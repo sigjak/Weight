@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/app_drawer.dart';
+import '../models/date_weight.dart';
+import '../widgets/plot_data.dart';
 
 import '../Providers/dataProvider.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +14,11 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
+  List<DateWeight> weight = [
+    DateWeight(date: DateTime(2020, 6, 20), weight: 93.5),
+    DateWeight(date: DateTime(2020, 6, 21), weight: 94),
+    DateWeight(date: DateTime(2020, 6, 24), weight: 94.5),
+  ];
   @override
   void initState() {
     Provider.of<Data>(context, listen: false).getDataFromFirebase();
@@ -22,6 +29,7 @@ class _ListScreenState extends State<ListScreen> {
   Widget build(BuildContext context) {
     final data = Provider.of<Data>(context);
     return Scaffold(
+      backgroundColor: Colors.brown[200],
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Hello from ListScreen'),
@@ -29,20 +37,30 @@ class _ListScreenState extends State<ListScreen> {
       drawer: AppDrawer(),
       body: Column(
         children: <Widget>[
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 15),
+            child: Text(
+              'Bio Data',
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
           Expanded(
-            child: ListView.builder(
-              itemCount: data.items.length,
-              itemBuilder: (ctx, i) => ListItem(
-                data.items[i],
+            child: Container(
+              color: Colors.white,
+              child: ListView.builder(
+                itemCount: data.items.length,
+                itemBuilder: (ctx, i) => ListItem(
+                  data.items[i],
+                ),
               ),
             ),
           ),
-          Container(height: 400, child: Text('plot Area')),
-          FlatButton(
-            textColor: Colors.white,
-            color: Colors.red,
-            onPressed: () {},
-            child: Text('press'),
+          Container(
+            margin: EdgeInsets.all(10),
+            color: Colors.white,
+            height: 250,
+            width: 350,
+            child: PlotData(weight),
           ),
         ],
       ),

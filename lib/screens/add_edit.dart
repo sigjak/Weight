@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weight_2/screens/list_screen.dart';
 import '../widgets/app_drawer.dart';
 import '../Providers/dataProvider.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ class _AddEditState extends State<AddEdit> {
   final _formKey = GlobalKey<FormState>();
   var _isInit = true;
   Bio bio = Bio();
-  //final url = 'https://weight-8da08.firebaseio.com/weights.json';
+  var isLoading = false;
   var init = {
     'weight': '',
     'systolic': '',
@@ -40,19 +41,21 @@ class _AddEditState extends State<AddEdit> {
   }
 
   void saveFormData() async {
+    setState(() {
+      isLoading = true;
+    });
     _formKey.currentState.save();
-    print('start');
     bio.day = DateTime.now();
     if (bio.id != null) {
       await Provider.of<Data>(context, listen: false)
           .updateOldData(bio.id, bio);
-      print('update');
     } else {
       await Provider.of<Data>(context, listen: false).addNewData(bio);
-      print('new');
     }
-
-    print(bio.id);
+    setState(() {
+      isLoading = false;
+    });
+    Navigator.of(context).pushNamed(ListScreen.routeName);
   }
 
   @override
@@ -67,71 +70,75 @@ class _AddEditState extends State<AddEdit> {
         ),
       ),
       drawer: AppDrawer(),
-      body: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.symmetric(
-              vertical: 10.0,
-              horizontal: 50.0,
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 50.0,
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.next,
+                          initialValue: init['weight'],
+                          decoration: InputDecoration(
+                            labelText: 'Weight',
+                          ),
+                          onSaved: (value) {
+                            bio.weight = value;
+                          },
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.next,
+                          initialValue: init['systolic'],
+                          decoration: InputDecoration(
+                            labelText: 'Systolic',
+                          ),
+                          onSaved: (value) {
+                            bio.syst = value;
+                          },
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.next,
+                          initialValue: init['diastolic'],
+                          decoration: InputDecoration(
+                            labelText: 'Diastolic',
+                          ),
+                          onSaved: (value) {
+                            bio.diast = value;
+                          },
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.next,
+                          initialValue: init['pulse'],
+                          decoration: InputDecoration(
+                            labelText: 'Pulse',
+                          ),
+                          onSaved: (value) {
+                            bio.pulse = value;
+                          },
+                        ),
+                        RaisedButton(
+                          child: Text('Submit'),
+                          onPressed: saveFormData,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    initialValue: init['weight'],
-                    decoration: InputDecoration(
-                      labelText: 'Weight',
-                    ),
-                    onSaved: (value) {
-                      bio.weight = value;
-                    },
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    initialValue: init['systolic'],
-                    decoration: InputDecoration(
-                      labelText: 'Systolic',
-                    ),
-                    onSaved: (value) {
-                      bio.syst = value;
-                    },
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    initialValue: init['diastolic'],
-                    decoration: InputDecoration(
-                      labelText: 'Diastolic',
-                    ),
-                    onSaved: (value) {
-                      bio.diast = value;
-                    },
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    initialValue: init['pulse'],
-                    decoration: InputDecoration(
-                      labelText: 'Pulse',
-                    ),
-                    onSaved: (value) {
-                      bio.pulse = value;
-                    },
-                  ),
-                  RaisedButton(
-                    child: Text('Submit'),
-                    onPressed: saveFormData,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
