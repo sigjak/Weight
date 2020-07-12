@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import '../widgets/app_drawer.dart';
-import '../models/date_weight.dart';
+//import '../models/date_weight.dart';
 import '../widgets/plot_data.dart';
 
 import '../Providers/dataProvider.dart';
 import 'package:provider/provider.dart';
 import '../widgets/list_item.dart';
+//import '../models/date_weight.dart';
 
 class ListScreen extends StatefulWidget {
   static const routeName = '/list';
@@ -14,14 +15,14 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  List<DateWeight> weight = [
-    DateWeight(date: DateTime(2020, 6, 20), weight: 93.5),
-    DateWeight(date: DateTime(2020, 6, 21), weight: 94),
-    DateWeight(date: DateTime(2020, 6, 24), weight: 94.5),
-  ];
+  // List<DateWeight> weights = [
+  //   DateWeight(date: DateTime(2020, 6, 20), weight: 93.5),
+  //   DateWeight(date: DateTime(2020, 6, 21), weight: 94),
+  // ];
   @override
   void initState() {
     Provider.of<Data>(context, listen: false).getDataFromFirebase();
+
     super.initState();
   }
 
@@ -29,7 +30,7 @@ class _ListScreenState extends State<ListScreen> {
   Widget build(BuildContext context) {
     final data = Provider.of<Data>(context);
     return Scaffold(
-      backgroundColor: Colors.brown[200],
+      //backgroundColor: Colors.brown[200],
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Hello from ListScreen'),
@@ -46,6 +47,7 @@ class _ListScreenState extends State<ListScreen> {
           ),
           Expanded(
             child: Container(
+              margin: EdgeInsets.all(10),
               color: Colors.white,
               child: ListView.builder(
                 itemCount: data.items.length,
@@ -56,11 +58,8 @@ class _ListScreenState extends State<ListScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsets.all(10),
-            color: Colors.white,
-            height: 250,
-            width: 350,
-            child: PlotData(weight),
+            margin: EdgeInsets.symmetric(vertical: 30),
+            child: PlotData(data.weights),
           ),
         ],
       ),

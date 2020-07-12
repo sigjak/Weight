@@ -15,14 +15,26 @@ class PlotData extends StatelessWidget {
         data: dataToPlot,
       ),
     ];
-    return charts.TimeSeriesChart(
-      series,
-      defaultRenderer: charts.LineRendererConfig(
-        includePoints: true,
-      ),
-      primaryMeasureAxis: charts.NumericAxisSpec(
-        tickProviderSpec: charts.BasicNumericTickProviderSpec(
-          zeroBound: false,
+    return Container(
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(8),
+      width: 300,
+      height: 200,
+      decoration: BoxDecoration(
+          color: Colors.grey[50],
+          border: Border.all(color: Colors.black, width: 2),
+          borderRadius: BorderRadius.circular(4)),
+      child: charts.TimeSeriesChart(
+        series,
+        defaultRenderer: charts.LineRendererConfig(
+          includePoints: true,
+        ),
+        primaryMeasureAxis: charts.NumericAxisSpec(
+          tickProviderSpec: charts.BasicNumericTickProviderSpec(
+              zeroBound: false, desiredMinTickCount: 4),
+          renderSpec: charts.GridlineRendererSpec(
+            lineStyle: charts.LineStyleSpec(dashPattern: [4, 4]),
+          ),
         ),
       ),
     );

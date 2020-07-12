@@ -1,5 +1,6 @@
 class DateWeight {
+  final String id;
   final DateTime date;
-  final double weight;
-  DateWeight({this.date, this.weight});
+  double weight;
+  DateWeight({this.id, this.date, this.weight});
 }

@@ -45,7 +45,9 @@ class _AddEditState extends State<AddEdit> {
       isLoading = true;
     });
     _formKey.currentState.save();
-    bio.day = DateTime.now();
+    DateTime now = DateTime.now();
+    DateTime bb = DateTime(now.year, now.month, now.day);
+    bio.day = bb;
     if (bio.id != null) {
       await Provider.of<Data>(context, listen: false)
           .updateOldData(bio.id, bio);

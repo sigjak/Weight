@@ -1,13 +1,19 @@
 import 'package:flutter/widgets.dart';
+import '../models/date_weight.dart';
 import '../models/bio.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Data with ChangeNotifier {
   List<Bio> _items = [];
+  List<DateWeight> _weights = [];
 
   List<Bio> get items {
     return [..._items];
+  }
+
+  List<DateWeight> get weights {
+    return [..._weights];
   }
 
   final url = 'https://weight-8da08.firebaseio.com/weights.json';
@@ -15,17 +21,28 @@ class Data with ChangeNotifier {
   Future<void> getDataFromFirebase() async {
     try {
       final List<Bio> loadedData = [];
+      final List<DateWeight> dataToPlot = [];
       final response = await http.get(url);
       final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
       extractedData.forEach((key, data) {
-        loadedData.add(Bio(
-            id: key,
-            weight: data['weight'],
-            syst: data['systolic'],
-            diast: data['diastolic'],
-            day: DateTime.parse(data['day']),
-            pulse: data['pulse']));
+        loadedData.add(
+          Bio(
+              id: key,
+              weight: data['weight'],
+              syst: data['systolic'],
+              diast: data['diastolic'],
+              day: DateTime.parse(data['day']),
+              pulse: data['pulse']),
+        );
+        dataToPlot.add(
+          DateWeight(
+              id: key,
+              date: DateTime.parse(data['day']),
+              weight: double.parse(data['weight'])),
+        );
       });
+
+      _weights = dataToPlot;
       _items = loadedData;
       notifyListeners();
     } catch (error) {
@@ -36,10 +53,10 @@ class Data with ChangeNotifier {
   Future<void> addNewData(bio) async {
     try {
       print(bio.day);
-      final response = await http.post(url,
+      await http.post(url,
           body: json.encode({
             'weight': bio.weight,
-            'day': DateTime.now().toIso8601String(),
+            'day': bio.day.toIso8601String(),
             'systolic': bio.syst,
             'diastolic': bio.diast,
             'pulse': bio.pulse,
@@ -67,6 +84,19 @@ class Data with ChangeNotifier {
           }));
       final itemIndex = _items.indexWhere((item) => item.id == id);
       _items[itemIndex] = updated;
+      _weights[itemIndex].weight = double.parse(updated.weight);
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  Future<void> deleteOldData(String id) async {
+    final url = 'https://weight-8da08.firebaseio.com/weights/$id.json';
+    try {
+      // await http.delete(url);
+      _items.removeWhere((element) => element.id == id);
+      _weights.removeWhere((element) => element.id == id);
       notifyListeners();
     } catch (error) {
       print(error);
