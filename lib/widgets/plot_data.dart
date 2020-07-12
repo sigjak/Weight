@@ -22,10 +22,16 @@ class PlotData extends StatelessWidget {
       height: 200,
       decoration: BoxDecoration(
           color: Colors.grey[50],
-          border: Border.all(color: Colors.black, width: 2),
+          border: Border.all(color: Colors.grey, width: 2),
           borderRadius: BorderRadius.circular(4)),
       child: charts.TimeSeriesChart(
         series,
+        behaviors: [
+          charts.ChartTitle('Weight vs. time',
+              behaviorPosition: charts.BehaviorPosition.top,
+              titleOutsideJustification: charts.OutsideJustification.start,
+              innerPadding: 18)
+        ],
         defaultRenderer: charts.LineRendererConfig(
           includePoints: true,
         ),

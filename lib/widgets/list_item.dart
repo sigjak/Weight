@@ -20,14 +20,16 @@ class ListItem extends StatelessWidget {
           width: 1.0,
         ),
         borderRadius: BorderRadius.circular(4),
+        color: Colors.grey[50],
       ),
       child: ListTile(
         dense: true,
         leading: Text(
           DateFormat.MMMd().format(items.day),
+          style: TextStyle(fontSize: 13),
         ),
         title: Text(
-          'W: ${items.weight}    BP: ${items.syst}/${items.diast},    HR: ${items.pulse}',
+          'W: ${items.weight} - BP: ${items.syst}/${items.diast} - HR: ${items.pulse}',
           textAlign: TextAlign.center,
         ),
         trailing: Row(

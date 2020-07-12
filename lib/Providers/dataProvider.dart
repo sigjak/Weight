@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+//import 'package:intl/intl.dart';
 import '../models/date_weight.dart';
 import '../models/bio.dart';
 import 'package:http/http.dart' as http;
@@ -36,14 +37,17 @@ class Data with ChangeNotifier {
         );
         dataToPlot.add(
           DateWeight(
-              id: key,
-              date: DateTime.parse(data['day']),
-              weight: double.parse(data['weight'])),
+            id: key,
+            date: DateTime.parse(data['day']),
+            weight: double.tryParse(data['weight']),
+          ),
         );
       });
 
       _weights = dataToPlot;
+      _weights.sort((a, b) => a.date.compareTo(b.date));
       _items = loadedData;
+      _items.sort((a, b) => a.day.compareTo(b.day));
       notifyListeners();
     } catch (error) {
       print(error);
@@ -84,7 +88,7 @@ class Data with ChangeNotifier {
           }));
       final itemIndex = _items.indexWhere((item) => item.id == id);
       _items[itemIndex] = updated;
-      _weights[itemIndex].weight = double.parse(updated.weight);
+      _weights[itemIndex].weight = double.tryParse(updated.weight);
       notifyListeners();
     } catch (error) {
       print(error);
@@ -94,7 +98,7 @@ class Data with ChangeNotifier {
   Future<void> deleteOldData(String id) async {
     final url = 'https://weight-8da08.firebaseio.com/weights/$id.json';
     try {
-      // await http.delete(url);
+      await http.delete(url);
       _items.removeWhere((element) => element.id == id);
       _weights.removeWhere((element) => element.id == id);
       notifyListeners();

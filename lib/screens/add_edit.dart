@@ -131,6 +131,7 @@ class _AddEditState extends State<AddEdit> {
                             bio.pulse = value;
                           },
                         ),
+                        SizedBox(height: 20),
                         RaisedButton(
                           child: Text('Submit'),
                           onPressed: saveFormData,
