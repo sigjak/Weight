@@ -9,9 +9,15 @@ class PlotData extends StatelessWidget {
   Widget build(BuildContext context) {
     var series = [
       charts.Series(
-        id: 'dataToPlot',
+        id: 'weight',
         domainFn: (DateWeight series, _) => series.date,
         measureFn: (DateWeight series, _) => series.weight,
+        data: dataToPlot,
+      ),
+      charts.Series(
+        id: 'Systolic',
+        domainFn: (DateWeight series, _) => series.date,
+        measureFn: (DateWeight series, _) => series.syst,
         data: dataToPlot,
       ),
     ];
@@ -27,6 +33,7 @@ class PlotData extends StatelessWidget {
       child: charts.TimeSeriesChart(
         series,
         behaviors: [
+          charts.SeriesLegend(),
           charts.ChartTitle('Weight vs. time',
               behaviorPosition: charts.BehaviorPosition.top,
               titleOutsideJustification: charts.OutsideJustification.start,

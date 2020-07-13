@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './screens/test_screen.dart';
+import './screens/login_screen.dart';
 import './screens/list_screen.dart';
 import './screens/add_edit.dart';
 import './Providers/dataProvider.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
                     borderSide: BorderSide(color: Colors.brown)),
                 labelStyle: TextStyle(color: Colors.brown)),
           ),
-          home: ListScreen(),
+          home: Login(),
           routes: {
             AddEdit.routeName: (ctx) => AddEdit(),
             ListScreen.routeName: (ctx) => ListScreen(),

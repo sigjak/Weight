@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weight_2/screens/add_edit.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/plot_data.dart';
 import '../Providers/dataProvider.dart';
 import '../widgets/list_item.dart';
 
-class ListScreen extends StatefulWidget {
+class ListScreen extends StatelessWidget {
   static const routeName = '/list';
-  @override
-  _ListScreenState createState() => _ListScreenState();
-}
 
-class _ListScreenState extends State<ListScreen> {
   @override
-  void initState() {
-    Provider.of<Data>(context, listen: false).getDataFromFirebase();
+  // void initState() {
+  //   Provider.of<Data>(context, listen: false).getDataFromFirebase();
 
-    super.initState();
-  }
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +24,13 @@ class _ListScreenState extends State<ListScreen> {
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Hello from ListScreen'),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.of(context).pushNamed(AddEdit.routeName);
+              })
+        ],
       ),
       drawer: AppDrawer(),
       body: Column(
@@ -36,17 +40,18 @@ class _ListScreenState extends State<ListScreen> {
             child: Text(
               'BIO DATA',
               style: TextStyle(
-                  fontSize: 20,
-                  letterSpacing: 1.2,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.grey[600],
-                  shadows: [
-                    Shadow(
-                      blurRadius: 10.0,
-                      color: Colors.grey[400],
-                      offset: Offset(2, 2),
-                    ),
-                  ]),
+                fontSize: 20,
+                letterSpacing: 1.2,
+                fontWeight: FontWeight.w800,
+                color: Colors.grey[600],
+                shadows: [
+                  Shadow(
+                    blurRadius: 10.0,
+                    color: Colors.grey[400],
+                    offset: Offset(2, 2),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(

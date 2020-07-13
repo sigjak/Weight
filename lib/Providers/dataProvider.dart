@@ -38,6 +38,7 @@ class Data with ChangeNotifier {
         dataToPlot.add(
           DateWeight(
             id: key,
+            syst: int.tryParse(data['systolic']),
             date: DateTime.parse(data['day']),
             weight: double.tryParse(data['weight']),
           ),
@@ -49,6 +50,7 @@ class Data with ChangeNotifier {
       _items = loadedData;
       _items.sort((a, b) => a.day.compareTo(b.day));
       notifyListeners();
+      print('hello');
     } catch (error) {
       print(error);
     }
@@ -66,6 +68,12 @@ class Data with ChangeNotifier {
             'pulse': bio.pulse,
           }));
       _items.add(bio);
+      _weights.add(DateWeight(
+        weight: double.tryParse(bio.weight),
+        date: bio.day,
+        syst: int.tryParse(bio.syst),
+      ));
+      //Todo add to weight so chartwill be updated
       notifyListeners();
     } catch (error) {
       print(error);
