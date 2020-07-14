@@ -14,12 +14,12 @@ class PlotData extends StatelessWidget {
         measureFn: (DateWeight series, _) => series.weight,
         data: dataToPlot,
       ),
-      charts.Series(
-        id: 'Systolic',
-        domainFn: (DateWeight series, _) => series.date,
-        measureFn: (DateWeight series, _) => series.syst,
-        data: dataToPlot,
-      ),
+      // charts.Series(
+      //   id: 'Systolic',
+      //   domainFn: (DateWeight series, _) => series.date,
+      //   measureFn: (DateWeight series, _) => series.syst,
+      //   data: dataToPlot,
+      // ),
     ];
     return Container(
       padding: EdgeInsets.all(10),
@@ -34,10 +34,10 @@ class PlotData extends StatelessWidget {
         series,
         behaviors: [
           charts.SeriesLegend(),
-          charts.ChartTitle('Weight vs. time',
-              behaviorPosition: charts.BehaviorPosition.top,
-              titleOutsideJustification: charts.OutsideJustification.start,
-              innerPadding: 18)
+          // charts.ChartTitle('Weight vs. time',
+          //     behaviorPosition: charts.BehaviorPosition.top,
+          //     titleOutsideJustification: charts.OutsideJustification.start,
+          //     innerPadding: 18)
         ],
         defaultRenderer: charts.LineRendererConfig(
           includePoints: true,

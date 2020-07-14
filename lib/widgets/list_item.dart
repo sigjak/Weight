@@ -9,6 +9,40 @@ import 'package:intl/intl.dart';
 class ListItem extends StatelessWidget {
   final Bio items;
   ListItem(this.items);
+  _showMyDialog(context) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        actionsPadding: EdgeInsets.symmetric(horizontal: 15),
+        //shape: ShapeBorder(),
+        elevation: 20,
+        title: Text('Delete?'),
+        actions: [
+          FlatButton(
+            color: Colors.green,
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              'NO',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          FlatButton(
+            color: Colors.red,
+            onPressed: () {
+              Provider.of<Data>(context, listen: false).deleteOldData(items.id);
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              'YES',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +85,9 @@ class ListItem extends StatelessWidget {
                 size: 18,
               ),
               onPressed: () {
-                Provider.of<Data>(context, listen: false)
-                    .deleteOldData(items.id);
+                _showMyDialog(context);
+                // Provider.of<Data>(context, listen: false)
+                //     .deleteOldData(items.id);
               },
             ),
           ],

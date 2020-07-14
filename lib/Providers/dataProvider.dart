@@ -68,12 +68,13 @@ class Data with ChangeNotifier {
             'pulse': bio.pulse,
           }));
       _items.add(bio);
+      //Todo add to weight so chart will be updated
       _weights.add(DateWeight(
         weight: double.tryParse(bio.weight),
         date: bio.day,
         syst: int.tryParse(bio.syst),
       ));
-      //Todo add to weight so chartwill be updated
+
       notifyListeners();
     } catch (error) {
       print(error);

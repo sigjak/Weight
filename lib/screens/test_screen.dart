@@ -43,6 +43,31 @@ class _TestScreenState extends State<TestScreen> {
     // print(dd[0].date);
   }
 
+  _showMyDialog() {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Accept'),
+        actions: [
+          FlatButton(
+            onPressed: () {
+              print('NO');
+              Navigator.of(context).pop();
+            },
+            child: Text('NO'),
+          ),
+          FlatButton(
+            onPressed: () {
+              print('YES');
+              Navigator.of(context).pop();
+            },
+            child: Text('yes'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +76,7 @@ class _TestScreenState extends State<TestScreen> {
       ),
       body: Container(
         child: FlatButton(
-          onPressed: geting,
+          onPressed: _showMyDialog,
           child: Text('Press'),
         ),
       ),
