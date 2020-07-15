@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Providers/dataProvider.dart';
 
-import '../screens/add_edit.dart';
+import '../screens/add.dart';
 import '../models/bio.dart';
 import 'package:intl/intl.dart';
 

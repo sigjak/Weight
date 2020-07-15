@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weight_2/screens/list_screen.dart';
+import 'package:weight_2/screens/edit.dart';
 import '../widgets/app_drawer.dart';
 import '../Providers/dataProvider.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +57,7 @@ class _AddEditState extends State<AddEdit> {
     setState(() {
       isLoading = false;
     });
-    Navigator.of(context).pushNamed(ListScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
   }
 
   @override
@@ -71,7 +71,7 @@ class _AddEditState extends State<AddEdit> {
           textAlign: TextAlign.center,
         ),
       ),
-      // drawer: AppDrawer(),
+      drawer: AppDrawer(),
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(),

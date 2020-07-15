@@ -12,6 +12,7 @@ class PlotData extends StatelessWidget {
         id: 'weight',
         domainFn: (DateWeight series, _) => series.date,
         measureFn: (DateWeight series, _) => series.weight,
+        colorFn: (_, __) => charts.MaterialPalette.gray.shade400,
         data: dataToPlot,
       ),
       // charts.Series(

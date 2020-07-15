@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weight_2/screens/add_edit.dart';
+import 'package:weight_2/screens/add.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/plot_data.dart';
 import '../Providers/dataProvider.dart';
@@ -20,10 +20,10 @@ class ListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final data = Provider.of<Data>(context);
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      // backgroundColor: Colors.grey[100],
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('Hello from ListScreen'),
+        title: Text('Data Plot'),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.add),

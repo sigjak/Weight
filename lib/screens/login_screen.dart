@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:weight_2/screens/add_edit.dart';
+import 'package:weight_2/screens/add.dart';
 import 'package:provider/provider.dart';
 import '../Providers/dataProvider.dart';
-import './list_screen.dart';
+import 'edit.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -24,11 +24,23 @@ class _LoginState extends State<Login> {
         title: Text('BIO DATA'),
       ),
       body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.of(context).popAndPushNamed(ListScreen.routeName);
-          },
-          child: Text('Login'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            RaisedButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(ListScreen.routeName);
+              },
+              child: Text('Edit'),
+            ),
+            RaisedButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed(AddEdit.routeName);
+              },
+              child: Text('Add'),
+            ),
+          ],
         ),
       ),
     );

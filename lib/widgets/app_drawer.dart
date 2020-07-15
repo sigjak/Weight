@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../screens/list_screen.dart';
-import '../screens/add_edit.dart';
+import '../screens/edit.dart';
+import '../screens/add.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
