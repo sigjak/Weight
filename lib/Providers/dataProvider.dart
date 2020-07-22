@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
 //import 'package:intl/intl.dart';
-import '../models/date_weight.dart';
+
 import '../models/bio.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../models/plot.dart';
 
 class Data with ChangeNotifier {
   List<Bio> _items = [];
@@ -21,7 +22,7 @@ class Data with ChangeNotifier {
 
   Future<void> getDataFromFirebase() async {
     try {
-      final List<Bio> loadedData = [];
+      List<Bio> loadedData = [];
       //final List<DateWeight> dataToPlot = [];
       final response = await http.get(url);
       final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
@@ -47,8 +48,12 @@ class Data with ChangeNotifier {
 
       // _weights = dataToPlot;
       // _weights.sort((a, b) => a.date.compareTo(b.date));
+      var len = loadedData.length - 6;
+      loadedData = loadedData.sublist(len);
       _items = loadedData;
+
       _items.sort((a, b) => a.day.compareTo(b.day));
+
       notifyListeners();
     } catch (error) {
       print(error);
@@ -113,5 +118,36 @@ class Data with ChangeNotifier {
     } catch (error) {
       print(error);
     }
+  }
+
+  List<Plot> weight() {
+    List<Plot> myPlot = [];
+    _items.forEach((element) {
+      if (element.weight != "") {
+        myPlot.add(
+          Plot(
+            xAxis: element.day,
+            yAxis: double.tryParse(element.weight),
+          ),
+        );
+      }
+    });
+    return myPlot;
+  }
+
+  List<Plot> systDiast() {
+    List<Plot> myPlot = [];
+    _items.forEach((element) {
+      if (element.syst != "" || element.diast != "") {
+        myPlot.add(
+          Plot(
+            xAxis: element.day,
+            yAxis: double.tryParse(element.syst),
+            yAxis2: double.tryParse(element.diast),
+          ),
+        );
+      }
+    });
+    return myPlot;
   }
 }

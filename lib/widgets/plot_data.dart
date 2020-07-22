@@ -1,27 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import '../models/date_weight.dart';
+//
+//import '../models/bio.dart';
+import '../models/plot.dart';
 
 class PlotData extends StatelessWidget {
-  final List<DateWeight> dataToPlot;
-  PlotData(this.dataToPlot);
+  final List<Plot> dataToPlot;
+  final bool zeroPlot;
+  final bool twoPlots;
+  final String plotName1;
+  final String plotName2;
+  PlotData(this.dataToPlot, this.zeroPlot, this.twoPlots, this.plotName1,
+      this.plotName2);
+
   @override
   Widget build(BuildContext context) {
     var series = [
       charts.Series(
-        id: 'weight',
-        domainFn: (DateWeight series, _) => series.date,
-        measureFn: (DateWeight series, _) => series.weight,
-        colorFn: (_, __) => charts.MaterialPalette.gray.shade400,
+        id: plotName1,
+        domainFn: (Plot series, _) => series.xAxis,
+        measureFn: (Plot series, _) => series.yAxis,
+        //: (_, __) => charts.MaterialPalette.gray.shade400,
         data: dataToPlot,
-      ),
-      // charts.Series(
-      //   id: 'Systolic',
-      //   domainFn: (DateWeight series, _) => series.date,
-      //   measureFn: (DateWeight series, _) => series.syst,
-      //   data: dataToPlot,
-      // ),
+      )
     ];
+    if (twoPlots) {
+      series.add(charts.Series(
+        id: plotName2,
+        domainFn: (Plot series, _) => series.xAxis,
+        measureFn: (Plot series, _) => series.yAxis2,
+        //colorFn: (_, __) => charts.MaterialPalette.gray.shade400,
+        data: dataToPlot,
+      ));
+    }
     return Container(
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.all(8),
@@ -45,7 +56,7 @@ class PlotData extends StatelessWidget {
         ),
         primaryMeasureAxis: charts.NumericAxisSpec(
           tickProviderSpec: charts.BasicNumericTickProviderSpec(
-              zeroBound: false, desiredMinTickCount: 4),
+              zeroBound: zeroPlot, desiredMinTickCount: 4),
           renderSpec: charts.GridlineRendererSpec(
             lineStyle: charts.LineStyleSpec(dashPattern: [4, 4]),
           ),

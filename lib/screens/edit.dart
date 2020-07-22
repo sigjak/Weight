@@ -5,9 +5,8 @@ import '../widgets/app_drawer.dart';
 import '../widgets/plot_data.dart';
 import '../Providers/dataProvider.dart';
 import '../widgets/list_item.dart';
-import '../screens/newPlot.dart';
 
-class ListScreen extends StatelessWidget {
+class EditScreen extends StatelessWidget {
   static const routeName = '/list';
 
   @override
@@ -74,7 +73,7 @@ class ListScreen extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 30),
-            child: PlotData2(data.items),
+            child: PlotData(data.weight(), false, false, 'weight', ''),
           ),
         ],
       ),

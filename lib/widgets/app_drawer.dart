@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../screens/edit.dart';
 import '../screens/add.dart';
+import '../screens/syst_diast.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -25,7 +26,15 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.edit),
             title: Text('Edit Data'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(EditScreen.routeName);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.favorite_border),
+            title: Text('BP Plots'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(SystDiast.routeName);
             },
           ),
         ],

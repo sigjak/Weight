@@ -13,7 +13,7 @@ class AddEdit extends StatefulWidget {
 
 class _AddEditState extends State<AddEdit> {
   final _formKey = GlobalKey<FormState>();
-  var _isInit = true;
+  //var _isInit = true;
   Bio bio = Bio();
   var isLoading = false;
   var init = {
@@ -22,23 +22,24 @@ class _AddEditState extends State<AddEdit> {
     'daiastolic': '',
     'pulse': '',
   };
-  @override
-  void didChangeDependencies() {
-    if (_isInit) {
-      final bioId = ModalRoute.of(context).settings.arguments as String;
-      if (bioId != null) {
-        bio = Provider.of<Data>(context).findById(bioId);
-        init = {
-          'weight': bio.weight,
-          'systolic': bio.syst,
-          'diastolic': bio.diast,
-          'pulse': bio.pulse,
-        };
-      }
-    }
-    _isInit = false;
-    super.didChangeDependencies();
-  }
+  //@override
+  // void didChangeDependencies() {
+  //   print('dep');
+  //   if (_isInit) {
+  //     final bioId = ModalRoute.of(context).settings.arguments as String;
+  //     if (bioId != null) {
+  //       bio = Provider.of<Data>(context).findById(bioId);
+  //       init = {
+  //         'weight': bio.weight,
+  //         'systolic': bio.syst,
+  //         'diastolic': bio.diast,
+  //         'pulse': bio.pulse,
+  //       };
+  //     }
+  //   }
+  //   _isInit = false;
+  //   super.didChangeDependencies();
+  // }
 
   void saveFormData() async {
     setState(() {
@@ -57,11 +58,21 @@ class _AddEditState extends State<AddEdit> {
     setState(() {
       isLoading = false;
     });
-    Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(EditScreen.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
+    final bioId = ModalRoute.of(context).settings.arguments as String;
+    if (bioId != null) {
+      bio = Provider.of<Data>(context).findById(bioId);
+      init = {
+        'weight': bio.weight,
+        'systolic': bio.syst,
+        'diastolic': bio.diast,
+        'pulse': bio.pulse,
+      };
+    }
     return Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
@@ -122,7 +133,7 @@ class _AddEditState extends State<AddEdit> {
                         ),
                         TextFormField(
                           keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.done,
                           initialValue: init['pulse'],
                           decoration: InputDecoration(
                             labelText: 'Pulse',
@@ -132,10 +143,15 @@ class _AddEditState extends State<AddEdit> {
                           },
                         ),
                         SizedBox(height: 20),
-                        RaisedButton(
-                          child: Text('Submit'),
-                          onPressed: saveFormData,
-                        ),
+                        Builder(builder: (BuildContext context) {
+                          return RaisedButton(
+                              child: Text('Submit'),
+                              onPressed: () {
+                                saveFormData();
+                                Scaffold.of(context).showSnackBar(
+                                    SnackBar(content: Text('New data added!')));
+                              });
+                        }),
                       ],
                     ),
                   ),
