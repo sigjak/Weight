@@ -1,29 +1,22 @@
 import 'package:flutter/widgets.dart';
-//import 'package:intl/intl.dart';
-
-import '../models/bio.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/plot.dart';
+import '../models/bio.dart';
 
 class Data with ChangeNotifier {
   List<Bio> _items = [];
-  // List<DateWeight> _weights = [];
 
   List<Bio> get items {
     return [..._items];
   }
-
-  // List<DateWeight> get weights {
-  //   return [..._weights];
-  // }
 
   final url = 'https://weight-8da08.firebaseio.com/weights.json';
 
   Future<void> getDataFromFirebase() async {
     try {
       List<Bio> loadedData = [];
-      //final List<DateWeight> dataToPlot = [];
+
       final response = await http.get(url);
       final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
       extractedData.forEach((key, data) {
@@ -36,24 +29,14 @@ class Data with ChangeNotifier {
               day: DateTime.parse(data['day']),
               pulse: data['pulse']),
         );
-        // dataToPlot.add(
-        //   DateWeight(
-        //     id: key,
-        //     syst: int.tryParse(data['systolic']),
-        //     date: DateTime.parse(data['day']),
-        //     weight: double.tryParse(data['weight']),
-        //   ),
-        // );
       });
-
-      // _weights = dataToPlot;
-      // _weights.sort((a, b) => a.date.compareTo(b.date));
-      var len = loadedData.length - 6;
-      loadedData = loadedData.sublist(len);
-      _items = loadedData;
-
+      if (loadedData.length < 10) {
+        var len = loadedData.length - 10;
+        _items = loadedData.sublist(len);
+      } else {
+        _items = loadedData;
+      }
       _items.sort((a, b) => a.day.compareTo(b.day));
-
       notifyListeners();
     } catch (error) {
       print(error);
@@ -62,7 +45,6 @@ class Data with ChangeNotifier {
 
   Future<void> addNewData(bio) async {
     try {
-      // print(bio.day);
       await http.post(url,
           body: json.encode({
             'weight': bio.weight,
@@ -72,13 +54,6 @@ class Data with ChangeNotifier {
             'pulse': bio.pulse,
           }));
       _items.add(bio);
-      //Todo add to weight so chart will be updated
-      // _weights.add(DateWeight(
-      //   weight: double.tryParse(bio.weight),
-      //   date: bio.day,
-      //   syst: int.tryParse(bio.syst),
-      // ));
-
       notifyListeners();
     } catch (error) {
       print(error);
@@ -101,7 +76,6 @@ class Data with ChangeNotifier {
           }));
       final itemIndex = _items.indexWhere((item) => item.id == id);
       _items[itemIndex] = updated;
-      //  _weights[itemIndex].weight = double.tryParse(updated.weight);
       notifyListeners();
     } catch (error) {
       print(error);
@@ -113,7 +87,6 @@ class Data with ChangeNotifier {
     try {
       await http.delete(url);
       _items.removeWhere((element) => element.id == id);
-      // _weights.removeWhere((element) => element.id == id);
       notifyListeners();
     } catch (error) {
       print(error);
@@ -128,6 +101,22 @@ class Data with ChangeNotifier {
           Plot(
             xAxis: element.day,
             yAxis: double.tryParse(element.weight),
+          ),
+        );
+      }
+    });
+    return myPlot;
+  }
+
+  List<Plot> pulsePressure() {
+    List<Plot> myPlot = [];
+    _items.forEach((element) {
+      if (element.syst != "" || element.diast != "") {
+        myPlot.add(
+          Plot(
+            xAxis: element.day,
+            yAxis:
+                double.tryParse(element.syst) - double.tryParse(element.diast),
           ),
         );
       }

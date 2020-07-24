@@ -43,11 +43,11 @@ class EditScreen extends StatelessWidget {
                 fontSize: 20,
                 letterSpacing: 1.2,
                 fontWeight: FontWeight.w800,
-                color: Colors.grey[600],
+                color: Colors.brown[500],
                 shadows: [
                   Shadow(
                     blurRadius: 10.0,
-                    color: Colors.grey[400],
+                    color: Colors.brown[400],
                     offset: Offset(2, 2),
                   ),
                 ],

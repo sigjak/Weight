@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weight_2/widgets/app_drawer.dart';
-import 'package:weight_2/widgets/plot_data.dart';
 import 'package:provider/provider.dart';
+import '../widgets/app_drawer.dart';
+import '../widgets/plot_data.dart';
 import '../Providers/dataProvider.dart';
 
 class SystDiast extends StatelessWidget {
@@ -21,15 +21,23 @@ class SystDiast extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              'Systolic/Diastolic',
+              style: TextStyle(fontSize: 18, color: Colors.brown[500]),
+            ),
             Container(
               child: PlotData(data.systDiast(), true, true, 'sys', 'dia'),
             ),
             SizedBox(
               height: 20.0,
             ),
+            Text(
+              'Pulse Pressure',
+              style: TextStyle(fontSize: 18, color: Colors.brown[500]),
+            ),
             Container(
-                //child: PlotData(data.diast(), true, 'diastolic'),
-                ),
+              child: PlotData(data.pulsePressure(), true, false, 'pulseP', ""),
+            ),
           ],
         ),
       ),

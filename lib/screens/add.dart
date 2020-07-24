@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:weight_2/screens/edit.dart';
+import 'package:provider/provider.dart';
 import '../widgets/app_drawer.dart';
 import '../Providers/dataProvider.dart';
-import 'package:provider/provider.dart';
 import '../models/bio.dart';
 
 class AddEdit extends StatefulWidget {
@@ -89,6 +89,7 @@ class _AddEditState extends State<AddEdit> {
             )
           : Column(
               children: <Widget>[
+                SizedBox(height: 20.0),
                 Container(
                   padding: EdgeInsets.symmetric(
                     vertical: 10.0,
