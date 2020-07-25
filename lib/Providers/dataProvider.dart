@@ -16,7 +16,8 @@ class Data with ChangeNotifier {
   Future<void> getDataFromFirebase() async {
     try {
       List<Bio> loadedData = [];
-
+      final url =
+          'https://weight-8da08.firebaseio.com/weights.json?orderBy="weights"&limitToLast=10';
       final response = await http.get(url);
       final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
       extractedData.forEach((key, data) {
@@ -30,12 +31,9 @@ class Data with ChangeNotifier {
               pulse: data['pulse']),
         );
       });
-      if (loadedData.length < 10) {
-        var len = loadedData.length - 10;
-        _items = loadedData.sublist(len);
-      } else {
-        _items = loadedData;
-      }
+
+      _items = loadedData;
+
       _items.sort((a, b) => a.day.compareTo(b.day));
       notifyListeners();
     } catch (error) {

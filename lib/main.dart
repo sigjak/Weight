@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weight_2/screens/syst_diast.dart';
+import 'package:weight_2/screens/syst_diast_screen.dart';
 
 import './screens/login_screen.dart';
-import 'screens/edit.dart';
-import 'screens/add.dart';
+import 'screens/data_list_screen.dart';
+import 'screens/data_add_screen.dart';
 import './Providers/dataProvider.dart';
 
 void main() {
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           home: Login(),
           routes: {
             AddEdit.routeName: (ctx) => AddEdit(),
-            EditScreen.routeName: (ctx) => EditScreen(),
+            ListScreen.routeName: (ctx) => ListScreen(),
             SystDiast.routeName: (ctx) => SystDiast(),
           }),
     );

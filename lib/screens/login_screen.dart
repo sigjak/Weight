@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:weight_2/screens/add.dart';
+import 'package:weight_2/screens/data_add_screen.dart';
 import 'package:provider/provider.dart';
 import '../Providers/dataProvider.dart';
 
-import 'edit.dart';
+import 'data_list_screen.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -47,7 +47,7 @@ class _LoginState extends State<Login> {
                   RaisedButton(
                     onPressed: () {
                       Navigator.of(context)
-                          .pushReplacementNamed(EditScreen.routeName);
+                          .pushReplacementNamed(ListScreen.routeName);
                     },
                     child: Text('Edit'),
                   ),

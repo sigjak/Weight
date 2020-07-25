@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weight_2/screens/add.dart';
+import 'package:weight_2/screens/data_add_screen.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/plot_data.dart';
 import '../Providers/dataProvider.dart';
 import '../widgets/list_item.dart';
 
-class EditScreen extends StatelessWidget {
+class ListScreen extends StatelessWidget {
   static const routeName = '/list';
 
   @override
