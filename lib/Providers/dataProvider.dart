@@ -43,7 +43,7 @@ class Data with ChangeNotifier {
 
   Future<void> addNewData(bio) async {
     try {
-      await http.post(url,
+      final response = await http.post(url,
           body: json.encode({
             'weight': bio.weight,
             'day': bio.day.toIso8601String(),
@@ -51,6 +51,9 @@ class Data with ChangeNotifier {
             'diastolic': bio.diast,
             'pulse': bio.pulse,
           }));
+      final decoded = jsonDecode(response.body);
+
+      bio.id = decoded['name'];
       _items.add(bio);
       notifyListeners();
     } catch (error) {
