@@ -1,16 +1,19 @@
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import './authProvider.dart';
 import '../models/plot.dart';
 import '../models/bio.dart';
 
 class Data with ChangeNotifier {
+  final Auth myAuth;
   List<Bio> _items = [];
 
   List<Bio> get items {
     return [..._items];
   }
 
+  Data(this.myAuth);
   final url = 'https://weight-8da08.firebaseio.com/weights.json';
 
   Future<void> getDataFromFirebase() async {
