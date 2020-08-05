@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weight_2/screens/auth_screen.dart';
 import 'package:weight_2/screens/syst_diast_screen.dart';
-
+import './Providers/authProvider.dart';
 import './screens/login_screen.dart';
 import 'screens/data_list_screen.dart';
 import 'screens/data_add_screen.dart';
@@ -14,8 +15,11 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (ctx) => Data(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (ctx) => Data()),
+        ChangeNotifierProvider(create: (ctx) => Auth()),
+      ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
@@ -36,6 +40,7 @@ class MyApp extends StatelessWidget {
             AddEdit.routeName: (ctx) => AddEdit(),
             ListScreen.routeName: (ctx) => ListScreen(),
             SystDiast.routeName: (ctx) => SystDiast(),
+            AuthScreen.routeName: (ctx) => AuthScreen(),
           }),
     );
   }
