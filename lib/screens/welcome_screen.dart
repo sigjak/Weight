@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'login_screen.dart';
+import './login_screen.dart';
+import './register_screen.dart';
 import '../Providers/authProvider.dart';
-import '../Providers/dataProvider.dart';
+//import '../Providers/dataProvider.dart';
 
 class Welcome extends StatefulWidget {
   static const routeName = '/welcome';
@@ -45,18 +46,20 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
 
   Widget build(BuildContext context) {
     final authenticate = Provider.of<Auth>(context, listen: false);
-    final data = Provider.of<Data>(context);
+    // final data = Provider.of<Data>(context);
     return Scaffold(
       appBar: AppBar(
-        centerTitle: false,
+        centerTitle: true,
         title: Text('Bio Data'),
         actions: <Widget>[
-          Text('Register'),
-          IconButton(
+          FlatButton.icon(
+              color: Colors.brown[300],
               icon: Icon(Icons.people),
-              onPressed: () {
-                Navigator.of(context).pushReplacementNamed(Login.routeName);
-              })
+              onPressed: () async {
+                // Navigator.of(context).pushNamed(Register.routeName);
+                await authenticate.signUp(email, password);
+              },
+              label: Text('Register'))
         ],
       ),
       body: Center(
@@ -82,7 +85,7 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
                         show = true;
                       });
                       await authenticate.signIn(email, password);
-                      //await data.getData();
+                      // await data.getData();
                       Navigator.of(context)
                           .pushReplacementNamed(Login.routeName);
                       setState(() {

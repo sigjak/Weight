@@ -33,34 +33,36 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     //var dd = Provider.of<Data>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('BIO DATA'),
-      ),
-      body: isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  RaisedButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(ListScreen.routeName);
-                    },
-                    child: Text('Edit'),
+        appBar: AppBar(
+          title: Text('BIO DATA'),
+        ),
+        body: Center(
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child: isLoading
+                ? LinearProgressIndicator(
+                    backgroundColor: Colors.brown[200],
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed(ListScreen.routeName);
+                        },
+                        child: Text('Edit'),
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed(AddEdit.routeName);
+                        },
+                        child: Text('Add'),
+                      ),
+                    ],
                   ),
-                  RaisedButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(AddEdit.routeName);
-                    },
-                    child: Text('Add'),
-                  ),
-                ],
-              ),
-            ),
-    );
+          ),
+        ));
   }
 }

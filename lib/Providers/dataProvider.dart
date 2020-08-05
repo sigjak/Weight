@@ -14,14 +14,15 @@ class Data with ChangeNotifier {
   }
 
   Data(this.myAuth);
+
   final url = 'https://weight-8da08.firebaseio.com/weights.json';
 
   Future<void> getDataFromFirebase() async {
     try {
       List<Bio> loadedData = [];
-      final url =
-          'https://weight-8da08.firebaseio.com/weights.json?orderBy="weights"&limitToLast=10';
-      final response = await http.get(url);
+      final segment = '?orderBy="weights"&limitToLast=10&auth=${myAuth.token}';
+
+      final response = await http.get('$url$segment');
       final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
       extractedData.forEach((key, data) {
         loadedData.add(
