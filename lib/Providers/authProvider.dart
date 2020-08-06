@@ -22,7 +22,9 @@ class Auth with ChangeNotifier {
 
   Future<void> signUp(String email, String password) async {
     print('signup');
-    return authenticate(email, password, 'signUp');
+    return authenticate(email, password, 'signUp').catchError((error) {
+      throw error;
+    });
   }
 
   Future<void> signIn(String email, String password) async {
@@ -47,7 +49,7 @@ class Auth with ChangeNotifier {
     _token = (responseData['idToken']);
     _expiresIn = (responseData['expiresIn']);
     _localId = (responseData['localId']);
-    // print(responseData);
+    //print(responseData);
     print(responseData['email']);
     //print(_token);
     notifyListeners();

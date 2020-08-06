@@ -52,14 +52,22 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
         centerTitle: true,
         title: Text('Bio Data'),
         actions: <Widget>[
-          FlatButton.icon(
+          Builder(
+            builder: (context) => FlatButton.icon(
               color: Colors.brown[300],
               icon: Icon(Icons.people),
               onPressed: () async {
                 // Navigator.of(context).pushNamed(Register.routeName);
-                await authenticate.signUp(email, password);
+                await authenticate.signUp(email, password).catchError((error) {
+                  print(error['message']);
+                });
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text('RegisterText'),
+                ));
               },
-              label: Text('Register'))
+              label: Text('Register'),
+            ),
+          ),
         ],
       ),
       body: Center(
