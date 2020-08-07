@@ -31,7 +31,7 @@ class _LoginState extends State<Login> {
   @override
   @override
   Widget build(BuildContext context) {
-    var dd = Provider.of<Data>(context);
+    // var dd = Provider.of<Data>(context);
     return Scaffold(
         appBar: AppBar(
           title: Text('BIO DATA'),
@@ -60,18 +60,18 @@ class _LoginState extends State<Login> {
                         },
                         child: Text('Add'),
                       ),
-                      RaisedButton(
-                        onPressed: () {
-                          dd.getDataToMove();
-                        },
-                        child: Text('Get Data to move'),
-                      ),
-                      RaisedButton(
-                        onPressed: () {
-                          dd.addMoveData();
-                        },
-                        child: Text('Add Move data'),
-                      ),
+                      // RaisedButton(
+                      //   onPressed: () {
+                      //     dd.getDataToMove();
+                      //   },
+                      //   child: Text('Get Data to move'),
+                      // ),
+                      // RaisedButton(
+                      //   onPressed: () {
+                      //     dd.addMoveData();
+                      //   },
+                      //   child: Text('Add Move data'),
+                      // ),
                     ],
                   ),
           ),

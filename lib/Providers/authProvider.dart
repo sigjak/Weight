@@ -50,7 +50,7 @@ class Auth with ChangeNotifier {
     _expiresIn = (responseData['expiresIn']);
     _localId = (responseData['localId']);
     //print(responseData);
-    print(responseData['email']);
+    // print(responseData['email']);
     //print(_token);
     notifyListeners();
   }
