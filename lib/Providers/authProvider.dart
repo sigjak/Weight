@@ -8,7 +8,6 @@ class Auth with ChangeNotifier {
   String uid;
   String _token;
   String _localId;
-  String _expiresIn;
 
   static const key = 'AIzaSyDpgIquPiqxhtImtv1tnATs0tMGwBktGmY';
 
@@ -22,9 +21,7 @@ class Auth with ChangeNotifier {
 
   Future<void> signUp(String email, String password) async {
     print('signup');
-    return authenticate(email, password, 'signUp').catchError((error) {
-      throw error;
-    });
+    return authenticate(email, password, 'signUp');
   }
 
   Future<void> signIn(String email, String password) async {
@@ -35,49 +32,27 @@ class Auth with ChangeNotifier {
       String email, String password, String urlSegment) async {
     final url =
         'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=$key';
-    final response = await http.post(
-      url,
-      body: jsonEncode(
-        {
-          'email': email,
-          'password': password,
-          'returnSecureToken': true,
-        },
-      ),
-    );
-    final responseData = jsonDecode(response.body);
-    _token = (responseData['idToken']);
-    _expiresIn = (responseData['expiresIn']);
-    _localId = (responseData['localId']);
-    //print(responseData);
-    // print(responseData['email']);
-    //print(_token);
-    notifyListeners();
+    try {
+      final response = await http.post(
+        url,
+        body: jsonEncode(
+          {
+            'email': email,
+            'password': password,
+            'returnSecureToken': true,
+          },
+        ),
+      );
+
+      final responseData = jsonDecode(response.body);
+      if (responseData['error'] != null) {
+        throw responseData['error']['message'];
+      }
+      _token = (responseData['idToken']);
+      _localId = (responseData['localId']);
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
   }
-  //Future<void> signIn(String email, String password) async {
-  // print('signin');
-  // final url =
-  //     'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$key';
-  // final response = await http.post(
-  //   url,
-  //   body: jsonEncode(
-  //     {
-  //       'email': email,
-  //       'password': password,
-  //       'returnSecureToken': true,
-  //     },
-  //   ),
-  // );
-  // final responseData = jsonDecode(response.body);
-  // _token = (responseData['idToken']);
-  // _expiresIn = (responseData['expiresIn']);
-  // _localId = (responseData['localId']);
-
-  // print(responseData['email']);
-  // print(_localId);
-
-  // print(_expiresIn);
-  // notifyListeners();
-  //await Future.delayed(Duration(seconds: 1));
-  // }
 }

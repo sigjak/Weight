@@ -56,41 +56,58 @@ class ListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(4),
         color: Colors.grey[50],
       ),
-      child: ListTile(
-        dense: true,
-        leading: Text(
-          DateFormat.MMMd().format(items.day),
-          style: TextStyle(fontSize: 13),
+      child: Dismissible(
+        key: ValueKey(items.id),
+        background: Container(
+          color: Colors.red[300],
+          child: Icon(
+            Icons.delete,
+            color: Colors.white,
+            size: 25.0,
+          ),
+          alignment: Alignment.centerRight,
+          padding: EdgeInsets.only(right: 15),
         ),
-        title: Text(
-          'W: ${items.weight} - BP: ${items.syst}/${items.diast} - HR: ${items.pulse}',
-          textAlign: TextAlign.center,
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.edit,
-                size: 18,
+        direction: DismissDirection.endToStart,
+        onDismissed: (direction) {
+          _showMyDialog(context);
+        },
+        child: ListTile(
+          dense: true,
+          leading: Text(
+            DateFormat.MMMd().format(items.day),
+            style: TextStyle(fontSize: 13),
+          ),
+          title: Text(
+            'W: ${items.weight} - BP: ${items.syst}/${items.diast} - HR: ${items.pulse}',
+            textAlign: TextAlign.center,
+          ),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.edit,
+                  size: 18,
+                ),
+                onPressed: () {
+                  Navigator.of(context)
+                      .popAndPushNamed(AddEdit.routeName, arguments: items.id);
+                },
               ),
-              onPressed: () {
-                Navigator.of(context)
-                    .popAndPushNamed(AddEdit.routeName, arguments: items.id);
-              },
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.delete,
-                size: 18,
+              IconButton(
+                icon: Icon(
+                  Icons.delete,
+                  size: 18,
+                ),
+                onPressed: () {
+                  _showMyDialog(context);
+                  // Provider.of<Data>(context, listen: false)
+                  //     .deleteOldData(items.id);
+                },
               ),
-              onPressed: () {
-                _showMyDialog(context);
-                // Provider.of<Data>(context, listen: false)
-                //     .deleteOldData(items.id);
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

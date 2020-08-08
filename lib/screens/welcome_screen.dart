@@ -1,3 +1,5 @@
+//import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './login_screen.dart';
@@ -45,7 +47,7 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
   }
 
   Widget build(BuildContext context) {
-    final authenticate = Provider.of<Auth>(context, listen: false);
+    //final authenticate = Provider.of<Auth>(context, listen: false);
     // final data = Provider.of<Data>(context);
     return Scaffold(
       appBar: AppBar(
@@ -56,15 +58,31 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
             builder: (context) => FlatButton.icon(
               color: Colors.brown[300],
               icon: Icon(Icons.people),
-              onPressed: () async {
-                // Navigator.of(context).pushNamed(Register.routeName);
-                await authenticate.signUp(email, password).catchError((error) {
-                  print(error['message']);
-                });
-                Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text('RegisterText'),
-                ));
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed(Register.routeName);
               },
+              //() async {
+              //   Navigator.of(context).pushNamed(Register.routeName);
+              //   await authenticate.signUp(email, password).catchError((error) {
+              //     Scaffold.of(context).showSnackBar(
+              //       SnackBar(
+              //         content: Text(
+              //           error,
+              //           textAlign: TextAlign.center,
+              //         ),
+              //       ),
+              //     );
+              //   }).then((_) {
+              //     Scaffold.of(context).showSnackBar(
+              //       SnackBar(
+              //         content: Text(
+              //           'Registered !',
+              //           textAlign: TextAlign.center,
+              //         ),
+              //       ),
+              //     );
+              // });
+              // },
               label: Text('Register'),
             ),
           ),
