@@ -46,10 +46,6 @@ class PlotData extends StatelessWidget {
         series,
         behaviors: [
           charts.SeriesLegend(),
-          // charts.ChartTitle('Weight vs. time',
-          //     behaviorPosition: charts.BehaviorPosition.top,
-          //     titleOutsideJustification: charts.OutsideJustification.start,
-          //     innerPadding: 18)
         ],
         defaultRenderer: charts.LineRendererConfig(
           includePoints: true,
@@ -59,6 +55,12 @@ class PlotData extends StatelessWidget {
               zeroBound: zeroPlot, desiredMinTickCount: 4),
           renderSpec: charts.GridlineRendererSpec(
             lineStyle: charts.LineStyleSpec(dashPattern: [4, 4]),
+          ),
+        ),
+        domainAxis: new charts.DateTimeAxisSpec(
+          tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
+            day: new charts.TimeFormatterSpec(
+                format: 'd', transitionFormat: 'd/M'),
           ),
         ),
       ),
