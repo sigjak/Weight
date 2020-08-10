@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../screens/data_list_screen.dart';
 import '../screens/data_add_screen.dart';
 import '../screens/syst_diast_screen.dart';
+import '../screens/register_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -27,6 +28,14 @@ class AppDrawer extends StatelessWidget {
             title: Text('Show Data'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.group_add),
+            title: Text('Register'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(Register.routeName);
             },
           ),
           Divider(),

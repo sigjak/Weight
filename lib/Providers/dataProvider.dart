@@ -15,38 +15,19 @@ class Data with ChangeNotifier {
   }
 
   Data(this.myAuth);
-  // Future<void> addMoveData() async {
-  //   print('hi');
-
-  //   final url =
-  //       'https://weight-8da08.firebaseio.com/weights/${myAuth.id}.json?auth=${myAuth.token}';
-  //   print(myList.length);
-  //   for (int i = 0; i < myList.length; i++) {
-  //     print(i);
-
-  //     final response = await http.post(url, body: jsonEncode(myList[i]));
-  //     // body: jsonEncode({
-  //     //   'day': '2020-07-11 00:00:00.000',
-  //     //   'diastolic': '79',
-  //     //   'pulse': '50',
-  //     //   'systolic': '130',
-  //     //   'weight': '94.20',
-  //     // }));
-  //     final resp = jsonDecode(response.body);
-  //     notifyListeners();
-  //     print(resp);
-  //   }
-  // }
 
   final url = 'https://weight-8da08.firebaseio.com/weights/';
 
-  Future<void> getDataFromFirebase() async {
+  Future<void> getDataFromFirebase(bool all) async {
     try {
       List<Bio> loadedData = [];
-
-      final segment =
-          '${myAuth.id}.json?orderBy="uid"&limitToLast=10&auth=${myAuth.token}';
-
+      String segment = '';
+      if (all == false) {
+        segment =
+            '${myAuth.id}.json?orderBy="uid"&limitToLast=10&auth=${myAuth.token}';
+      } else {
+        segment = '${myAuth.id}.json?auth=${myAuth.token}';
+      }
       final response = await http.get('$url$segment');
 
       final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
@@ -172,30 +153,4 @@ class Data with ChangeNotifier {
     });
     return myPlot;
   }
-
-//   Future<void> getDataToMove() async {
-//     final url = 'https://weight-8da08.firebaseio.com/weights.json';
-
-//     final response = await http.get(url);
-//     final respData = jsonDecode(response.body) as Map<String, dynamic>;
-//     print(respData);
-
-//     ///////////////////
-// //   CHEXK IF toString() IS NECESSARY
-
-// ///////
-//     respData.forEach((key, data) {
-//       myList.add({
-//         'day': data['day'],
-//         'diastolic': data['diastolic'],
-//         'pulse': data['pulse'],
-//         'systolic': data['systolic'],
-//         'weight': data['weight'],
-//       });
-//     });
-//     print(myList.length);
-
-//     notifyListeners();
-//     print(myList[0]);
-//   }
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
-import 'package:weight_2/screens/data_add_screen.dart';
+import 'package:provider/provider.dart';
 import '../Providers/authProvider.dart';
+import '../screens/data_add_screen.dart';
+import '../widgets/app_drawer.dart';
 
 class Register extends StatefulWidget {
   static const routeName = '/register';
@@ -14,14 +15,31 @@ class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   String email;
   String password;
+  String alertMessage = '';
+
+  void registerAlert(String alertMessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.grey,
+          content: Text(
+            alertMessage,
+            textAlign: TextAlign.center,
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final authenticate = Provider.of<Auth>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text('Register'),
       ),
+      drawer: AppDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Form(
@@ -65,13 +83,23 @@ class _RegisterState extends State<Register> {
               RaisedButton(
                 onPressed: () async {
                   FocusScopeNode currentFocus = FocusScope.of(context);
-                  //SystemChannels.textInput.invokeMethod('TextInput.hide');
+                  final authenticate =
+                      Provider.of<Auth>(context, listen: false);
                   if (_formKey.currentState.validate()) {
-                    // await authenticate.signUp(email, password);
+                    await authenticate
+                        .signUp(email, password)
+                        .catchError((error) => alertMessage = error);
+
+                    if (authenticate.regSuccess) {
+                      alertMessage = 'Registration success!';
+                      authenticate.regSuccess = false;
+                    }
+                    registerAlert(alertMessage);
+                    await Future.delayed(Duration(seconds: 2));
+                    currentFocus.unfocus();
+
                     Navigator.of(context)
                         .pushReplacementNamed(AddEdit.routeName);
-                    print(email);
-                    currentFocus.unfocus();
                   }
                 },
                 child: Text('Submit'),

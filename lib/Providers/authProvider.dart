@@ -8,6 +8,7 @@ class Auth with ChangeNotifier {
   String uid;
   String _token;
   String _localId;
+  bool regSuccess = false;
 
   static const key = 'AIzaSyDpgIquPiqxhtImtv1tnATs0tMGwBktGmY';
 
@@ -20,7 +21,6 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> signUp(String email, String password) async {
-    print('signup');
     return authenticate(email, password, 'signUp');
   }
 
@@ -47,10 +47,12 @@ class Auth with ChangeNotifier {
       final responseData = jsonDecode(response.body);
       if (responseData['error'] != null) {
         throw responseData['error']['message'];
+      } else {
+        regSuccess = true;
+        _token = (responseData['idToken']);
+        _localId = (responseData['localId']);
+        notifyListeners();
       }
-      _token = (responseData['idToken']);
-      _localId = (responseData['localId']);
-      notifyListeners();
     } catch (error) {
       throw (error);
     }

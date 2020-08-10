@@ -16,7 +16,7 @@ class Welcome extends StatefulWidget {
 class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
   bool show = false;
   final email = 'sigjak@gmail.com';
-  final password = '123456';
+  final password = '12345';
   AnimationController _controller;
   Animation<Offset> _slideAnimation;
 
