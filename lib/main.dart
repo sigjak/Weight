@@ -31,17 +31,17 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             accentColor: Colors.brown[700],
-            primaryColor: Colors.brown[300],
-            canvasColor: Colors.brown[100],
+            primaryColor: Colors.brown[500],
+            canvasColor: Colors.brown[200],
             buttonTheme: ButtonThemeData(
-                buttonColor: Colors.brown[300],
+                buttonColor: Colors.brown[500],
                 textTheme: ButtonTextTheme.primary),
             inputDecorationTheme: InputDecorationTheme(
                 border: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.brown)),
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.brown)),
-                labelStyle: TextStyle(color: Colors.brown)),
+                labelStyle: TextStyle(color: Colors.brown[400])),
           ),
           home: Welcome(),
           routes: {

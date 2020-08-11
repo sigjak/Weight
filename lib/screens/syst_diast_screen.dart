@@ -33,7 +33,7 @@ class SystDiast extends StatelessWidget {
           children: <Widget>[
             Text(
               'Systolic/Diastolic',
-              style: TextStyle(fontSize: 18, color: Colors.brown[500]),
+              style: TextStyle(fontSize: 18, color: Colors.brown[700]),
             ),
             Container(
               child: PlotData(data.systDiast(), true, true, 'sys', 'dia'),
@@ -43,7 +43,7 @@ class SystDiast extends StatelessWidget {
             ),
             Text(
               'Pulse Pressure',
-              style: TextStyle(fontSize: 18, color: Colors.brown[500]),
+              style: TextStyle(fontSize: 18, color: Colors.brown[700]),
             ),
             Container(
               child: PlotData(data.pulsePressure(), true, false, 'pulseP', ""),

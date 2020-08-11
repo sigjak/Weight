@@ -55,95 +55,81 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
         actions: <Widget>[
           Builder(
             builder: (context) => FlatButton.icon(
-              color: Colors.brown[300],
+              color: Colors.brown[600],
               icon: Icon(Icons.people),
               onPressed: () {
                 Navigator.of(context).pushReplacementNamed(Register.routeName);
               },
-              //() async {
-              //   Navigator.of(context).pushNamed(Register.routeName);
-              //   await authenticate.signUp(email, password).catchError((error) {
-              //     Scaffold.of(context).showSnackBar(
-              //       SnackBar(
-              //         content: Text(
-              //           error,
-              //           textAlign: TextAlign.center,
-              //         ),
-              //       ),
-              //     );
-              //   }).then((_) {
-              //     Scaffold.of(context).showSnackBar(
-              //       SnackBar(
-              //         content: Text(
-              //           'Registered !',
-              //           textAlign: TextAlign.center,
-              //         ),
-              //       ),
-              //     );
-              // });
-              // },
               label: Text('Register'),
             ),
           ),
         ],
       ),
-      body: Center(
-        child: SlideTransition(
-          position: _slideAnimation,
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            width: double.infinity,
-            child: show
-                ? LinearProgressIndicator(
-                    backgroundColor: Colors.brown[200],
-                  )
-                : RaisedButton(
-                    elevation: 6,
-                    child: Text(
-                      'Login',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    onPressed: () async {
-                      final authenticate =
-                          Provider.of<Auth>(context, listen: false);
-                      setState(() {
-                        show = true;
-                      });
-                      await authenticate
-                          .signIn(email, password)
-                          .catchError((error) {
-                        message = error;
-                        print(error);
-                      });
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/brick100.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: SlideTransition(
+            position: _slideAnimation,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              width: double.infinity,
+              child: show
+                  ? LinearProgressIndicator(
+                      backgroundColor: Colors.brown[200],
+                    )
+                  : RaisedButton(
+                      elevation: 6,
+                      child: Text(
+                        'Login',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () async {
+                        final authenticate =
+                            Provider.of<Auth>(context, listen: false);
+                        setState(() {
+                          show = true;
+                        });
+                        await authenticate
+                            .signIn(email, password)
+                            .catchError((error) {
+                          message = error;
+                          print(error);
+                        });
 
-                      if (message.isEmpty) {
-                        Navigator.of(context)
-                            .pushReplacementNamed(Login.routeName);
-                      } else {
+                        if (message.isEmpty) {
+                          Navigator.of(context)
+                              .pushReplacementNamed(Login.routeName);
+                        } else {
+                          setState(() {
+                            show = false;
+                          });
+                          authenticate.registerAlert(message, context);
+                          Future.delayed(Duration(seconds: 2), () {
+                            Navigator.of(context)
+                                .pushReplacementNamed(Welcome.routeName);
+                          });
+                        }
+
+                        //   Future.delayed(
+                        //     Duration(seconds: 2),
+                        //   );
+                        //   Navigator.of(context)
+                        //       .pushReplacementNamed(Welcome.routeName);
+                        // });
+                        // // await data.getData();
+                        // Navigator.of(context)
+                        //     .pushReplacementNamed(Login.routeName);
                         setState(() {
                           show = false;
                         });
-                        authenticate.registerAlert(message, context);
-                        Future.delayed(Duration(seconds: 2), () {
-                          Navigator.of(context)
-                              .pushReplacementNamed(Welcome.routeName);
-                        });
-                      }
-
-                      //   Future.delayed(
-                      //     Duration(seconds: 2),
-                      //   );
-                      //   Navigator.of(context)
-                      //       .pushReplacementNamed(Welcome.routeName);
-                      // });
-                      // // await data.getData();
-                      // Navigator.of(context)
-                      //     .pushReplacementNamed(Login.routeName);
-                      setState(() {
-                        show = false;
-                      });
-                    },
-                  ),
+                      },
+                    ),
+            ),
           ),
         ),
       ),
