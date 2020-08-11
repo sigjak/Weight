@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
-
+import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,6 +18,21 @@ class Auth with ChangeNotifier {
 
   String get id {
     return _localId;
+  }
+
+  void registerAlert(String alertMessage, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.grey,
+          content: Text(
+            alertMessage,
+            textAlign: TextAlign.center,
+          ),
+        );
+      },
+    );
   }
 
   Future<void> signUp(String email, String password) async {

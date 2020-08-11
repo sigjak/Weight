@@ -1,11 +1,9 @@
-//import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import './login_screen.dart';
 import './register_screen.dart';
 import '../Providers/authProvider.dart';
-//import '../Providers/dataProvider.dart';
 
 class Welcome extends StatefulWidget {
   static const routeName = '/welcome';
@@ -16,7 +14,8 @@ class Welcome extends StatefulWidget {
 class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
   bool show = false;
   final email = 'sigjak@gmail.com';
-  final password = '12345';
+  final password = '123456';
+  String message = '';
   AnimationController _controller;
   Animation<Offset> _slideAnimation;
 
@@ -110,10 +109,36 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
                       setState(() {
                         show = true;
                       });
-                      await authenticate.signIn(email, password);
-                      // await data.getData();
-                      Navigator.of(context)
-                          .pushReplacementNamed(Login.routeName);
+                      await authenticate
+                          .signIn(email, password)
+                          .catchError((error) {
+                        message = error;
+                        print(error);
+                      });
+
+                      if (message.isEmpty) {
+                        Navigator.of(context)
+                            .pushReplacementNamed(Login.routeName);
+                      } else {
+                        setState(() {
+                          show = false;
+                        });
+                        authenticate.registerAlert(message, context);
+                        Future.delayed(Duration(seconds: 2), () {
+                          Navigator.of(context)
+                              .pushReplacementNamed(Welcome.routeName);
+                        });
+                      }
+
+                      //   Future.delayed(
+                      //     Duration(seconds: 2),
+                      //   );
+                      //   Navigator.of(context)
+                      //       .pushReplacementNamed(Welcome.routeName);
+                      // });
+                      // // await data.getData();
+                      // Navigator.of(context)
+                      //     .pushReplacementNamed(Login.routeName);
                       setState(() {
                         show = false;
                       });

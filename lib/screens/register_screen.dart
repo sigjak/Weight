@@ -17,20 +17,20 @@ class _RegisterState extends State<Register> {
   String password;
   String alertMessage = '';
 
-  void registerAlert(String alertMessage) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.grey,
-          content: Text(
-            alertMessage,
-            textAlign: TextAlign.center,
-          ),
-        );
-      },
-    );
-  }
+  // void registerAlert(String alertMessage) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         backgroundColor: Colors.grey,
+  //         content: Text(
+  //           alertMessage,
+  //           textAlign: TextAlign.center,
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -88,18 +88,22 @@ class _RegisterState extends State<Register> {
                   if (_formKey.currentState.validate()) {
                     await authenticate
                         .signUp(email, password)
-                        .catchError((error) => alertMessage = error);
+                        .catchError((error) {
+                      alertMessage = error;
+                    });
 
                     if (authenticate.regSuccess) {
                       alertMessage = 'Registration success!';
-                      authenticate.regSuccess = false;
                     }
-                    registerAlert(alertMessage);
+                    authenticate.registerAlert(alertMessage, context);
                     await Future.delayed(Duration(seconds: 2));
+                    Navigator.of(context).pop();
                     currentFocus.unfocus();
-
-                    Navigator.of(context)
-                        .pushReplacementNamed(AddEdit.routeName);
+                    if (authenticate.regSuccess) {
+                      authenticate.regSuccess = false;
+                      Navigator.of(context)
+                          .pushReplacementNamed(AddEdit.routeName);
+                    }
                   }
                 },
                 child: Text('Submit'),
