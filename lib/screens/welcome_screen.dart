@@ -46,8 +46,6 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
   }
 
   Widget build(BuildContext context) {
-    //final authenticate = Provider.of<Auth>(context, listen: false);
-    // final data = Provider.of<Data>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -82,52 +80,55 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
                   ? LinearProgressIndicator(
                       backgroundColor: Colors.brown[200],
                     )
-                  : RaisedButton(
-                      elevation: 6,
-                      child: Text(
-                        'Login',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      onPressed: () async {
-                        final authenticate =
-                            Provider.of<Auth>(context, listen: false);
-                        setState(() {
-                          show = true;
-                        });
-                        await authenticate
-                            .signIn(email, password)
-                            .catchError((error) {
-                          message = error;
-                          print(error);
-                        });
+                  : Container(
+                      height: 45,
+                      child: RaisedButton(
+                        elevation: 6,
+                        child: Text(
+                          'Login',
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        onPressed: () async {
+                          final authenticate =
+                              Provider.of<Auth>(context, listen: false);
+                          setState(() {
+                            show = true;
+                          });
+                          await authenticate
+                              .signIn(email, password)
+                              .catchError((error) {
+                            message = error;
+                            print(error);
+                          });
 
-                        if (message.isEmpty) {
-                          Navigator.of(context)
-                              .pushReplacementNamed(Login.routeName);
-                        } else {
+                          if (message.isEmpty) {
+                            Navigator.of(context)
+                                .pushReplacementNamed(Login.routeName);
+                          } else {
+                            setState(() {
+                              show = false;
+                            });
+                            authenticate.registerAlert(message, context);
+                            Future.delayed(Duration(seconds: 2), () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed(Welcome.routeName);
+                            });
+                          }
+
+                          //   Future.delayed(
+                          //     Duration(seconds: 2),
+                          //   );
+                          //   Navigator.of(context)
+                          //       .pushReplacementNamed(Welcome.routeName);
+                          // });
+                          // // await data.getData();
+                          // Navigator.of(context)
+                          //     .pushReplacementNamed(Login.routeName);
                           setState(() {
                             show = false;
                           });
-                          authenticate.registerAlert(message, context);
-                          Future.delayed(Duration(seconds: 2), () {
-                            Navigator.of(context)
-                                .pushReplacementNamed(Welcome.routeName);
-                          });
-                        }
-
-                        //   Future.delayed(
-                        //     Duration(seconds: 2),
-                        //   );
-                        //   Navigator.of(context)
-                        //       .pushReplacementNamed(Welcome.routeName);
-                        // });
-                        // // await data.getData();
-                        // Navigator.of(context)
-                        //     .pushReplacementNamed(Login.routeName);
-                        setState(() {
-                          show = false;
-                        });
-                      },
+                        },
+                      ),
                     ),
             ),
           ),

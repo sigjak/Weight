@@ -99,6 +99,7 @@ class ListItem extends StatelessWidget {
                 icon: Icon(
                   Icons.delete,
                   size: 18,
+                  color: Colors.red[200],
                 ),
                 onPressed: () {
                   _showMyDialog(context);

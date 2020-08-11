@@ -34,32 +34,55 @@ class _LoginState extends State<Login> {
         appBar: AppBar(
           title: Text('BIO DATA'),
         ),
-        body: Center(
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            child: isLoading
-                ? LinearProgressIndicator(
-                    backgroundColor: Colors.brown[200],
-                  )
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      RaisedButton(
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed(ListScreen.routeName);
-                        },
-                        child: Text('Edit'),
-                      ),
-                      RaisedButton(
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed(AddEdit.routeName);
-                        },
-                        child: Text('Add'),
-                      ),
-                    ],
-                  ),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/brickRot.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Center(
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: isLoading
+                  ? LinearProgressIndicator(
+                      backgroundColor: Colors.brown[200],
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          height: 40,
+                          width: double.infinity,
+                          child: RaisedButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed(ListScreen.routeName);
+                            },
+                            child: Text(
+                              'Edit',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          width: double.infinity,
+                          height: 40,
+                          child: RaisedButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed(AddEdit.routeName);
+                            },
+                            child: Text(
+                              'Add',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
           ),
         ));
   }

@@ -27,28 +27,37 @@ class SystDiast extends StatelessWidget {
         ],
       ),
       drawer: AppDrawer(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Systolic/Diastolic',
-              style: TextStyle(fontSize: 18, color: Colors.brown[700]),
-            ),
-            Container(
-              child: PlotData(data.systDiast(), true, true, 'sys', 'dia'),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Text(
-              'Pulse Pressure',
-              style: TextStyle(fontSize: 18, color: Colors.brown[700]),
-            ),
-            Container(
-              child: PlotData(data.pulsePressure(), true, false, 'pulseP', ""),
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/brick100.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Systolic/Diastolic',
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+              Container(
+                child: PlotData(data.systDiast(), true, true, 'sys', 'dia'),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Text(
+                'Pulse Pressure',
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+              Container(
+                child:
+                    PlotData(data.pulsePressure(), true, false, 'pulseP', ""),
+              ),
+            ],
+          ),
         ),
       ),
     );
