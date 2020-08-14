@@ -29,9 +29,7 @@ class Data with ChangeNotifier {
         segment = '${myAuth.id}.json?auth=${myAuth.token}';
       }
       final response = await http.get('$url$segment');
-
       final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
-
       extractedData.forEach((key, data) {
         loadedData.add(
           Bio(
@@ -45,7 +43,6 @@ class Data with ChangeNotifier {
       });
 
       _items = loadedData;
-
       _items.sort((a, b) => a.day.compareTo(b.day));
       notifyListeners();
     } catch (error) {
@@ -55,14 +52,15 @@ class Data with ChangeNotifier {
 
   Future<void> addNewData(bio) async {
     try {
-      final response = await http.post('$url${myAuth.id}.json',
-          body: json.encode({
-            'weight': bio.weight,
-            'day': bio.day.toIso8601String(),
-            'systolic': bio.syst,
-            'diastolic': bio.diast,
-            'pulse': bio.pulse,
-          }));
+      final response =
+          await http.post('$url${myAuth.id}.json?auth=${myAuth.token}',
+              body: json.encode({
+                'weight': bio.weight,
+                'day': bio.day.toIso8601String(),
+                'systolic': bio.syst,
+                'diastolic': bio.diast,
+                'pulse': bio.pulse,
+              }));
       final decoded = jsonDecode(response.body);
 
       bio.id = decoded['name'];
@@ -78,28 +76,27 @@ class Data with ChangeNotifier {
   }
 
   Future<void> updateOldData(String id, Bio updated) async {
-    // final url = 'https://weight-8da08.firebaseio.com/weights/$id.json';
     try {
-      await http.patch('$url${myAuth.id}/$id.json',
-          body: json.encode({
-            'weight': updated.weight,
-            'systolic': updated.syst,
-            'diastolic': updated.diast,
-            'pulse': updated.pulse,
-          }));
+      final response =
+          await http.patch('$url${myAuth.id}/$id.json?auth=${myAuth.token}',
+              body: json.encode({
+                'weight': updated.weight,
+                'systolic': updated.syst,
+                'diastolic': updated.diast,
+                'pulse': updated.pulse,
+              }));
       final itemIndex = _items.indexWhere((item) => item.id == id);
       _items[itemIndex] = updated;
       notifyListeners();
+      print(jsonDecode(response.body));
     } catch (error) {
       print(error);
     }
   }
 
   Future<void> deleteOldData(String id) async {
-    // final url =
-    //     'https://weight-8da08.firebaseio.com/weights/${myAuth.id}/$id.json';
     try {
-      await http.delete('$url${myAuth.id}/$id.json');
+      await http.delete('$url${myAuth.id}/$id.json?auth=${myAuth.token}');
       _items.removeWhere((element) => element.id == id);
       notifyListeners();
     } catch (error) {

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:weight_2/screens/data_list_screen.dart';
+import './data_list_screen.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/plot_data.dart';
 import '../Providers/dataProvider.dart';
+import '../widgets/my_icons.dart';
 
 class SystDiast extends StatelessWidget {
   static const routeName = '/syst-diast';
@@ -19,11 +20,15 @@ class SystDiast extends StatelessWidget {
         ),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(ListScreen.routeName);
-              }),
+            // icon: Chart(),
+            icon: Icon(MyIcons.chart),
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
+            },
+          ),
+          SizedBox(
+            width: 5,
+          )
         ],
       ),
       drawer: AppDrawer(),

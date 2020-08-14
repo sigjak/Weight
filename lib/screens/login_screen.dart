@@ -45,8 +45,17 @@ class _LoginState extends State<Login> {
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: isLoading
-                  ? LinearProgressIndicator(
-                      backgroundColor: Colors.brown[200],
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '...and Loading Data',
+                          style: TextStyle(color: Colors.white, fontSize: 0),
+                        ),
+                        LinearProgressIndicator(
+                          backgroundColor: Colors.brown[200],
+                        ),
+                      ],
                     )
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.center,

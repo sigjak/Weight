@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weight_2/widgets/my_icons.dart';
 import '../screens/data_list_screen.dart';
 import '../screens/data_add_screen.dart';
 import '../screens/syst_diast_screen.dart';
@@ -24,7 +25,7 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.edit),
+            leading: Icon(MyIcons.chart),
             title: Text('Show Data'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(ListScreen.routeName);

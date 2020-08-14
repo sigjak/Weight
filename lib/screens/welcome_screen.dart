@@ -77,8 +77,20 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
               margin: EdgeInsets.symmetric(horizontal: 20),
               width: double.infinity,
               child: show
-                  ? LinearProgressIndicator(
-                      backgroundColor: Colors.brown[200],
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Authenticating...',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                          ),
+                        ),
+                        LinearProgressIndicator(
+                          backgroundColor: Colors.brown[200],
+                        ),
+                      ],
                     )
                   : Container(
                       height: 45,
@@ -98,7 +110,6 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
                               .signIn(email, password)
                               .catchError((error) {
                             message = error;
-                            print(error);
                           });
 
                           if (message.isEmpty) {
@@ -115,15 +126,6 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
                             });
                           }
 
-                          //   Future.delayed(
-                          //     Duration(seconds: 2),
-                          //   );
-                          //   Navigator.of(context)
-                          //       .pushReplacementNamed(Welcome.routeName);
-                          // });
-                          // // await data.getData();
-                          // Navigator.of(context)
-                          //     .pushReplacementNamed(Login.routeName);
                           setState(() {
                             show = false;
                           });
