@@ -114,34 +114,3 @@ class ListItem extends StatelessWidget {
     );
   }
 }
-
-//  final func = Provider.of<Data>(context, listen: false);
-//     return Container(
-//       //margin: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-//       decoration:
-//           BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceAround,
-//         children: <Widget>[
-//           Text(DateFormat.MMMd().format(items.day)),
-//           Text('Weight: ${items.weight.toString()}'),
-//           Text('Sys/Dia: ${items.syst}/${items.diast}'),
-//           Text('HB: ${items.pulse}'),
-//           IconButton(
-//               icon: Icon(Icons.edit),
-//               onPressed: () {
-//                 Navigator.of(context).pushNamed(
-//                   AddEdit.routeName,
-//                   arguments: items.id,
-//                 );
-//               }),
-//           IconButton(
-//               icon: Icon(Icons.delete),
-//               onPressed: () {
-//                 func.deleteOldData(items.id).then((_) {
-//                   print('done');
-//                 });
-//               })
-//         ],
-//       ),
-//     );

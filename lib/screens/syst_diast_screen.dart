@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter/services.dart';
 import './data_list_screen.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/plot_data.dart';
@@ -64,6 +64,13 @@ class SystDiast extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.brown[500],
+        child: Icon(Icons.exit_to_app),
+        onPressed: () {
+          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        },
       ),
     );
   }

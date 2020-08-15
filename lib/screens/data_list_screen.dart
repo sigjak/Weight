@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 import '../screens/syst_diast_screen.dart';
 import '../screens/data_add_screen.dart';
 import '../widgets/app_drawer.dart';
@@ -36,7 +37,7 @@ class ListScreen extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pushNamed(AddEdit.routeName);
             },
-          )
+          ),
         ],
       ),
       drawer: AppDrawer(),
@@ -96,6 +97,13 @@ class ListScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.brown[500],
+        child: Icon(Icons.exit_to_app),
+        onPressed: () {
+          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        },
       ),
     );
   }
