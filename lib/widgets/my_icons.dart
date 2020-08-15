@@ -10,4 +10,6 @@ class MyIcons {
       IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData chart =
       IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData database =
+      IconData(0xf1c0, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

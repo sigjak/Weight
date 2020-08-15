@@ -58,8 +58,8 @@ class SystDiast extends StatelessWidget {
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
               Container(
-                child:
-                    PlotData(data.pulsePressure(), true, false, 'pulseP', ""),
+                child: PlotData(
+                    data.pulsePressure(), true, true, 'pulseP', "pulse"),
               ),
             ],
           ),

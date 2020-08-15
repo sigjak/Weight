@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
+import 'package:weight_2/widgets/my_icons.dart';
 import '../screens/syst_diast_screen.dart';
 import '../screens/data_add_screen.dart';
 import '../widgets/app_drawer.dart';
@@ -21,15 +22,16 @@ class ListScreen extends StatelessWidget {
         title: Text('Data'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.filter_none),
-            onPressed: () {
-              data.getDataFromFirebase(true);
-            },
-          ),
-          IconButton(
             icon: Icon(Icons.favorite),
             onPressed: () {
               Navigator.of(context).pushNamed(SystDiast.routeName);
+            },
+          ),
+          IconButton(
+            iconSize: 18,
+            icon: Icon(MyIcons.database),
+            onPressed: () {
+              data.getDataFromFirebase(true);
             },
           ),
           IconButton(

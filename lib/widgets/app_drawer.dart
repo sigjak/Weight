@@ -25,18 +25,18 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Icon(MyIcons.chart),
-            title: Text('Show Data'),
-            onTap: () {
-              Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
-            },
-          ),
-          Divider(),
-          ListTile(
             leading: Icon(Icons.group_add),
             title: Text('Register'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(Register.routeName);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(MyIcons.chart),
+            title: Text('Show Data'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
             },
           ),
           Divider(),

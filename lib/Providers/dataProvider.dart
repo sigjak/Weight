@@ -128,6 +128,7 @@ class Data with ChangeNotifier {
             xAxis: element.day,
             yAxis:
                 double.tryParse(element.syst) - double.tryParse(element.diast),
+            yAxis2: double.tryParse(element.pulse),
           ),
         );
       }
