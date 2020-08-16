@@ -57,9 +57,11 @@ class PlotData extends StatelessWidget {
           ),
         ),
         domainAxis: new charts.DateTimeAxisSpec(
+          tickProviderSpec: charts.DayTickProviderSpec(
+              increments: [dataToPlot.length > 10 ? 10 : 2]),
           tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
             day: new charts.TimeFormatterSpec(
-                format: 'd', transitionFormat: 'd/M'),
+                format: 'd', transitionFormat: 'd.MMM'),
           ),
         ),
       ),
