@@ -50,8 +50,8 @@ class SystDiast extends StatelessWidget {
               Stack(children: [
                 PlotData(data.systDiast(), true, true, 'sys', 'dia'),
                 Positioned(
-                  bottom: 60,
-                  left: 60,
+                  top: 45,
+                  left: 52,
                   child: Row(
                     children: [
                       Text(
