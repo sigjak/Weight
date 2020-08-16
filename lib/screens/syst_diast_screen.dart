@@ -47,9 +47,36 @@ class SystDiast extends StatelessWidget {
                 'Systolic/Diastolic',
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
-              Container(
-                child: PlotData(data.systDiast(), true, true, 'sys', 'dia'),
-              ),
+              Stack(children: [
+                PlotData(data.systDiast(), true, true, 'sys', 'dia'),
+                Positioned(
+                  bottom: 60,
+                  left: 60,
+                  child: Row(
+                    children: [
+                      Text(
+                        'Average:  ${data.systAverage.toStringAsFixed(0)}',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        data.diastAverage.toStringAsFixed(0),
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ]),
               SizedBox(
                 height: 20.0,
               ),

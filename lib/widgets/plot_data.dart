@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-//
-//import '../models/bio.dart';
+
 import '../models/plot.dart';
 
 class PlotData extends StatelessWidget {

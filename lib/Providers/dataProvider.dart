@@ -9,7 +9,8 @@ class Data with ChangeNotifier {
   final Auth myAuth;
   List<Bio> _items = [];
   List<Map<String, dynamic>> myList = [];
-
+  double systAverage;
+  double diastAverage;
   List<Bio> get items {
     return [..._items];
   }
@@ -138,17 +139,36 @@ class Data with ChangeNotifier {
 
   List<Plot> systDiast() {
     List<Plot> myPlot = [];
-    _items.forEach((element) {
-      if (element.syst != "" || element.diast != "") {
-        myPlot.add(
-          Plot(
-            xAxis: element.day,
-            yAxis: double.tryParse(element.syst),
-            yAxis2: double.tryParse(element.diast),
-          ),
-        );
-      }
-    });
+    double totSys = 0;
+    double totDiast = 0;
+    double len = 0;
+    _items.forEach(
+      (element) {
+        if (element.syst != "" || element.diast != "") {
+          myPlot.add(
+            Plot(
+              xAxis: element.day,
+              yAxis: double.tryParse(element.syst),
+              yAxis2: double.tryParse(element.diast),
+            ),
+          );
+          totSys += double.tryParse((element.syst));
+          totDiast += double.tryParse((element.diast));
+          len++;
+        }
+      },
+    );
+    systAverage = totSys / len;
+    diastAverage = totDiast / len;
+
     return myPlot;
+  }
+
+  double averSyst() {
+    double total = 0;
+    _items.forEach((element) {
+      total += double.tryParse(element.syst);
+    });
+    return total;
   }
 }
