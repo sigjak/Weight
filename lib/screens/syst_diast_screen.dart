@@ -52,30 +52,25 @@ class SystDiast extends StatelessWidget {
                 Positioned(
                   top: 45,
                   left: 52,
-                  child: Row(
-                    children: [
-                      Text(
-                        'Average:  ${data.systAverage.toStringAsFixed(0)}',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                  child: RichText(
+                    text: TextSpan(
+                      text: 'Average: ',
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: Colors.black,
+                      ),
+                      children: [
+                        TextSpan(
+                            text: data.systAverage.toStringAsFixed(0),
+                            style: TextStyle(color: Colors.blue)),
+                        TextSpan(
+                          text: '  ${data.diastAverage.toStringAsFixed(0)}',
+                          style: TextStyle(color: Colors.red),
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        data.diastAverage.toStringAsFixed(0),
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                )
+                ),
               ]),
               SizedBox(
                 height: 20.0,
