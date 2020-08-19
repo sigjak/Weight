@@ -5,13 +5,18 @@ import '../models/plot.dart';
 
 class PlotData extends StatelessWidget {
   final List<Plot> dataToPlot;
+  //final List<Plot> regData;
   final bool zeroPlot;
   final bool twoPlots;
   final String plotName1;
   final String plotName2;
   PlotData(this.dataToPlot, this.zeroPlot, this.twoPlots, this.plotName1,
       this.plotName2);
-
+  // final bool wLine = false;
+  // final List<Plot> regData = [
+  //   Plot(xAxis: DateTime(2020, 08, 10), yAxis2: 96.0),
+  //   Plot(xAxis: DateTime(2020, 08, 18), yAxis2: 94.0)
+  // ];
   @override
   Widget build(BuildContext context) {
     var series = [
@@ -58,7 +63,7 @@ class PlotData extends StatelessWidget {
         ),
         domainAxis: new charts.DateTimeAxisSpec(
           tickProviderSpec: charts.DayTickProviderSpec(
-              increments: [dataToPlot.length > 10 ? 10 : 2]),
+              increments: [dataToPlot.length > 20 ? 30 : 2]),
           tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
             day: new charts.TimeFormatterSpec(
                 format: 'd', transitionFormat: 'd.MMM'),

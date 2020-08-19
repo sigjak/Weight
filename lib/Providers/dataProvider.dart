@@ -4,13 +4,17 @@ import 'dart:convert';
 import './authProvider.dart';
 import '../models/plot.dart';
 import '../models/bio.dart';
+import '../calc/statistic.dart';
 
 class Data with ChangeNotifier {
   final Auth myAuth;
+
   List<Bio> _items = [];
   List<Map<String, dynamic>> myList = [];
-  double systAverage;
-  double diastAverage;
+
+  List<double> systAveSd;
+  List<double> diastAveSd;
+  final statistic = Statistic();
   List<Bio> get items {
     return [..._items];
   }
@@ -107,7 +111,10 @@ class Data with ChangeNotifier {
 
   List<Plot> weight() {
     List<Plot> myPlot = [];
-    _items.forEach((element) {
+    List<Plot> regress = [];
+    List<double> abscissa = [];
+    List<double> ordinate = [];
+    items.forEach((element) {
       if (element.weight != "") {
         myPlot.add(
           Plot(
@@ -115,8 +122,17 @@ class Data with ChangeNotifier {
             yAxis: double.tryParse(element.weight),
           ),
         );
+
+        abscissa.add(element.day.millisecondsSinceEpoch.toDouble());
+
+        ordinate.add(double.tryParse(element.weight));
       }
     });
+
+    regress = (statistic.regressData(abscissa, ordinate));
+    myPlot.add(regress[0]);
+    myPlot.add(regress[1]);
+
     return myPlot;
   }
 
@@ -139,9 +155,8 @@ class Data with ChangeNotifier {
 
   List<Plot> systDiast() {
     List<Plot> myPlot = [];
-    double totSys = 0;
-    double totDiast = 0;
-    double len = 0;
+    List diArray = [];
+    List systArray = [];
     _items.forEach(
       (element) {
         if (element.syst != "" || element.diast != "") {
@@ -152,23 +167,19 @@ class Data with ChangeNotifier {
               yAxis2: double.tryParse(element.diast),
             ),
           );
-          totSys += double.tryParse((element.syst));
-          totDiast += double.tryParse((element.diast));
-          len++;
         }
       },
     );
-    systAverage = totSys / len;
-    diastAverage = totDiast / len;
 
-    return myPlot;
-  }
-
-  double averSyst() {
-    double total = 0;
-    _items.forEach((element) {
-      total += double.tryParse(element.syst);
+    items.forEach((it) {
+      if (it.diast != '' || it.syst != '') {
+        diArray.add(double.tryParse(it.diast));
+        systArray.add(double.tryParse(it.syst));
+      }
     });
-    return total;
+
+    diastAveSd = statistic.calcAverSD(diArray);
+    systAveSd = statistic.calcAverSD(systArray);
+    return myPlot;
   }
 }

@@ -94,7 +94,7 @@ class ListScreen extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 30),
-                child: PlotData(data.weight(), false, false, 'weight', ''),
+                child: PlotData(data.weight(), false, true, 'weight', 'fit'),
               ),
             ],
           ),

@@ -61,10 +61,29 @@ class SystDiast extends StatelessWidget {
                       ),
                       children: [
                         TextSpan(
-                            text: data.systAverage.toStringAsFixed(0),
+                            text: data.systAveSd[0].toStringAsFixed(0),
                             style: TextStyle(color: Colors.blue)),
                         TextSpan(
-                          text: '  ${data.diastAverage.toStringAsFixed(0)}',
+                            text: '\u{00B1}',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 9,
+                            )),
+                        TextSpan(
+                            text: data.systAveSd[1].toStringAsFixed(0),
+                            style: TextStyle(color: Colors.blue)),
+                        TextSpan(
+                          text: '  ${data.diastAveSd[0].toStringAsFixed(0)}',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        TextSpan(
+                            text: '\u{00B1}',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 9,
+                            )),
+                        TextSpan(
+                          text: '${data.diastAveSd[1].toStringAsFixed(0)}',
                           style: TextStyle(color: Colors.red),
                         ),
                       ],
