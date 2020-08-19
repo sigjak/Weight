@@ -11,7 +11,7 @@ class Data with ChangeNotifier {
 
   List<Bio> _items = [];
   List<Map<String, dynamic>> myList = [];
-
+  double progress = 0;
   List<double> systAveSd;
   List<double> diastAveSd;
   final statistic = Statistic();
@@ -132,7 +132,7 @@ class Data with ChangeNotifier {
     regress = (statistic.regressData(abscissa, ordinate));
     myPlot.add(regress[0]);
     myPlot.add(regress[1]);
-
+    progress = regress[2];
     return myPlot;
   }
 

@@ -58,7 +58,10 @@ class Statistic {
     int fd = x[0].toInt();
     DateTime lastDay = DateTime.fromMillisecondsSinceEpoch(ld);
     DateTime firstDay = DateTime.fromMillisecondsSinceEpoch(fd);
+    var difference = lastDay.difference(firstDay).inDays;
+
     List<dynamic> regPlot = [];
+    var progress = (y[n - 1] - y[0]) * 1000 / difference;
     regPlot
       ..add(Plot(
         xAxis: firstDay,
@@ -68,7 +71,7 @@ class Statistic {
         xAxis: lastDay,
         yAxis2: last,
       ))
-      ..add(sigmaChi);
+      ..add(progress);
 
     return regPlot;
   }

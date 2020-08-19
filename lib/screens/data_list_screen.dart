@@ -94,7 +94,19 @@ class ListScreen extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 30),
-                child: PlotData(data.weight(), false, true, 'weight', 'fit'),
+                child: Stack(
+                  children: [
+                    PlotData(data.weight(), false, true, 'weight', 'fit'),
+                    Positioned(
+                      top: 45,
+                      left: 50,
+                      child: Text(
+                        'Progress:  ${data.progress.toStringAsFixed(0)} g/day.',
+                        style: TextStyle(fontSize: 9),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
