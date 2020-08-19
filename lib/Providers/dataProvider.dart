@@ -111,7 +111,7 @@ class Data with ChangeNotifier {
 
   List<Plot> weight() {
     List<Plot> myPlot = [];
-    List<Plot> regress = [];
+
     List<double> abscissa = [];
     List<double> ordinate = [];
     items.forEach((element) {
@@ -128,7 +128,7 @@ class Data with ChangeNotifier {
         ordinate.add(double.tryParse(element.weight));
       }
     });
-
+    List regress = [];
     regress = (statistic.regressData(abscissa, ordinate));
     myPlot.add(regress[0]);
     myPlot.add(regress[1]);

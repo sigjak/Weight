@@ -12,11 +12,7 @@ class PlotData extends StatelessWidget {
   final String plotName2;
   PlotData(this.dataToPlot, this.zeroPlot, this.twoPlots, this.plotName1,
       this.plotName2);
-  // final bool wLine = false;
-  // final List<Plot> regData = [
-  //   Plot(xAxis: DateTime(2020, 08, 10), yAxis2: 96.0),
-  //   Plot(xAxis: DateTime(2020, 08, 18), yAxis2: 94.0)
-  // ];
+
   @override
   Widget build(BuildContext context) {
     var series = [
@@ -29,13 +25,16 @@ class PlotData extends StatelessWidget {
       )
     ];
     if (twoPlots) {
-      series.add(charts.Series(
-        id: plotName2,
-        domainFn: (Plot series, _) => series.xAxis,
-        measureFn: (Plot series, _) => series.yAxis2,
-        //colorFn: (_, __) => charts.MaterialPalette.gray.shade400,
-        data: dataToPlot,
-      ));
+      series.add(
+        charts.Series(
+          id: plotName2,
+          domainFn: (Plot series, _) => series.xAxis,
+          measureFn: (Plot series, _) => series.yAxis2,
+          colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+          data: dataToPlot,
+        )..setAttribute(
+            charts.rendererIdKey, plotName2 == 'fit' ? 'custom' : 'original'),
+      );
     }
     return Container(
       padding: EdgeInsets.all(10),
@@ -54,6 +53,11 @@ class PlotData extends StatelessWidget {
         defaultRenderer: charts.LineRendererConfig(
           includePoints: true,
         ),
+        customSeriesRenderers: [
+          charts.LineRendererConfig(customRendererId: ('custom')),
+          charts.LineRendererConfig(
+              customRendererId: ('original'), includePoints: true)
+        ],
         primaryMeasureAxis: charts.NumericAxisSpec(
           tickProviderSpec: charts.BasicNumericTickProviderSpec(
               zeroBound: zeroPlot, desiredMinTickCount: 4),

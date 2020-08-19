@@ -3,9 +3,7 @@ import 'dart:math';
 import '../models/plot.dart';
 
 class Statistic {
-  //final List<Bio> items;
   List<Plot> myPlot = [];
-  //Average(this.items);
 
   List<double> calcAverSD(List array) {
     double tempTotal = 0;
@@ -27,11 +25,11 @@ class Statistic {
     return outList;
   }
 
-  List<Plot> regressData(List<double> x, List<double> y) {
+  List<dynamic> regressData(List<double> x, List<double> y) {
     double sigmaX = 0;
     double sigmaY = 0;
     double sigmaXSquared = 0;
-    List<Plot> regPlot = [];
+    double sigmaChi = 0;
     double sigmaXY = 0;
     int n = x.length;
     double slope = 0;
@@ -47,24 +45,30 @@ class Statistic {
         (n * sigmaXSquared - pow(sigmaX, 2));
     slope = (n * sigmaXY - (sigmaX * sigmaY)) /
         (n * sigmaXSquared - pow(sigmaX, 2));
-    // print(intercept);
-    // print(slope);
-    var first = intercept + (slope * x[0]);
-    var last = intercept + (slope * x[n - 1]);
-    var ld = x[n - 1].toInt();
+
+    for (var i = 0; i < n; i++) {
+      var expected = intercept + slope * x[i];
+
+      var chiSq = pow((y[i] - expected), 2) / expected;
+      sigmaChi += chiSq;
+    }
+    double first = intercept + (slope * x[0]);
+    double last = intercept + (slope * x[n - 1]);
+    int ld = x[n - 1].toInt();
     int fd = x[0].toInt();
-    var lastDay = DateTime.fromMillisecondsSinceEpoch(ld);
-    var firstDay = DateTime.fromMillisecondsSinceEpoch(fd);
-
-    regPlot.add(Plot(
-      xAxis: firstDay,
-      yAxis2: first,
-    ));
-
-    regPlot.add(Plot(
-      xAxis: lastDay,
-      yAxis2: last,
-    ));
+    DateTime lastDay = DateTime.fromMillisecondsSinceEpoch(ld);
+    DateTime firstDay = DateTime.fromMillisecondsSinceEpoch(fd);
+    List<dynamic> regPlot = [];
+    regPlot
+      ..add(Plot(
+        xAxis: firstDay,
+        yAxis2: first,
+      ))
+      ..add(Plot(
+        xAxis: lastDay,
+        yAxis2: last,
+      ))
+      ..add(sigmaChi);
 
     return regPlot;
   }
