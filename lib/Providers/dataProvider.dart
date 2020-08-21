@@ -12,6 +12,7 @@ class Data with ChangeNotifier {
   List<Bio> _items = [];
   List<Map<String, dynamic>> myList = [];
   double progress = 0;
+  double weightInOneWeek = 0;
   List<double> systAveSd;
   List<double> diastAveSd;
   final statistic = Statistic();
@@ -133,6 +134,7 @@ class Data with ChangeNotifier {
     myPlot.add(regress[0]);
     myPlot.add(regress[1]);
     progress = regress[2];
+    weightInOneWeek = regress[3];
     return myPlot;
   }
 

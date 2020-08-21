@@ -29,7 +29,7 @@ class Statistic {
     double sigmaX = 0;
     double sigmaY = 0;
     double sigmaXSquared = 0;
-    double sigmaChi = 0;
+
     double sigmaXY = 0;
     int n = x.length;
     double slope = 0;
@@ -46,12 +46,17 @@ class Statistic {
     slope = (n * sigmaXY - (sigmaX * sigmaY)) /
         (n * sigmaXSquared - pow(sigmaX, 2));
 
-    for (var i = 0; i < n; i++) {
-      var expected = intercept + slope * x[i];
+    // for (var i = 0; i < n; i++) {
+    //   var expected = intercept + slope * x[i];
 
-      var chiSq = pow((y[i] - expected), 2) / expected;
-      sigmaChi += chiSq;
-    }
+    //   var chiSq = pow((y[i] - expected), 2) / expected;
+    //   sigmaChi += chiSq;
+    // }
+    var toDay = DateTime.now();
+    var sevenDays =
+        toDay.add(Duration(days: 6)).millisecondsSinceEpoch.toDouble();
+    var weightWeek = intercept + slope * sevenDays;
+    print(weightWeek);
     double first = intercept + (slope * x[0]);
     double last = intercept + (slope * x[n - 1]);
     int ld = x[n - 1].toInt();
@@ -61,7 +66,7 @@ class Statistic {
     var difference = lastDay.difference(firstDay).inDays;
 
     List<dynamic> regPlot = [];
-    var progress = (y[n - 1] - y[0]) * 1000 / difference;
+    var progress = (y[n - 1] - y[0]) * 1000 / (difference + 1);
     regPlot
       ..add(Plot(
         xAxis: firstDay,
@@ -71,7 +76,8 @@ class Statistic {
         xAxis: lastDay,
         yAxis2: last,
       ))
-      ..add(progress);
+      ..add(progress)
+      ..add(weightWeek);
 
     return regPlot;
   }

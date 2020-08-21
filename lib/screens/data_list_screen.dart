@@ -96,14 +96,38 @@ class ListScreen extends StatelessWidget {
                 margin: EdgeInsets.symmetric(vertical: 30),
                 child: Stack(
                   children: [
-                    PlotData(data.weight(), false, true, 'weight', 'fit'),
+                    PlotData(
+                      dataToPlot: data.weight(),
+                      zeroPlot: false,
+                      twoPlots: true,
+                      plotName1: 'weight',
+                      plotName2: 'fit',
+                    ),
                     Positioned(
                       top: 45,
                       left: 50,
-                      child: Text(
-                        'Progress:  ${data.progress.toStringAsFixed(0)} g/day.',
-                        style: TextStyle(fontSize: 9),
-                      ),
+                      child: Builder(builder: (BuildContext context) {
+                        return GestureDetector(
+                          onTap: () {
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Weight after one more week: ${data.weightInOneWeek.toStringAsFixed(0)} kg.',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: 400,
+                            height: 400,
+                            child: Text(
+                              'Progress:  ${data.progress.toStringAsFixed(0)} g/day.',
+                              style: TextStyle(fontSize: 9),
+                            ),
+                          ),
+                        );
+                      }),
                     ),
                   ],
                 ),

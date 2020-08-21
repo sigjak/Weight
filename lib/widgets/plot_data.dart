@@ -10,8 +10,12 @@ class PlotData extends StatelessWidget {
   final bool twoPlots;
   final String plotName1;
   final String plotName2;
-  PlotData(this.dataToPlot, this.zeroPlot, this.twoPlots, this.plotName1,
-      this.plotName2);
+  PlotData(
+      {this.dataToPlot,
+      this.zeroPlot,
+      this.twoPlots,
+      this.plotName1,
+      this.plotName2});
 
   @override
   Widget build(BuildContext context) {

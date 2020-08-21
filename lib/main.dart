@@ -37,11 +37,14 @@ class MyApp extends StatelessWidget {
                 buttonColor: Colors.brown[500],
                 textTheme: ButtonTextTheme.primary),
             inputDecorationTheme: InputDecorationTheme(
-                border: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.brown)),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.brown)),
-                labelStyle: TextStyle(color: Colors.brown[400])),
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.brown),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.brown),
+              ),
+              labelStyle: TextStyle(color: Colors.brown[400]),
+            ),
           ),
           home: Welcome(),
           routes: {

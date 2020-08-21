@@ -48,7 +48,13 @@ class SystDiast extends StatelessWidget {
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
               Stack(children: [
-                PlotData(data.systDiast(), true, true, 'sys', 'dia'),
+                PlotData(
+                  dataToPlot: data.systDiast(),
+                  zeroPlot: true,
+                  twoPlots: true,
+                  plotName1: 'sys',
+                  plotName2: 'dia',
+                ),
                 Positioned(
                   top: 45,
                   left: 52,
@@ -100,7 +106,12 @@ class SystDiast extends StatelessWidget {
               ),
               Container(
                 child: PlotData(
-                    data.pulsePressure(), true, true, 'pulseP', "pulse"),
+                  dataToPlot: data.pulsePressure(),
+                  zeroPlot: true,
+                  twoPlots: true,
+                  plotName1: 'pulseP',
+                  plotName2: 'pulse',
+                ),
               ),
             ],
           ),

@@ -23,24 +23,6 @@ class _AddEditState extends State<AddEdit> {
     'daiastolic': '',
     'pulse': '',
   };
-  //@override
-  // void didChangeDependencies() {
-  //   print('dep');
-  //   if (_isInit) {
-  //     final bioId = ModalRoute.of(context).settings.arguments as String;
-  //     if (bioId != null) {
-  //       bio = Provider.of<Data>(context).findById(bioId);
-  //       init = {
-  //         'weight': bio.weight,
-  //         'systolic': bio.syst,
-  //         'diastolic': bio.diast,
-  //         'pulse': bio.pulse,
-  //       };
-  //     }
-  //   }
-  //   _isInit = false;
-  //   super.didChangeDependencies();
-  // }
 
   void saveFormData() async {
     setState(() {
