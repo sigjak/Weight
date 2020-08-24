@@ -24,7 +24,7 @@ class ListScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.favorite),
             onPressed: () {
-              Navigator.of(context).pushNamed(SystDiast.routeName);
+              Navigator.of(context).pushReplacementNamed(SystDiast.routeName);
             },
           ),
           IconButton(
@@ -37,7 +37,7 @@ class ListScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
-              Navigator.of(context).pushNamed(AddEdit.routeName);
+              Navigator.of(context).pushReplacementNamed(AddEdit.routeName);
             },
           ),
         ],
@@ -112,7 +112,7 @@ class ListScreen extends StatelessWidget {
                             Scaffold.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'Weight after one more week: ${data.weightInOneWeek.toStringAsFixed(0)} kg.',
+                                  'Weight after one more week: ${data.weightInOneWeek.toStringAsFixed(1)} \u{00B1}${data.rms.toStringAsFixed(1)} kg.',
                                   textAlign: TextAlign.center,
                                 ),
                               ),

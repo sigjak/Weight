@@ -60,7 +60,7 @@ class SystDiast extends StatelessWidget {
                   left: 52,
                   child: RichText(
                     text: TextSpan(
-                      text: 'Average: ',
+                      text: '${data.numbDays} day average: ',
                       style: TextStyle(
                         fontSize: 10,
                         color: Colors.black,
