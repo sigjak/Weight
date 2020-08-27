@@ -24,7 +24,7 @@ class ListScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.favorite),
             onPressed: () {
-              Navigator.of(context).pushReplacementNamed(SystDiast.routeName);
+              Navigator.of(context).pushNamed(SystDiast.routeName);
             },
           ),
           IconButton(
@@ -80,8 +80,8 @@ class ListScreen extends StatelessWidget {
                   margin: EdgeInsets.all(10),
                   padding: EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey),
-                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(width: 2, color: Colors.black),
+                    borderRadius: BorderRadius.circular(5),
                     color: Colors.white,
                   ),
                   child: ListView.builder(
@@ -94,6 +94,14 @@ class ListScreen extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 30),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.white,
+                  border: Border.all(
+                    width: 2,
+                    color: Colors.black,
+                  ),
+                ),
                 child: Stack(
                   children: [
                     PlotData(

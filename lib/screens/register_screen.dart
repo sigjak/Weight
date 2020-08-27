@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../Providers/authProvider.dart';
 import '../screens/data_add_screen.dart';
-import '../widgets/app_drawer.dart';
 
 class Register extends StatefulWidget {
   static const routeName = '/register';
@@ -39,7 +38,7 @@ class _RegisterState extends State<Register> {
         centerTitle: true,
         title: Text('Register'),
       ),
-      drawer: AppDrawer(),
+      // drawer: AppDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Form(

@@ -140,11 +140,6 @@ class _AddEditState extends State<AddEdit> {
                     ),
                   ),
                 ),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )
               ],
             ),
     );

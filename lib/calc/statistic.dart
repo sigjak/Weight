@@ -48,9 +48,7 @@ class Statistic {
     double sum = 0;
     for (var i = 0; i < n; i++) {
       var expected = intercept + slope * x[i];
-
       var chiSq = pow((y[i] - expected), 2);
-
       sum += chiSq;
     }
     var rms = sqrt(sum / (n - 2));

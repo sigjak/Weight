@@ -56,7 +56,7 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
               color: Colors.brown[600],
               icon: Icon(Icons.people),
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed(Register.routeName);
+                Navigator.of(context).pushNamed(Register.routeName);
               },
               label: Text('Register'),
             ),

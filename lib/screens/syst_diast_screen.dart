@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
-import './data_list_screen.dart';
-import '../widgets/app_drawer.dart';
+//import './data_list_screen.dart';
+//import '../widgets/app_drawer.dart';
 import '../widgets/plot_data.dart';
 import '../Providers/dataProvider.dart';
-import '../widgets/my_icons.dart';
+//import '../widgets/my_icons.dart';
 
 class SystDiast extends StatelessWidget {
   static const routeName = '/syst-diast';
@@ -18,20 +18,8 @@ class SystDiast extends StatelessWidget {
           'Systolic-Diastolic',
           textAlign: TextAlign.center,
         ),
-        actions: <Widget>[
-          IconButton(
-            // icon: Chart(),
-            icon: Icon(MyIcons.chart),
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
-            },
-          ),
-          SizedBox(
-            width: 5,
-          )
-        ],
       ),
-      drawer: AppDrawer(),
+      //drawer: AppDrawer(),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -47,13 +35,26 @@ class SystDiast extends StatelessWidget {
                 'Systolic/Diastolic',
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
+              SizedBox(
+                height: 5,
+              ),
               Stack(children: [
-                PlotData(
-                  dataToPlot: data.systDiast(),
-                  zeroPlot: true,
-                  twoPlots: true,
-                  plotName1: 'sys',
-                  plotName2: 'dia',
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+                    border: Border.all(
+                      width: 2,
+                      color: Colors.black,
+                    ),
+                  ),
+                  child: PlotData(
+                    dataToPlot: data.systDiast(),
+                    zeroPlot: true,
+                    twoPlots: true,
+                    plotName1: 'sys',
+                    plotName2: 'dia',
+                  ),
                 ),
                 Positioned(
                   top: 45,
@@ -104,7 +105,16 @@ class SystDiast extends StatelessWidget {
                 'Pulse Pressure',
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
+              SizedBox(height: 5),
               Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.white,
+                  border: Border.all(
+                    width: 2,
+                    color: Colors.black,
+                  ),
+                ),
                 child: PlotData(
                   dataToPlot: data.pulsePressure(),
                   zeroPlot: true,
