@@ -8,6 +8,8 @@ class Auth with ChangeNotifier {
   String uid;
   String _token;
   String _localId;
+  int expiresIn;
+  DateTime expiry;
   bool regSuccess = false;
 
   static const key = 'AIzaSyDpgIquPiqxhtImtv1tnATs0tMGwBktGmY';
@@ -66,6 +68,9 @@ class Auth with ChangeNotifier {
         regSuccess = true;
         _token = (responseData['idToken']);
         _localId = (responseData['localId']);
+        expiresIn = int.tryParse(responseData['expiresIn']);
+        expiry = DateTime.now().add(Duration(seconds: expiresIn));
+
         notifyListeners();
       }
     } catch (error) {

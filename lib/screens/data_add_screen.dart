@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weight_2/screens/data_list_screen.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter/services.dart';
+import '../screens/data_list_screen.dart';
 import '../widgets/app_drawer.dart';
 import '../Providers/dataProvider.dart';
 import '../models/bio.dart';
@@ -131,7 +131,10 @@ class _AddEditState extends State<AddEdit> {
                           return RaisedButton(
                               child: Text('Submit'),
                               onPressed: () {
+                                SystemChannels.textInput
+                                    .invokeMethod('TextInput.hide');
                                 saveFormData();
+
                                 Scaffold.of(context).showSnackBar(
                                     SnackBar(content: Text('New data added!')));
                               });

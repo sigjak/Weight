@@ -51,7 +51,7 @@ class Statistic {
       var chiSq = pow((y[i] - expected), 2);
       sum += chiSq;
     }
-    var rms = sqrt(sum / (n - 2));
+    var rms = sqrt(sum / n);
 
     var toDay = DateTime.now();
     var sevenDays =

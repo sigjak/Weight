@@ -88,18 +88,16 @@ class Data with ChangeNotifier {
 
   Future<void> updateOldData(String id, Bio updated) async {
     try {
-      final response =
-          await http.patch('$url${myAuth.id}/$id.json?auth=${myAuth.token}',
-              body: json.encode({
-                'weight': updated.weight,
-                'systolic': updated.syst,
-                'diastolic': updated.diast,
-                'pulse': updated.pulse,
-              }));
+      await http.patch('$url${myAuth.id}/$id.json?auth=${myAuth.token}',
+          body: json.encode({
+            'weight': updated.weight,
+            'systolic': updated.syst,
+            'diastolic': updated.diast,
+            'pulse': updated.pulse,
+          }));
       final itemIndex = _items.indexWhere((item) => item.id == id);
       _items[itemIndex] = updated;
       notifyListeners();
-      print(jsonDecode(response.body));
     } catch (error) {
       print(error);
     }

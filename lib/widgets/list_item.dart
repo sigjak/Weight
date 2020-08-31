@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../Providers/dataProvider.dart';
 
+import '../widgets/dialog_func.dart';
 import '../screens/data_add_screen.dart';
 import '../models/bio.dart';
 import 'package:intl/intl.dart';
@@ -9,43 +8,10 @@ import 'package:intl/intl.dart';
 class ListItem extends StatelessWidget {
   final Bio items;
   ListItem(this.items);
-  _showMyDialog(context) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        actionsPadding: EdgeInsets.symmetric(horizontal: 15),
-        //shape: ShapeBorder(),
-        elevation: 20,
-        title: Text('Delete?'),
-        actions: [
-          FlatButton(
-            color: Colors.green,
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              'NO',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          FlatButton(
-            color: Colors.red,
-            onPressed: () {
-              Provider.of<Data>(context, listen: false).deleteOldData(items.id);
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              'YES',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
+    final dialogs = Dialogs(items);
     return Container(
       margin: EdgeInsets.only(bottom: 2),
       decoration: BoxDecoration(
@@ -70,7 +36,9 @@ class ListItem extends StatelessWidget {
         ),
         direction: DismissDirection.endToStart,
         onDismissed: (direction) {
-          _showMyDialog(context);
+          if (!dialogs.tokenTest(context)) {
+            dialogs.deleteDialog(context);
+          }
         },
         child: ListTile(
           dense: true,
@@ -90,9 +58,12 @@ class ListItem extends StatelessWidget {
                   Icons.edit,
                   size: 18,
                 ),
-                onPressed: () {
-                  Navigator.of(context)
-                      .popAndPushNamed(AddEdit.routeName, arguments: items.id);
+                onPressed: () async {
+                  // true if expired
+                  if (!dialogs.tokenTest(context)) {
+                    Navigator.of(context).popAndPushNamed(AddEdit.routeName,
+                        arguments: items.id);
+                  }
                 },
               ),
               IconButton(
@@ -102,9 +73,9 @@ class ListItem extends StatelessWidget {
                   color: Colors.red[200],
                 ),
                 onPressed: () {
-                  _showMyDialog(context);
-                  // Provider.of<Data>(context, listen: false)
-                  //     .deleteOldData(items.id);
+                  if (!dialogs.tokenTest(context)) {
+                    dialogs.deleteDialog(context);
+                  }
                 },
               ),
             ],

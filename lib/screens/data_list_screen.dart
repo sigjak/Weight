@@ -8,6 +8,7 @@ import '../widgets/app_drawer.dart';
 import '../widgets/plot_data.dart';
 import '../Providers/dataProvider.dart';
 import '../widgets/list_item.dart';
+import '../widgets/dialog_func.dart';
 
 class ListScreen extends StatelessWidget {
   static const routeName = '/list';
@@ -16,6 +17,7 @@ class ListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<Data>(context);
+    var dialogs = Dialogs();
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
@@ -37,7 +39,9 @@ class ListScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
-              Navigator.of(context).pushReplacementNamed(AddEdit.routeName);
+              if (!dialogs.tokenTest(context)) {
+                Navigator.of(context).pushReplacementNamed(AddEdit.routeName);
+              }
             },
           ),
         ],
