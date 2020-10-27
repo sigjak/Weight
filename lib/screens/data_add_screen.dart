@@ -14,7 +14,7 @@ class AddEdit extends StatefulWidget {
 
 class _AddEditState extends State<AddEdit> {
   final _formKey = GlobalKey<FormState>();
-  //var _isInit = true;
+  final FocusScopeNode _node = FocusScopeNode();
   Bio bio = Bio();
   var isLoading = false;
   var init = {
@@ -44,6 +44,20 @@ class _AddEditState extends State<AddEdit> {
     Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
   }
 
+  String validateNumber(String val) {
+    if (double.tryParse(val) == null) {
+      return ('Enter a valid number');
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  void dispose() {
+    _node.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final bioId = ModalRoute.of(context).settings.arguments as String;
@@ -57,6 +71,7 @@ class _AddEditState extends State<AddEdit> {
       };
     }
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
@@ -80,66 +95,83 @@ class _AddEditState extends State<AddEdit> {
                   ),
                   child: Form(
                     key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        TextFormField(
-                          keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction.next,
-                          initialValue: init['weight'],
-                          decoration: InputDecoration(
-                            labelText: 'Weight',
+                    child: FocusScope(
+                      node: _node,
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            validator: validateNumber,
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.next,
+                            onEditingComplete: _node.nextFocus,
+                            initialValue: init['weight'],
+                            decoration: InputDecoration(
+                              labelText: 'Weight',
+                            ),
+                            onSaved: (value) {
+                              bio.weight = value;
+                            },
                           ),
-                          onSaved: (value) {
-                            bio.weight = value;
-                          },
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction.next,
-                          initialValue: init['systolic'],
-                          decoration: InputDecoration(
-                            labelText: 'Systolic',
+                          TextFormField(
+                            validator: validateNumber,
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.next,
+                            onEditingComplete: _node.nextFocus,
+                            initialValue: init['systolic'],
+                            decoration: InputDecoration(
+                              labelText: 'Systolic',
+                            ),
+                            onSaved: (value) {
+                              bio.syst = value;
+                            },
                           ),
-                          onSaved: (value) {
-                            bio.syst = value;
-                          },
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction.next,
-                          initialValue: init['diastolic'],
-                          decoration: InputDecoration(
-                            labelText: 'Diastolic',
+                          TextFormField(
+                            validator: validateNumber,
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.next,
+                            onEditingComplete: _node.nextFocus,
+                            initialValue: init['diastolic'],
+                            decoration: InputDecoration(
+                              labelText: 'Diastolic',
+                            ),
+                            onSaved: (value) {
+                              bio.diast = value;
+                            },
                           ),
-                          onSaved: (value) {
-                            bio.diast = value;
-                          },
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction.done,
-                          initialValue: init['pulse'],
-                          decoration: InputDecoration(
-                            labelText: 'Pulse',
+                          TextFormField(
+                            validator: validateNumber,
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.done,
+                            onEditingComplete: _node.nextFocus,
+                            initialValue: init['pulse'],
+                            decoration: InputDecoration(
+                              labelText: 'Pulse',
+                            ),
+                            onSaved: (value) {
+                              bio.pulse = value;
+                            },
                           ),
-                          onSaved: (value) {
-                            bio.pulse = value;
-                          },
-                        ),
-                        SizedBox(height: 20),
-                        Builder(builder: (BuildContext context) {
-                          return RaisedButton(
-                              child: Text('Submit'),
-                              onPressed: () {
-                                SystemChannels.textInput
-                                    .invokeMethod('TextInput.hide');
-                                saveFormData();
+                          SizedBox(height: 20),
+                          Builder(builder: (BuildContext context) {
+                            return RaisedButton(
+                                child: Text('Submit'),
+                                onPressed: () {
+                                  SystemChannels.textInput
+                                      .invokeMethod('TextInput.hide');
+                                  if (!_formKey.currentState.validate()) {
+                                    return;
+                                  }
+                                  saveFormData();
 
-                                Scaffold.of(context).showSnackBar(
-                                    SnackBar(content: Text('New data added!')));
-                              });
-                        }),
-                      ],
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('New data added!'),
+                                    ),
+                                  );
+                                });
+                          }),
+                        ],
+                      ),
                     ),
                   ),
                 ),
