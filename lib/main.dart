@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import './screens/register_screen.dart';
 import './screens/login_screen.dart';
 import './screens/syst_diast_screen.dart';
+import 'screens/bp_ave.dart';
 
 import './screens/welcome_screen.dart';
 import 'screens/data_list_screen.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
             ListScreen.routeName: (ctx) => ListScreen(),
             SystDiast.routeName: (ctx) => SystDiast(),
             Register.routeName: (ctx) => Register(),
+            BPAve.routeName: (ctx) => BPAve()
           }),
     );
   }

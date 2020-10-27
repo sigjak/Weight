@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
+import 'package:weight_2/screens/bp_ave.dart';
 //import './data_list_screen.dart';
 //import '../widgets/app_drawer.dart';
 import '../widgets/plot_data.dart';
@@ -18,6 +19,13 @@ class SystDiast extends StatelessWidget {
           'Systolic-Diastolic',
           textAlign: TextAlign.center,
         ),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.account_balance),
+              onPressed: () {
+                Navigator.of(context).pushNamed(BPAve.routeName);
+              })
+        ],
       ),
       //drawer: AppDrawer(),
       body: Container(

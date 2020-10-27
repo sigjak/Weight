@@ -80,7 +80,7 @@ class _AddEditState extends State<AddEdit> {
           textAlign: TextAlign.center,
         ),
       ),
-      drawer: AppDrawer(),
+      // drawer: AppDrawer(),
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(),

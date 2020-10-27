@@ -17,6 +17,7 @@ class Data with ChangeNotifier {
   double progress = 0;
   double weightInOneWeek = 0;
   double rms = 0;
+
   List<Bio> get items {
     return [..._items];
   }
