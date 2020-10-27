@@ -29,7 +29,8 @@ class Statistic {
     double sigmaX = 0;
     double sigmaY = 0;
     double sigmaXSquared = 0;
-
+    print(x);
+    print(y);
     double sigmaXY = 0;
     int n = x.length;
     double slope = 0;
@@ -69,6 +70,7 @@ class Statistic {
 
     List<dynamic> regPlot = [];
     var progress = (last - first) * 1000 / (difference);
+    print(progress);
     regPlot
       ..add(Plot(
         xAxis: firstDay,
