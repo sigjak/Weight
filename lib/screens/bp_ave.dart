@@ -14,7 +14,12 @@ class BPAve extends StatefulWidget {
 
 class _BPAveState extends State<BPAve> {
   List<Bio> myList = [];
-  List<double> myWeight = [];
+  List<double> mySyst = [];
+  List<double> myDiast = [];
+  String systAv = "";
+  String systSd = "";
+  String diastAv = "";
+  String diastSd = "";
   @override
   void initState() {
     gettingData();
@@ -65,49 +70,100 @@ class _BPAveState extends State<BPAve> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    RichText(
-                      text: TextSpan(
-                        text: "From: ",
-                        style: TextStyle(color: Colors.black87),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text:
-                                  "${DateFormat.yMMMd().format(myList.first.day)}",
-                              style: TextStyle(
-                                  color: Colors.black26,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: "To: ",
-                        style: TextStyle(color: Colors.black87),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text:
-                                  "${DateFormat.yMMMd().format(myList.last.day)}",
-                              style: TextStyle(
-                                  color: Colors.black26,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    ),
+                    AvailRange(fromTo: "From: ", range: myList.first.day),
+                    AvailRange(fromTo: "To: ", range: myList.last.day),
                   ],
                 ),
+                systAv.isEmpty
+                    ? Container()
+                    : Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                  text: "Systolic: ",
+                                  style: TextStyle(
+                                      color: Colors.black45,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: systAv,
+                                      style: TextStyle(fontSize: 26),
+                                    ),
+                                    TextSpan(
+                                      text: " \u00B1 ",
+                                    ),
+                                    TextSpan(
+                                      text: systSd,
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  ]),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                  text: "Diastolic: ",
+                                  style: TextStyle(
+                                      color: Colors.black45,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: diastAv,
+                                      style: TextStyle(fontSize: 26),
+                                    ),
+                                    TextSpan(
+                                      text: " \u00B1 ",
+                                    ),
+                                    TextSpan(
+                                      text: diastSd,
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  ]),
+                            ),
+                          ],
+                        ),
+                      ),
                 RaisedButton(
                     child: Text("Get"),
                     onPressed: () {
-                      print(myWeight.length);
                       setState(() {
-                        myWeight = bpCalc.weightToDouble(myList);
+                        mySyst = bpCalc.bpToDouble(myList)[0];
+                        myDiast = bpCalc.bpToDouble(myList)[1];
+
+                        systAv = bpCalc.averSd(mySyst)[0].toStringAsFixed(0);
+                        systSd = bpCalc.averSd(mySyst)[1].toStringAsFixed(0);
+                        diastAv = bpCalc.averSd(myDiast)[0].toStringAsFixed(0);
+                        diastSd = bpCalc.averSd(myDiast)[1].toStringAsFixed(0);
                       });
-                      print(myWeight.length);
                     }),
               ],
             ),
+    );
+  }
+}
+
+class AvailRange extends StatelessWidget {
+  final DateTime range;
+  final String fromTo;
+  AvailRange({this.fromTo, this.range});
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        text: fromTo,
+        style: TextStyle(color: Colors.black87),
+        children: <TextSpan>[
+          TextSpan(
+              text: "${DateFormat.yMMMd().format(range)}",
+              style: TextStyle(
+                  color: Colors.black26,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
+        ],
+      ),
     );
   }
 }
