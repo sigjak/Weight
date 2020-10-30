@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
+import '../widgets/bp_widgets.dart';
 import '../models/bio.dart';
 import '../Providers/dataProvider.dart';
 import '../calc/bp_calc.dart';
@@ -16,10 +17,8 @@ class _BPAveState extends State<BPAve> {
   List<Bio> myList = [];
   List<double> mySyst = [];
   List<double> myDiast = [];
-  String systAv = "";
-  String systSd = "";
-  String diastAv = "";
-  String diastSd = "";
+  String systAv, systSd, diastAv, diastSd;
+
   @override
   void initState() {
     gettingData();
@@ -33,20 +32,12 @@ class _BPAveState extends State<BPAve> {
     setState(() {
       myList = data.items;
     });
-
-    // for (int i = 0; i < myList.length; i++) {
-    //   if (myList[i].weight.isNotEmpty) {
-    //     myWeight.add(double.parse(myList[i].weight));
-    //   }
-    // }
   }
 
   BPCalc bpCalc = new BPCalc();
 
   @override
   Widget build(BuildContext context) {
-    //final data = Provider.of<Data>(context, listen: false);
-    // final List<Bio> bb = data.items;
     return Scaffold(
       appBar: AppBar(
         title: Text("Bp averages"),
@@ -74,96 +65,55 @@ class _BPAveState extends State<BPAve> {
                     AvailRange(fromTo: "To: ", range: myList.last.day),
                   ],
                 ),
-                systAv.isEmpty
+                RaisedButton(
+                    child: Text("Get"),
+                    onPressed: () async {
+                      // setState(() {
+                      //   systAv = null;
+                      // });
+                      List<int> indexList = await bpCalc.dateRange(
+                          context, myList.first.day, myList.last.day, myList);
+                      // int start = indexList[0];
+                      // int end = indexList[1];
+                      // print(start);
+                      // print(end);
+                      // if (bpCalc.bpToDouble(myList, start, end)[0].length > 0) {
+                      //   setState(() {
+                      //     mySyst = bpCalc.bpToDouble(myList, start, end)[0];
+                      //     myDiast = bpCalc.bpToDouble(myList, start, end)[1];
+
+                      //     List<double> syst = bpCalc.averSd(mySyst);
+                      //     systAv = syst[0].toStringAsFixed(0);
+                      //     systSd = syst[1].toStringAsFixed(0);
+                      //     List<double> diast = bpCalc.averSd(myDiast);
+                      //     diastAv = diast[0].toStringAsFixed(0);
+                      //     diastSd = diast[1].toStringAsFixed(0);
+
+                      //     //   //bpCalc.findData(myList);
+                      //   });
+                      // } else {
+                      //   print('???????????????????????????????');
+                      // }
+                    }),
+                systAv == null
                     ? Container()
                     : Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            RichText(
-                              text: TextSpan(
-                                  text: "Systolic: ",
-                                  style: TextStyle(
-                                      color: Colors.black45,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: systAv,
-                                      style: TextStyle(fontSize: 26),
-                                    ),
-                                    TextSpan(
-                                      text: " \u00B1 ",
-                                    ),
-                                    TextSpan(
-                                      text: systSd,
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: "Diastolic: ",
-                                  style: TextStyle(
-                                      color: Colors.black45,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: diastAv,
-                                      style: TextStyle(fontSize: 26),
-                                    ),
-                                    TextSpan(
-                                      text: " \u00B1 ",
-                                    ),
-                                    TextSpan(
-                                      text: diastSd,
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                  ]),
-                            ),
+                            SystDiastDisplay(
+                                bpName: "Systolic: ",
+                                bpAv: systAv,
+                                bpSd: systSd),
+                            SystDiastDisplay(
+                                bpName: "Diastolic: ",
+                                bpAv: diastAv,
+                                bpSd: diastSd),
                           ],
                         ),
                       ),
-                RaisedButton(
-                    child: Text("Get"),
-                    onPressed: () {
-                      setState(() {
-                        mySyst = bpCalc.bpToDouble(myList)[0];
-                        myDiast = bpCalc.bpToDouble(myList)[1];
-
-                        systAv = bpCalc.averSd(mySyst)[0].toStringAsFixed(0);
-                        systSd = bpCalc.averSd(mySyst)[1].toStringAsFixed(0);
-                        diastAv = bpCalc.averSd(myDiast)[0].toStringAsFixed(0);
-                        diastSd = bpCalc.averSd(myDiast)[1].toStringAsFixed(0);
-                      });
-                    }),
               ],
             ),
-    );
-  }
-}
-
-class AvailRange extends StatelessWidget {
-  final DateTime range;
-  final String fromTo;
-  AvailRange({this.fromTo, this.range});
-
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: fromTo,
-        style: TextStyle(color: Colors.black87),
-        children: <TextSpan>[
-          TextSpan(
-              text: "${DateFormat.yMMMd().format(range)}",
-              style: TextStyle(
-                  color: Colors.black26,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold)),
-        ],
-      ),
     );
   }
 }

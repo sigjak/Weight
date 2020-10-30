@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import '../screens/data_list_screen.dart';
-import '../widgets/app_drawer.dart';
+//import '../widgets/app_drawer.dart';
 import '../Providers/dataProvider.dart';
 import '../models/bio.dart';
 
