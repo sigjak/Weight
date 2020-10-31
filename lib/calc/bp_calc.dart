@@ -2,7 +2,7 @@
 import "dart:math";
 
 import 'package:flutter/material.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import "../models/bio.dart";
 
 class BPCalc {
@@ -35,7 +35,17 @@ class BPCalc {
     }
 
     // if flag is false range is empty: exit and display a toast
-    if (flag == false) return null;
+    if (flag == false) {
+      Fluttertoast.showToast(
+          msg: "Nothing in range. Make another selection. ",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      return null;
+    }
     //
     // now find upper value:if empty decrement until a value is found
     //
@@ -44,7 +54,7 @@ class BPCalc {
     diffDt = end.difference(bioList[startIndex].day);
     lim = diffDt.inDays;
 
-    for (int j = 0; j < lim; j++) {
+    for (int j = 0; j <= lim; j++) {
       for (int i = 0; i < bioList.length; i++) {
         if (end.compareTo(bioList[i].day) == 0) {
           endIndex = i;
@@ -59,8 +69,7 @@ class BPCalc {
       if (flag == true) break;
       end = end.subtract(Duration(days: 1));
     }
-    print(startIndex);
-    print(endIndex);
+
     validIndices.add(startIndex);
     validIndices.add(endIndex);
     return validIndices;
@@ -88,6 +97,8 @@ class BPCalc {
       // print(picked);
       validIndices = checkIfInRange(bioList, picked.start, picked.end);
       // print(validIndices);
+      // print(bioList[validIndices[0]].day);
+      // print(bioList[validIndices[1]].day);
       // int indexStart = findIndex(bioList, picked.start);
       // int indexEnd = findIndex(bioList, picked.end);
       // indices.add(indexStart);
@@ -133,27 +144,27 @@ class BPCalc {
         tempDiast.add(double.parse(bioList[i].diast));
       }
     }
-    print("Length: ${tempSyst.length}");
+    print(tempSyst.length);
     List<List<double>> temp = [];
     temp.add(tempSyst);
     temp.add(tempDiast);
     return temp;
   }
 
-  int findIndex(List<Bio> bioList, DateTime date) {
-    int index = 0;
-    bool flag = false;
-    for (int i = 0; i < bioList.length; i++) {
-      if (bioList[i].day.compareTo(date) == 0) {
-        //print("found");
-        flag = true;
-        index = i;
-        break;
-      }
-      if (flag == false) {
-        print('NOT FOUND');
-      }
-    }
-    return index;
-  }
+  // int findIndex(List<Bio> bioList, DateTime date) {
+  //   int index = 0;
+  //   bool flag = false;
+  //   for (int i = 0; i < bioList.length; i++) {
+  //     if (bioList[i].day.compareTo(date) == 0) {
+  //       //print("found");
+  //       flag = true;
+  //       index = i;
+  //       break;
+  //     }
+  //     if (flag == false) {
+  //       print('NOT FOUND');
+  //     }
+  //   }
+  //   return index;
+  // }
 }

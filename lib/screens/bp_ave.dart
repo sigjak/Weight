@@ -68,15 +68,32 @@ class _BPAveState extends State<BPAve> {
                 RaisedButton(
                     child: Text("Get"),
                     onPressed: () async {
-                      // setState(() {
-                      //   systAv = null;
-                      // });
+                      setState(() {
+                        systAv = null;
+                      });
                       List<int> indexList = await bpCalc.dateRange(
                           context, myList.first.day, myList.last.day, myList);
-                      // int start = indexList[0];
-                      // int end = indexList[1];
-                      // print(start);
-                      // print(end);
+                      if (indexList != null) {
+                        int start = indexList[0];
+                        int end = indexList[1];
+                        print(start);
+                        print(end);
+                        setState(() {
+                          mySyst = bpCalc.bpToDouble(myList, start, end)[0];
+                          List<double> syst = bpCalc.averSd(mySyst);
+                          int numberOfDays = mySyst.length;
+                          print("Number of days: $numberOfDays");
+                          print(
+                              "Days: ${myList[start].day} to ${myList[end].day}");
+                          systAv = syst[0].toStringAsFixed(0);
+                          systSd = syst[1].toStringAsFixed(0);
+                          myDiast = bpCalc.bpToDouble(myList, start, end)[1];
+                          List<double> diast = bpCalc.averSd(myDiast);
+                          diastAv = diast[0].toStringAsFixed(0);
+                          diastSd = diast[1].toStringAsFixed(0);
+                        });
+                      }
+
                       // if (bpCalc.bpToDouble(myList, start, end)[0].length > 0) {
                       //   setState(() {
                       //     mySyst = bpCalc.bpToDouble(myList, start, end)[0];
