@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 import '../widgets/bp_widgets.dart';
 import '../models/bio.dart';
 import '../Providers/dataProvider.dart';
@@ -18,6 +18,8 @@ class _BPAveState extends State<BPAve> {
   List<double> mySyst = [];
   List<double> myDiast = [];
   String systAv, systSd, diastAv, diastSd;
+  int numberOfDays, start, end;
+  DateTime firstDay, lastDay;
 
   @override
   void initState() {
@@ -45,9 +47,10 @@ class _BPAveState extends State<BPAve> {
       body: myList.isEmpty
           ? Center(child: CircularProgressIndicator())
           : Column(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  height: 40,
+                  height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -65,68 +68,81 @@ class _BPAveState extends State<BPAve> {
                     AvailRange(fromTo: "To: ", range: myList.last.day),
                   ],
                 ),
-                RaisedButton(
-                    child: Text("Get"),
-                    onPressed: () async {
-                      setState(() {
-                        systAv = null;
-                      });
-                      List<int> indexList = await bpCalc.dateRange(
-                          context, myList.first.day, myList.last.day, myList);
-                      if (indexList != null) {
-                        int start = indexList[0];
-                        int end = indexList[1];
-                        print(start);
-                        print(end);
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: RaisedButton(
+                      child: Text("Select Range"),
+                      onPressed: () async {
                         setState(() {
-                          mySyst = bpCalc.bpToDouble(myList, start, end)[0];
-                          List<double> syst = bpCalc.averSd(mySyst);
-                          int numberOfDays = mySyst.length;
-                          print("Number of days: $numberOfDays");
-                          print(
-                              "Days: ${myList[start].day} to ${myList[end].day}");
-                          systAv = syst[0].toStringAsFixed(0);
-                          systSd = syst[1].toStringAsFixed(0);
-                          myDiast = bpCalc.bpToDouble(myList, start, end)[1];
-                          List<double> diast = bpCalc.averSd(myDiast);
-                          diastAv = diast[0].toStringAsFixed(0);
-                          diastSd = diast[1].toStringAsFixed(0);
+                          systAv = null;
                         });
-                      }
-
-                      // if (bpCalc.bpToDouble(myList, start, end)[0].length > 0) {
-                      //   setState(() {
-                      //     mySyst = bpCalc.bpToDouble(myList, start, end)[0];
-                      //     myDiast = bpCalc.bpToDouble(myList, start, end)[1];
-
-                      //     List<double> syst = bpCalc.averSd(mySyst);
-                      //     systAv = syst[0].toStringAsFixed(0);
-                      //     systSd = syst[1].toStringAsFixed(0);
-                      //     List<double> diast = bpCalc.averSd(myDiast);
-                      //     diastAv = diast[0].toStringAsFixed(0);
-                      //     diastSd = diast[1].toStringAsFixed(0);
-
-                      //     //   //bpCalc.findData(myList);
-                      //   });
-                      // } else {
-                      //   print('???????????????????????????????');
-                      // }
-                    }),
+                        List<int> indexList = await bpCalc.dateRange(
+                            context, myList.first.day, myList.last.day, myList);
+                        if (indexList != null) {
+                          setState(() {
+                            start = indexList[0];
+                            end = indexList[1];
+                            mySyst = bpCalc.bpToDouble(myList, start, end)[0];
+                            List<double> syst = bpCalc.averSd(mySyst);
+                            numberOfDays = mySyst.length;
+                            firstDay = myList[indexList[0]].day;
+                            lastDay = myList[indexList[1]].day;
+                            systAv = syst[0].toStringAsFixed(0);
+                            systSd = syst[1].toStringAsFixed(0);
+                            myDiast = bpCalc.bpToDouble(myList, start, end)[1];
+                            List<double> diast = bpCalc.averSd(myDiast);
+                            diastAv = diast[0].toStringAsFixed(0);
+                            diastSd = diast[1].toStringAsFixed(0);
+                          });
+                        }
+                      }),
+                ),
                 systAv == null
                     ? Container()
                     : Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            SystDiastDisplay(
-                                bpName: "Systolic: ",
-                                bpAv: systAv,
-                                bpSd: systSd),
-                            SystDiastDisplay(
-                                bpName: "Diastolic: ",
-                                bpAv: diastAv,
-                                bpSd: diastSd),
-                          ],
+                        margin: EdgeInsets.symmetric(horizontal: 16),
+                        decoration: BoxDecoration(
+                          color: Colors.white12,
+                          border: Border.all(
+                            width: 2,
+                            color: Colors.black45,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "From: ${DateFormat.yMMMd().format(firstDay)} to ${DateFormat.yMMMd().format(lastDay)}",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Average of $numberOfDays days",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SystDiastDisplay(
+                                  bpName: "  Systolic: ",
+                                  bpAv: systAv,
+                                  bpSd: systSd),
+                              SystDiastDisplay(
+                                  bpName: "Diastolic: ",
+                                  bpAv: diastAv,
+                                  bpSd: diastSd),
+                            ],
+                          ),
                         ),
                       ),
               ],
