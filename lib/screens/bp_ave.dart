@@ -5,6 +5,7 @@ import '../widgets/bp_widgets.dart';
 import '../models/bio.dart';
 import '../Providers/dataProvider.dart';
 import '../calc/bp_calc.dart';
+import '../widgets/plot_data.dart';
 
 class BPAve extends StatefulWidget {
   static const routeName = "/bpave";
@@ -29,7 +30,7 @@ class _BPAveState extends State<BPAve> {
 
   gettingData() async {
     final data = Provider.of<Data>(context, listen: false);
-    await data.getDataFromFirebase(true);
+    // await data.getDataFromFirebase(false);
 
     setState(() {
       myList = data.items;
@@ -40,6 +41,7 @@ class _BPAveState extends State<BPAve> {
 
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<Data>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text("Bp averages"),
@@ -145,6 +147,24 @@ class _BPAveState extends State<BPAve> {
                           ),
                         ),
                       ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+                    border: Border.all(
+                      width: 2,
+                      color: Colors.black,
+                    ),
+                  ),
+                  child: PlotData(
+                    dataToPlot: data.systDiast(),
+                    zeroPlot: true,
+                    twoPlots: true,
+                    plotName1: 'sys',
+                    plotName2: 'dia',
+                  ),
+                ),
               ],
             ),
     );

@@ -27,14 +27,14 @@ class Data with ChangeNotifier {
   }
 
   bool get weightEmpty {
-    int temp = 0;
+    bool temp = true;
     for (int i = 0; i < _items.length; i++) {
       if (_items[i].weight.isNotEmpty) {
-        temp++;
+        temp = false;
       }
     }
-    if (temp > 0) return false;
-    return true;
+
+    return temp;
   }
 
   Data(this.myAuth);

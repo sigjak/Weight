@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:weight_2/widgets/my_icons.dart';
+
+import 'package:fluttertoast/fluttertoast.dart';
 import '../screens/syst_diast_screen.dart';
 import '../screens/data_add_screen.dart';
 import '../widgets/app_drawer.dart';
@@ -13,7 +15,17 @@ import '../widgets/dialog_func.dart';
 class ListScreen extends StatelessWidget {
   static const routeName = '/list';
 
-  @override
+  sig() {
+    Fluttertoast.showToast(
+        msg: "No weight in entries. Expand selection. ",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 20.0);
+  }
+
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<Data>(context);
@@ -107,7 +119,7 @@ class ListScreen extends StatelessWidget {
                   ),
                 ),
                 child: data.weightEmpty
-                    ? Text("Nodata: ${data.weightEmpty} ")
+                    ? sig()
                     : Stack(
                         children: [
                           PlotData(

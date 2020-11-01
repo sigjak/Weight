@@ -130,8 +130,7 @@ class BPCalc {
     sd = sqrt(tempPow / listSize);
     outAvSd.add(average);
     outAvSd.add(sd);
-    // print(average);
-    // print(sd);
+
     return outAvSd;
   }
 
@@ -150,21 +149,4 @@ class BPCalc {
     temp.add(tempDiast);
     return temp;
   }
-
-  // int findIndex(List<Bio> bioList, DateTime date) {
-  //   int index = 0;
-  //   bool flag = false;
-  //   for (int i = 0; i < bioList.length; i++) {
-  //     if (bioList[i].day.compareTo(date) == 0) {
-  //       //print("found");
-  //       flag = true;
-  //       index = i;
-  //       break;
-  //     }
-  //     if (flag == false) {
-  //       print('NOT FOUND');
-  //     }
-  //   }
-  //   return index;
-  // }
 }

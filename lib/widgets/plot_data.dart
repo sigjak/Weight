@@ -50,16 +50,7 @@ class PlotData extends StatelessWidget {
           color: Colors.grey[50],
           border: Border.all(color: Colors.grey, width: 2),
           borderRadius: BorderRadius.circular(4)),
-      child:
-          //  dataToPlot.length <= 3
-          //     ? Text(
-          //         'No weight data in the last 10 entries. Expand selection ${dataToPlot.length}',
-          //         style: TextStyle(
-          //           color: Colors.red,
-          //         ),
-          //       )
-          //     :
-          charts.TimeSeriesChart(
+      child: charts.TimeSeriesChart(
         series,
         behaviors: [
           charts.SeriesLegend(),
