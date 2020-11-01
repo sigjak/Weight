@@ -26,6 +26,17 @@ class Data with ChangeNotifier {
     return _items.length;
   }
 
+  bool get weightEmpty {
+    int temp = 0;
+    for (int i = 0; i < _items.length; i++) {
+      if (_items[i].weight.isNotEmpty) {
+        temp++;
+      }
+    }
+    if (temp > 0) return false;
+    return true;
+  }
+
   Data(this.myAuth);
 
   final url = 'https://weight-8da08.firebaseio.com/weights/';

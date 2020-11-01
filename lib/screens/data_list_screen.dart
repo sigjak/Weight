@@ -106,43 +106,47 @@ class ListScreen extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                child: Stack(
-                  children: [
-                    PlotData(
-                      dataToPlot: data.weight(),
-                      zeroPlot: false,
-                      twoPlots: true,
-                      plotName1: 'weight',
-                      plotName2: 'fit',
-                    ),
-                    Positioned(
-                      top: 45,
-                      left: 50,
-                      child: Builder(builder: (BuildContext context) {
-                        return GestureDetector(
-                          onTap: () {
-                            Scaffold.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Weight after one more week: ${data.weightInOneWeek.toStringAsFixed(1)} \u{00B1}${data.rms.toStringAsFixed(1)} kg.',
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: 400,
-                            height: 400,
-                            child: Text(
-                              'Progress:  ${data.progress.toStringAsFixed(0)} g/day.',
-                              style: TextStyle(fontSize: 9),
-                            ),
+                child: data.weightEmpty
+                    ? Text("Nodata: ${data.weightEmpty} ")
+                    : Stack(
+                        children: [
+                          PlotData(
+                            dataToPlot: data.weight(),
+                            zeroPlot: false,
+                            twoPlots: true,
+                            plotName1: 'weight',
+                            plotName2: 'fit',
                           ),
-                        );
-                      }),
-                    ),
-                  ],
-                ),
+                          Positioned(
+                            top: 45,
+                            left: 50,
+                            child: Builder(builder: (BuildContext context) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Weight after one more week: ${data.weightInOneWeek.toStringAsFixed(1)} \u{00B1}${data.rms.toStringAsFixed(1)} kg.',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: data.weight().length < 1
+                                    ? Container()
+                                    : Container(
+                                        width: 400,
+                                        height: 400,
+                                        child: Text(
+                                          'Progress:  ${data.progress.toStringAsFixed(0)} g/day.',
+                                          style: TextStyle(fontSize: 9),
+                                        ),
+                                      ),
+                              );
+                            }),
+                          ),
+                        ],
+                      ),
               ),
             ],
           ),

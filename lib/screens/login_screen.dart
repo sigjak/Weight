@@ -66,10 +66,10 @@ class _LoginState extends State<Login> {
                           width: double.infinity,
                           child: RaisedButton(
                             onPressed: () {
-                              // Navigator.of(context)
-                              //   .pushReplacementNamed(ListScreen.routeName);
                               Navigator.of(context)
-                                  .pushReplacementNamed(BPAve.routeName);
+                                  .pushReplacementNamed(ListScreen.routeName);
+                              // Navigator.of(context)
+                              //     .pushReplacementNamed(BPAve.routeName);
                             },
                             child: Text(
                               'Edit',

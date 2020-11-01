@@ -10,6 +10,7 @@ class PlotData extends StatelessWidget {
   final bool twoPlots;
   final String plotName1;
   final String plotName2;
+
   PlotData(
       {this.dataToPlot,
       this.zeroPlot,
@@ -49,7 +50,16 @@ class PlotData extends StatelessWidget {
           color: Colors.grey[50],
           border: Border.all(color: Colors.grey, width: 2),
           borderRadius: BorderRadius.circular(4)),
-      child: charts.TimeSeriesChart(
+      child:
+          //  dataToPlot.length <= 3
+          //     ? Text(
+          //         'No weight data in the last 10 entries. Expand selection ${dataToPlot.length}',
+          //         style: TextStyle(
+          //           color: Colors.red,
+          //         ),
+          //       )
+          //     :
+          charts.TimeSeriesChart(
         series,
         behaviors: [
           charts.SeriesLegend(),
