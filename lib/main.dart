@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import './screens/register_screen.dart';
 import './screens/login_screen.dart';
@@ -12,7 +13,10 @@ import './Providers/dataProvider.dart';
 import './Providers/authProvider.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(MyApp()));
+  ;
 }
 
 class MyApp extends StatelessWidget {

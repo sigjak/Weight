@@ -30,7 +30,6 @@ class _BPAveState extends State<BPAve> {
 
   gettingData() async {
     final data = Provider.of<Data>(context, listen: false);
-    // await data.getDataFromFirebase(false);
 
     setState(() {
       myList = data.items;
@@ -49,7 +48,6 @@ class _BPAveState extends State<BPAve> {
       body: myList.isEmpty
           ? Center(child: CircularProgressIndicator())
           : Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
                   height: 20,
@@ -114,7 +112,6 @@ class _BPAveState extends State<BPAve> {
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Column(
-                            // mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Row(
