@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
-import 'package:weight_2/widgets/my_icons.dart';
+import "package:flutter/services.dart";
+import '../widgets/my_icons.dart';
 import '../widgets/bp_widgets.dart';
 import '../models/bio.dart';
 import '../models/plot.dart';
@@ -45,6 +45,7 @@ class _BPAveState extends State<BPAve> {
     final data = Provider.of<Data>(context, listen: false);
     BPCalc bpCalc = new BPCalc(myList);
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text("Bp averages"),
         actions: [
@@ -187,6 +188,13 @@ class _BPAveState extends State<BPAve> {
                 ),
               ],
             ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.brown[500],
+        child: Icon(Icons.exit_to_app),
+        onPressed: () {
+          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        },
+      ),
     );
   }
 }
