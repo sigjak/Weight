@@ -21,7 +21,7 @@ class SystDiast extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              icon: Icon(MyIcons.chart_line),
+              icon: Icon(MyIcons.calendar),
               onPressed: () {
                 Navigator.of(context).pushNamed(BPAve.routeName);
               })

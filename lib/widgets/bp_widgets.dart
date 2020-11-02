@@ -36,6 +36,39 @@ class SystDiastDisplay extends StatelessWidget {
   }
 }
 
+class SecondFromTo extends StatelessWidget {
+  const SecondFromTo({
+    Key key,
+    @required this.firstDay,
+    @required this.lastDay,
+  }) : super(key: key);
+
+  final DateTime firstDay;
+  final DateTime lastDay;
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+          text: "From: ",
+          style: TextStyle(color: Colors.black54, fontSize: 12),
+          children: <TextSpan>[
+            TextSpan(
+              text: DateFormat.yMMMd().format(firstDay),
+              style: TextStyle(fontSize: 16),
+            ),
+            TextSpan(
+              text: " to ",
+              style: TextStyle(fontSize: 12),
+            ),
+            TextSpan(
+                text: DateFormat.yMMMd().format(lastDay),
+                style: TextStyle(fontSize: 16))
+          ]),
+    );
+  }
+}
+
 class AvailRange extends StatelessWidget {
   final DateTime range;
   final String fromTo;

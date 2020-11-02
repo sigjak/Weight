@@ -4,8 +4,37 @@ import "dart:math";
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import "../models/bio.dart";
+import '../models/plot.dart';
 
 class BPCalc {
+  List<Bio> bioList = [];
+  List<Plot> tempPlot = [];
+
+  BPCalc(this.bioList);
+
+  List<Plot> updatePlotLists(int start, int end) {
+    List<Plot> tempPlot = [];
+    List<Bio> shortList = [];
+
+    for (int i = start; i <= end; i++) {
+      shortList.add(bioList[i]);
+    }
+    shortList.forEach(
+      (element) {
+        if (element.syst != "" || element.diast != "") {
+          tempPlot.add(
+            Plot(
+              xAxis: element.day,
+              yAxis: double.tryParse(element.syst),
+              yAxis2: double.tryParse(element.diast),
+            ),
+          );
+        }
+      },
+    );
+    return tempPlot;
+  }
+
   List<int> checkIfInRange(List<Bio> bioList, DateTime start, DateTime end) {
     List<int> validIndices = [];
     int startIndex;
@@ -88,7 +117,7 @@ class BPCalc {
     );
     if (picked != null) {
       validIndices = checkIfInRange(bioList, picked.start, picked.end);
-
+      //updatePlotLists(validIndices);
       return validIndices;
     } else
       return null;

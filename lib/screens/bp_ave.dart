@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:weight_2/widgets/my_icons.dart';
 import '../widgets/bp_widgets.dart';
 import '../models/bio.dart';
+import '../models/plot.dart';
 import '../Providers/dataProvider.dart';
 import '../calc/bp_calc.dart';
 import '../widgets/plot_data.dart';
@@ -19,6 +20,7 @@ class _BPAveState extends State<BPAve> {
   List<Bio> myList = [];
   List<double> mySyst = [];
   List<double> myDiast = [];
+  List<Plot> myPlotData = [];
   String systAv, systSd, diastAv, diastSd;
   int numberOfDays, start, end;
   DateTime firstDay, lastDay;
@@ -34,14 +36,14 @@ class _BPAveState extends State<BPAve> {
 
     setState(() {
       myList = data.items;
+      myPlotData = data.systDiast();
     });
   }
-
-  BPCalc bpCalc = new BPCalc();
 
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<Data>(context, listen: false);
+    BPCalc bpCalc = new BPCalc(myList);
     return Scaffold(
       appBar: AppBar(
         title: Text("Bp averages"),
@@ -52,6 +54,7 @@ class _BPAveState extends State<BPAve> {
                 await data.getDataFromFirebase(false);
                 setState(() {
                   myList = data.items;
+                  myPlotData = data.systDiast();
                 });
               }),
           IconButton(
@@ -60,6 +63,7 @@ class _BPAveState extends State<BPAve> {
               await data.getDataFromFirebase(true);
               setState(() {
                 myList = data.items;
+                myPlotData = data.systDiast();
               });
             },
           ),
@@ -93,15 +97,16 @@ class _BPAveState extends State<BPAve> {
                   child: RaisedButton(
                       child: Text("Select Range"),
                       onPressed: () async {
-                        setState(() {
-                          systAv = null;
-                        });
+                        // setState(() {
+                        //   systAv = null;
+                        // });
                         List<int> indexList = await bpCalc.dateRange(
                             context, myList.first.day, myList.last.day, myList);
                         if (indexList != null) {
                           setState(() {
                             start = indexList[0];
                             end = indexList[1];
+                            myPlotData = bpCalc.updatePlotLists(start, end);
                             mySyst = bpCalc.bpToDouble(myList, start, end)[0];
                             List<double> syst = bpCalc.averSd(mySyst);
                             numberOfDays = mySyst.length;
@@ -136,10 +141,8 @@ class _BPAveState extends State<BPAve> {
                             children: [
                               Row(
                                 children: [
-                                  Text(
-                                    "From: ${DateFormat.yMMMd().format(firstDay)} to ${DateFormat.yMMMd().format(lastDay)}",
-                                    style: TextStyle(fontSize: 16),
-                                  ),
+                                  SecondFromTo(
+                                      firstDay: firstDay, lastDay: lastDay),
                                 ],
                               ),
                               Row(
@@ -147,8 +150,7 @@ class _BPAveState extends State<BPAve> {
                                   Text(
                                     "Average of $numberOfDays days",
                                     style: TextStyle(
-                                      fontSize: 14,
-                                    ),
+                                        color: Colors.black54, fontSize: 14),
                                   ),
                                 ],
                               ),
@@ -176,7 +178,7 @@ class _BPAveState extends State<BPAve> {
                     ),
                   ),
                   child: PlotData(
-                    dataToPlot: data.systDiast(),
+                    dataToPlot: myPlotData,
                     zeroPlot: true,
                     twoPlots: true,
                     plotName1: 'sys',
