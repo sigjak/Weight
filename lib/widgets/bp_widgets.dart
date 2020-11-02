@@ -22,7 +22,7 @@ class SystDiastDisplay extends StatelessWidget {
           children: <TextSpan>[
             TextSpan(
               text: bpAv,
-              style: TextStyle(fontSize: 26),
+              style: TextStyle(fontSize: 24),
             ),
             TextSpan(
               text: " \u00B1 ",

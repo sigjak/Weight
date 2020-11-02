@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:weight_2/widgets/my_icons.dart';
 import '../widgets/bp_widgets.dart';
 import '../models/bio.dart';
 import '../Providers/dataProvider.dart';
@@ -44,19 +45,38 @@ class _BPAveState extends State<BPAve> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Bp averages"),
+        actions: [
+          IconButton(
+              icon: Icon(MyIcons.resize_small),
+              onPressed: () async {
+                await data.getDataFromFirebase(false);
+                setState(() {
+                  myList = data.items;
+                });
+              }),
+          IconButton(
+            icon: Icon(MyIcons.resize_full),
+            onPressed: () async {
+              await data.getDataFromFirebase(true);
+              setState(() {
+                myList = data.items;
+              });
+            },
+          ),
+        ],
       ),
       body: myList.isEmpty
           ? Center(child: CircularProgressIndicator())
           : Column(
               children: [
                 SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Available Data",
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 26,
                         fontWeight: FontWeight.bold,
                         color: Colors.white38,
                       )),
@@ -110,7 +130,7 @@ class _BPAveState extends State<BPAve> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -118,7 +138,7 @@ class _BPAveState extends State<BPAve> {
                                 children: [
                                   Text(
                                     "From: ${DateFormat.yMMMd().format(firstDay)} to ${DateFormat.yMMMd().format(lastDay)}",
-                                    style: TextStyle(fontSize: 18),
+                                    style: TextStyle(fontSize: 16),
                                   ),
                                 ],
                               ),
@@ -127,7 +147,7 @@ class _BPAveState extends State<BPAve> {
                                   Text(
                                     "Average of $numberOfDays days",
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 14,
                                     ),
                                   ),
                                 ],
@@ -145,7 +165,8 @@ class _BPAveState extends State<BPAve> {
                         ),
                       ),
                 Container(
-                  margin: EdgeInsets.only(top: 20),
+                  height: MediaQuery.of(context).size.height / 3,
+                  margin: EdgeInsets.only(top: 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: Colors.white,

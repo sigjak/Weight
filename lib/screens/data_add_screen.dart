@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import '../screens/data_list_screen.dart';
-//import '../widgets/app_drawer.dart';
+import '../widgets/app_drawer.dart';
 import '../Providers/dataProvider.dart';
 import '../models/bio.dart';
 
@@ -45,7 +45,7 @@ class _AddEditState extends State<AddEdit> {
   }
 
   String validateNumber(String val) {
-    if (double.tryParse(val) == null) {
+    if (val.isNotEmpty && double.tryParse(val) == null) {
       return ('Enter a valid number');
     } else {
       return null;
@@ -80,7 +80,7 @@ class _AddEditState extends State<AddEdit> {
           textAlign: TextAlign.center,
         ),
       ),
-      // drawer: AppDrawer(),
+      drawer: AppDrawer(),
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(),

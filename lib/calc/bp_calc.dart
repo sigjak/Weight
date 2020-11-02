@@ -22,10 +22,6 @@ class BPCalc {
       for (int i = 0; i < bioList.length; i++) {
         if (start.compareTo(bioList[i].day) == 0) {
           startIndex = i;
-
-          // print("found  start in range at i=$i");
-          // print("start; $start");
-          // print("i: $i : ${bioList[i].day}");
           flag = true;
           break;
         }
@@ -59,9 +55,6 @@ class BPCalc {
         if (end.compareTo(bioList[i].day) == 0) {
           endIndex = i;
 
-          // print("found  end in range at i=$i");
-          // print("end; $end");
-          // print("i: $i : ${bioList[i].day}");
           flag = true;
           break;
         }
@@ -94,15 +87,8 @@ class BPCalc {
       },
     );
     if (picked != null) {
-      // print(picked);
       validIndices = checkIfInRange(bioList, picked.start, picked.end);
-      // print(validIndices);
-      // print(bioList[validIndices[0]].day);
-      // print(bioList[validIndices[1]].day);
-      // int indexStart = findIndex(bioList, picked.start);
-      // int indexEnd = findIndex(bioList, picked.end);
-      // indices.add(indexStart);
-      // indices.add(indexEnd);
+
       return validIndices;
     } else
       return null;
@@ -118,9 +104,7 @@ class BPCalc {
     for (int i = 0; i < listSize; i++) {
       average += bpList[i];
     }
-    if (average <= 0) {
-      print("in averSd");
-    }
+    if (average <= 0) {}
     average = average / listSize;
 
     for (int i = 0; i < listSize; i++) {
@@ -143,7 +127,7 @@ class BPCalc {
         tempDiast.add(double.parse(bioList[i].diast));
       }
     }
-    print(tempSyst.length);
+
     List<List<double>> temp = [];
     temp.add(tempSyst);
     temp.add(tempDiast);

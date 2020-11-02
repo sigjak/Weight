@@ -6,7 +6,7 @@ import 'package:weight_2/screens/bp_ave.dart';
 //import '../widgets/app_drawer.dart';
 import '../widgets/plot_data.dart';
 import '../Providers/dataProvider.dart';
-//import '../widgets/my_icons.dart';
+import '../widgets/my_icons.dart';
 
 class SystDiast extends StatelessWidget {
   static const routeName = '/syst-diast';
@@ -21,7 +21,7 @@ class SystDiast extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              icon: Icon(Icons.account_balance),
+              icon: Icon(MyIcons.chart_line),
               onPressed: () {
                 Navigator.of(context).pushNamed(BPAve.routeName);
               })

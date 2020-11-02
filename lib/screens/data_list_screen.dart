@@ -36,7 +36,7 @@ class ListScreen extends StatelessWidget {
         title: Text('Data'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.favorite),
+            icon: Icon(MyIcons.heartbeat),
             onPressed: () {
               Navigator.of(context).pushNamed(SystDiast.routeName);
             },

@@ -33,7 +33,7 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Icon(MyIcons.chart),
+            leading: Icon(MyIcons.chart_line),
             title: Text('Show Data'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(ListScreen.routeName);

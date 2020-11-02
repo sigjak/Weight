@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weight_2/screens/bp_ave.dart';
+//import 'package:weight_2/screens/bp_ave.dart';
 import 'package:weight_2/screens/data_add_screen.dart';
 import 'package:provider/provider.dart';
 import '../Providers/dataProvider.dart';
