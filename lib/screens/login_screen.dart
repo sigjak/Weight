@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:weight_2/screens/bp_ave.dart';
-import 'package:weight_2/screens/data_add_screen.dart';
+import 'data_add_screen.dart';
 import 'package:provider/provider.dart';
 import '../Providers/dataProvider.dart';
 import './data_list_screen.dart';
@@ -68,8 +67,6 @@ class _LoginState extends State<Login> {
                             onPressed: () {
                               Navigator.of(context)
                                   .pushReplacementNamed(ListScreen.routeName);
-                              // Navigator.of(context)
-                              //     .pushReplacementNamed(BPAve.routeName);
                             },
                             child: Text(
                               'Edit',

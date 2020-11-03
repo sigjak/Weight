@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import '../widgets/app_drawer.dart';
 import '../Providers/authProvider.dart';
 import '../screens/data_add_screen.dart';
 
@@ -16,21 +17,6 @@ class _RegisterState extends State<Register> {
   String password;
   String alertMessage = '';
 
-  // void registerAlert(String alertMessage) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         backgroundColor: Colors.grey,
-  //         content: Text(
-  //           alertMessage,
-  //           textAlign: TextAlign.center,
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +24,7 @@ class _RegisterState extends State<Register> {
         centerTitle: true,
         title: Text('Register'),
       ),
-      // drawer: AppDrawer(),
+      drawer: AppDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Form(

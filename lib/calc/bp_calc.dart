@@ -1,4 +1,3 @@
-//import 'dart:io';
 import "dart:math";
 
 import 'package:flutter/material.dart';
@@ -102,8 +101,6 @@ class BPCalc {
     List<int> validIndices = [];
     final DateTimeRange picked = await showDateRangePicker(
       context: context,
-      // initialDateRange:
-      //     DateTimeRange(start: DateTime.now(), end: DateTime.now()),
       firstDate: firstDate,
       lastDate: DateTime(2030),
       builder: (context, child) {
@@ -117,7 +114,6 @@ class BPCalc {
     );
     if (picked != null) {
       validIndices = checkIfInRange(bioList, picked.start, picked.end);
-      //updatePlotLists(validIndices);
       return validIndices;
     } else
       return null;

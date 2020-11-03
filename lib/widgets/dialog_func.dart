@@ -43,37 +43,6 @@ class Dialogs {
     );
   }
 
-  // tokenDialog(context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (_) => AlertDialog(
-  //       actionsPadding: EdgeInsets.symmetric(horizontal: 15),
-  //       elevation: 20,
-  //       title: Text('Token expired!'),
-  //       content: Text('You have to login again.'),
-  //       actions: [
-  //         FlatButton(
-  //           color: Colors.green,
-  //           onPressed: () {
-  //             Navigator.of(context).pushReplacementNamed(Welcome.routeName);
-  //           },
-  //           child: Text(
-  //             'OK',
-  //             style: TextStyle(color: Colors.white),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  // tokenTest<bool>(context) {
-  //   var expiry = Provider.of<Data>(context, listen: false).myAuth.expiry;
-
-  //   var now = DateTime.now();
-  //   return expiry.isBefore(now);
-  // }
-
   tokenTest<bool>(context) {
     var expiry = Provider.of<Data>(context, listen: false).myAuth.expiry;
     var now = DateTime.now();
