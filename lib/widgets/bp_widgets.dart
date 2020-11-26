@@ -5,11 +5,15 @@ class SystDiastDisplay extends StatelessWidget {
   final String bpName;
   final String bpAv;
   final String bpSd;
+  final String bpHi;
+  final String bpLo;
 
   SystDiastDisplay({
     this.bpName,
     this.bpAv,
     this.bpSd,
+    this.bpHi,
+    this.bpLo,
   });
 
   @override
@@ -30,6 +34,10 @@ class SystDiastDisplay extends StatelessWidget {
             TextSpan(
               text: bpSd,
               style: TextStyle(fontSize: 20),
+            ),
+            TextSpan(
+              text: ' ($bpHi/$bpLo)',
+              style: TextStyle(fontSize: 16),
             ),
           ]),
     );

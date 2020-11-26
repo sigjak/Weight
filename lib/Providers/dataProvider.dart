@@ -197,20 +197,21 @@ class Data with ChangeNotifier {
     });
 
     diastAveSd = statistic.calcAverSD(diArray);
+    // print(diastAveSd);
     systAveSd = statistic.calcAverSD(systArray);
     return myPlot;
   }
 
-  void findData(List<Bio> bioList) {
-    DateTime tt = DateTime.now();
-    DateTime test = DateTime(tt.year, tt.month, tt.day);
+  // void findData(List<Bio> bioList) {
+  //   DateTime tt = DateTime.now();
+  //   DateTime test = DateTime(tt.year, tt.month, tt.day);
 
-    for (int i = 0; i < bioList.length; i++) {
-      if (bioList[i].day.compareTo(test) == 0) {
-        print("found");
-        print(bioList[i].day);
-        print(i);
-      }
-    }
-  }
+  //   for (int i = 0; i < bioList.length; i++) {
+  //     if (bioList[i].day.compareTo(test) == 0) {
+  //       print("found");
+  //       print(bioList[i].day);
+  //       print(i);
+  //     }
+  //   }
+  // }
 }

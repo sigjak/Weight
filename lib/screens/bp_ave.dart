@@ -21,7 +21,7 @@ class _BPAveState extends State<BPAve> {
   List<double> mySyst = [];
   List<double> myDiast = [];
   List<Plot> myPlotData = [];
-  String systAv, systSd, diastAv, diastSd;
+  String systAv, systSd, systHi, systLo, diastAv, diastSd, diastHi, diastLo;
   int numberOfDays, start, end;
   DateTime firstDay, lastDay;
 
@@ -54,6 +54,7 @@ class _BPAveState extends State<BPAve> {
               onPressed: () async {
                 await data.getDataFromFirebase(false);
                 setState(() {
+                  systAv = null;
                   myList = data.items;
                   myPlotData = data.systDiast();
                 });
@@ -63,6 +64,7 @@ class _BPAveState extends State<BPAve> {
             onPressed: () async {
               await data.getDataFromFirebase(true);
               setState(() {
+                systAv = null;
                 myList = data.items;
                 myPlotData = data.systDiast();
               });
@@ -115,10 +117,15 @@ class _BPAveState extends State<BPAve> {
                             lastDay = myList[indexList[1]].day;
                             systAv = syst[0].toStringAsFixed(0);
                             systSd = syst[1].toStringAsFixed(0);
+                            systHi = syst[2].toStringAsFixed(0);
+                            systLo = syst[3].toStringAsFixed(0);
+
                             myDiast = bpCalc.bpToDouble(myList, start, end)[1];
                             List<double> diast = bpCalc.averSd(myDiast);
                             diastAv = diast[0].toStringAsFixed(0);
                             diastSd = diast[1].toStringAsFixed(0);
+                            diastHi = diast[2].toStringAsFixed(0);
+                            diastLo = diast[3].toStringAsFixed(0);
                           });
                         }
                       }),
@@ -156,13 +163,18 @@ class _BPAveState extends State<BPAve> {
                                 ],
                               ),
                               SystDiastDisplay(
-                                  bpName: "  Systolic: ",
-                                  bpAv: systAv,
-                                  bpSd: systSd),
+                                bpName: "  Systolic: ",
+                                bpAv: systAv,
+                                bpSd: systSd,
+                                bpHi: systHi,
+                                bpLo: systLo,
+                              ),
                               SystDiastDisplay(
                                   bpName: "Diastolic: ",
                                   bpAv: diastAv,
-                                  bpSd: diastSd),
+                                  bpSd: diastSd,
+                                  bpHi: diastHi,
+                                  bpLo: diastLo),
                             ],
                           ),
                         ),

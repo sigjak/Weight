@@ -123,10 +123,14 @@ class BPCalc {
     double average = 0;
     double sd = 0;
     double tempPow = 0;
+    double hi = bpList[0];
+    double low = bpList[0];
     List<double> outAvSd = [];
     int listSize = bpList.length;
 
     for (int i = 0; i < listSize; i++) {
+      if (bpList[i] > hi) hi = bpList[i];
+      if (bpList[i] < low) low = bpList[i];
       average += bpList[i];
     }
     if (average <= 0) {}
@@ -139,6 +143,8 @@ class BPCalc {
     sd = sqrt(tempPow / listSize);
     outAvSd.add(average);
     outAvSd.add(sd);
+    outAvSd.add(hi);
+    outAvSd.add(low);
 
     return outAvSd;
   }

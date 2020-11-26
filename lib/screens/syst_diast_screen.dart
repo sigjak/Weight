@@ -83,8 +83,14 @@ class SystDiast extends StatelessWidget {
                               fontSize: 9,
                             )),
                         TextSpan(
-                            text: data.systAveSd[1].toStringAsFixed(0),
-                            style: TextStyle(color: Colors.blue)),
+                          text: data.systAveSd[1].toStringAsFixed(0),
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                        TextSpan(
+                          text:
+                              ' (${data.systAveSd[2].toStringAsFixed(0)}/${data.systAveSd[3].toStringAsFixed(0)})',
+                          style: TextStyle(fontSize: 7),
+                        ),
                         TextSpan(
                           text: '  ${data.diastAveSd[0].toStringAsFixed(0)}',
                           style: TextStyle(color: Colors.red),
@@ -98,6 +104,11 @@ class SystDiast extends StatelessWidget {
                         TextSpan(
                           text: '${data.diastAveSd[1].toStringAsFixed(0)}',
                           style: TextStyle(color: Colors.red),
+                        ),
+                        TextSpan(
+                          text:
+                              ' (${data.diastAveSd[2].toStringAsFixed(0)}/${data.diastAveSd[3].toStringAsFixed(0)})',
+                          style: TextStyle(fontSize: 7),
                         ),
                       ],
                     ),

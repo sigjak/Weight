@@ -11,8 +11,13 @@ class Statistic {
     double temp = 0;
     int n = array.length;
     double ave;
+    double high, low;
+    high = array[0];
+    low = array[0];
     List<double> outList = [];
     for (var i = 0; i < n; i++) {
+      if (array[i] > high) high = array[i];
+      if (array[i] < low) low = array[i];
       tempTotal += array[i];
     }
     ave = tempTotal / n;
@@ -22,6 +27,9 @@ class Statistic {
     });
     sd = sqrt(temp / (n - 1));
     outList.add(sd);
+    outList.add(high);
+    outList.add(low);
+    //print(":$high low: $low");
     return outList;
   }
 
