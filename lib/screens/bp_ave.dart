@@ -37,6 +37,17 @@ class _BPAveState extends State<BPAve> {
     setState(() {
       myList = data.items;
       myPlotData = data.systDiast();
+
+      firstDay = myPlotData.first.xAxis;
+      lastDay = myPlotData.last.xAxis;
+      systAv = data.systAveSd[0].toStringAsFixed(0);
+      systSd = data.systAveSd[1].toStringAsFixed(0);
+      systHi = data.systAveSd[2].toStringAsFixed(0);
+      systLo = data.systAveSd[3].toStringAsFixed(0);
+      diastAv = data.diastAveSd[0].toStringAsFixed(0);
+      diastSd = data.diastAveSd[1].toStringAsFixed(0);
+      diastHi = data.diastAveSd[2].toStringAsFixed(0);
+      diastLo = data.diastAveSd[3].toStringAsFixed(0);
     });
   }
 
@@ -53,21 +64,18 @@ class _BPAveState extends State<BPAve> {
               icon: Icon(MyIcons.resize_small),
               onPressed: () async {
                 await data.getDataFromFirebase(false);
-                setState(() {
-                  systAv = null;
-                  myList = data.items;
-                  myPlotData = data.systDiast();
-                });
+                await gettingData();
               }),
           IconButton(
             icon: Icon(MyIcons.resize_full),
             onPressed: () async {
               await data.getDataFromFirebase(true);
-              setState(() {
-                systAv = null;
-                myList = data.items;
-                myPlotData = data.systDiast();
-              });
+              await gettingData();
+              // setState(() {
+              //   systAv = null;
+              //   myList = data.items;
+              //   myPlotData = data.systDiast();
+              // });
             },
           ),
         ],
