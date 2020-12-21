@@ -44,7 +44,7 @@ class BPCalc {
     bool flag = false;
     //
     //  find index of first item in range, If selected date has no value
-    //  increment until valueis found i given range.
+    //  increment until value is found i given range.
     //
     for (int j = 0; j < lim; j++) {
       for (int i = 0; i < bioList.length; i++) {
@@ -78,17 +78,31 @@ class BPCalc {
     diffDt = end.difference(bioList[startIndex].day);
     lim = diffDt.inDays;
 
-    for (int j = 0; j <= lim; j++) {
-      for (int i = 0; i < bioList.length; i++) {
-        if (end.compareTo(bioList[i].day) == 0) {
-          endIndex = i;
+    DateTime endPlus = end.add(Duration(days: 1));
+    // print("End: $end, ENDPlus: $endPlus, ");
+    // for (int i = 0; i < bioList.length; i++) {
+    //   print("index: $i, -- day: ${bioList[i].day}");
+    // }
 
-          flag = true;
-          break;
-        }
+    // for (int j = 0; j <= lim; j++) {
+    for (int i = 0; i < bioList.length; i++) {
+      // print("DAY: ${bioList[i].day}");
+      if (bioList[i].day.isBefore(endPlus)) {
+        endIndex = i;
+        //  print("EndIndex: $endIndex");
+      } else {
+        flag = true;
       }
-      if (flag == true) break;
-      end = end.subtract(Duration(days: 1));
+
+      // if (end.compareTo(bioList[i].day) == 0) {
+      //   endIndex = i;
+
+      //   flag = true;
+      //   break;
+      // }
+      // }
+      // if (flag == true) break;
+      // end = end.subtract(Duration(days: 1));
     }
 
     validIndices.add(startIndex);
@@ -113,6 +127,7 @@ class BPCalc {
       },
     );
     if (picked != null) {
+      //print("picked.start: ${picked.start} picked.end ${picked.end}");
       validIndices = checkIfInRange(bioList, picked.start, picked.end);
       return validIndices;
     } else

@@ -48,6 +48,7 @@ class _BPAveState extends State<BPAve> {
       diastSd = data.diastAveSd[1].toStringAsFixed(0);
       diastHi = data.diastAveSd[2].toStringAsFixed(0);
       diastLo = data.diastAveSd[3].toStringAsFixed(0);
+      numberOfDays = myPlotData.length;
     });
   }
 
@@ -85,7 +86,7 @@ class _BPAveState extends State<BPAve> {
           : Column(
               children: [
                 SizedBox(
-                  height: 15,
+                  height: 40,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -103,17 +104,16 @@ class _BPAveState extends State<BPAve> {
                     AvailRange(fromTo: "To: ", range: myList.last.day),
                   ],
                 ),
+                SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: RaisedButton(
                       child: Text("Select Range"),
                       onPressed: () async {
-                        // setState(() {
-                        //   systAv = null;
-                        // });
                         List<int> indexList = await bpCalc.dateRange(
                             context, myList.first.day, myList.last.day, myList);
                         if (indexList != null) {
+                          print("indexlist: $indexList");
                           setState(() {
                             start = indexList[0];
                             end = indexList[1];
@@ -138,6 +138,7 @@ class _BPAveState extends State<BPAve> {
                         }
                       }),
                 ),
+                SizedBox(height: 10),
                 systAv == null
                     ? Container()
                     : Container(
@@ -164,7 +165,7 @@ class _BPAveState extends State<BPAve> {
                               Row(
                                 children: [
                                   Text(
-                                    "Average of $numberOfDays days",
+                                    "Average of $numberOfDays measurements",
                                     style: TextStyle(
                                         color: Colors.black54, fontSize: 14),
                                   ),
@@ -188,8 +189,8 @@ class _BPAveState extends State<BPAve> {
                         ),
                       ),
                 Container(
-                  height: MediaQuery.of(context).size.height / 3,
-                  margin: EdgeInsets.only(top: 10),
+                  height: MediaQuery.of(context).size.height / 3.5,
+                  margin: EdgeInsets.only(top: 50),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: Colors.white,

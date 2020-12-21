@@ -20,7 +20,7 @@ class _AddEditState extends State<AddEdit> {
   var init = {
     'weight': '',
     'systolic': '',
-    'daiastolic': '',
+    'diastolic': '',
     'pulse': '',
   };
 
@@ -31,7 +31,9 @@ class _AddEditState extends State<AddEdit> {
     _formKey.currentState.save();
     DateTime now = DateTime.now();
     DateTime bb = DateTime(now.year, now.month, now.day);
-    bio.day = bb;
+    // more thatn once a day
+    bio.day = now;
+    //bio.day = bb;
     if (bio.id != null) {
       await Provider.of<Data>(context, listen: false)
           .updateOldData(bio.id, bio);
