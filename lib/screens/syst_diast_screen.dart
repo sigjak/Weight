@@ -42,7 +42,7 @@ class SystDiast extends StatelessWidget {
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
               SizedBox(
-                height: 5,
+                height: 20,
               ),
               Stack(children: [
                 Container(
@@ -116,13 +116,13 @@ class SystDiast extends StatelessWidget {
                 ),
               ]),
               SizedBox(
-                height: 20.0,
+                height: 50.0,
               ),
               Text(
                 'Pulse Pressure',
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 20),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),

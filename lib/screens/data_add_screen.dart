@@ -30,7 +30,7 @@ class _AddEditState extends State<AddEdit> {
     });
     _formKey.currentState.save();
     DateTime now = DateTime.now();
-    DateTime bb = DateTime(now.year, now.month, now.day);
+    //DateTime bb = DateTime(now.year, now.month, now.day);
     // more thatn once a day
     bio.day = now;
     //bio.day = bb;

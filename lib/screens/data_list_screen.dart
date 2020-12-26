@@ -91,23 +91,24 @@ class ListScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.all(10),
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 2, color: Colors.black),
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.white,
-                  ),
-                  child: ListView.builder(
-                    itemCount: data.items.length,
-                    itemBuilder: (ctx, i) => ListItem(
-                      data.items[i],
-                    ),
+              //Expanded(
+              Container(
+                height: MediaQuery.of(context).size.height / 2.5,
+                margin: EdgeInsets.all(10),
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  border: Border.all(width: 2, color: Colors.black),
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.white,
+                ),
+                child: ListView.builder(
+                  itemCount: data.items.length,
+                  itemBuilder: (ctx, i) => ListItem(
+                    data.items[i],
                   ),
                 ),
               ),
+              // ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 30),
                 decoration: BoxDecoration(
