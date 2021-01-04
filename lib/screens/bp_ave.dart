@@ -113,7 +113,7 @@ class _BPAveState extends State<BPAve> {
                         List<int> indexList = await bpCalc.dateRange(
                             context, myList.first.day, myList.last.day, myList);
                         if (indexList != null) {
-                          // print("indexlist: $indexList");
+                          print("indexlist: $indexList");
                           setState(() {
                             start = indexList[0];
                             end = indexList[1];

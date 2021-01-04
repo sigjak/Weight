@@ -42,13 +42,17 @@ class BPCalc {
     int lim = diffDt.inDays;
 
     bool flag = false;
+    print("in if in range");
     //
     //  find index of first item in range, If selected date has no value
     //  increment until value is found i given range.
     //
+    print("start: $start");
     for (int j = 0; j < lim; j++) {
       for (int i = 0; i < bioList.length; i++) {
+        print(bioList[i].day);
         if (start.compareTo(bioList[i].day) == 0) {
+          print('in loop');
           startIndex = i;
           flag = true;
           break;
@@ -129,6 +133,7 @@ class BPCalc {
     if (picked != null) {
       //print("picked.start: ${picked.start} picked.end ${picked.end}");
       validIndices = checkIfInRange(bioList, picked.start, picked.end);
+      print(validIndices);
       return validIndices;
     } else
       return null;
