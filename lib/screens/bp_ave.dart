@@ -110,33 +110,42 @@ class _BPAveState extends State<BPAve> {
                   child: RaisedButton(
                       child: Text("Select Range"),
                       onPressed: () async {
-                        List<int> indexList = await bpCalc.dateRange(
+                        // find index of firt and last day
+                        // List<int> indexList = await bpCalc.dateRange(
+                        //     context, myList.first.day, myList.last.day, myList);
+                        // if (indexList != null) {
+                        // print("indexlist: $indexList");
+                        myPlotData = await bpCalc.dateRange(
                             context, myList.first.day, myList.last.day, myList);
-                        if (indexList != null) {
-                          print("indexlist: $indexList");
-                          setState(() {
-                            start = indexList[0];
-                            end = indexList[1];
-                            myPlotData = bpCalc.updatePlotLists(start, end);
-                            mySyst = bpCalc.bpToDouble(myList, start, end)[0];
-                            List<double> syst = bpCalc.averSd(mySyst);
-                            numberOfDays = mySyst.length;
-                            firstDay = myList[indexList[0]].day;
-                            lastDay = myList[indexList[1]].day;
-                            systAv = syst[0].toStringAsFixed(0);
-                            systSd = syst[1].toStringAsFixed(0);
-                            systHi = syst[2].toStringAsFixed(0);
-                            systLo = syst[3].toStringAsFixed(0);
+                        //print(myPlotData);
+                        setState(() {
+                          // start = indexList[0];
+                          // end = indexList[1];
+                          // myPlotData;
+                          mySyst = bpCalc.getBpFromPlotlist(myPlotData)[0];
 
-                            myDiast = bpCalc.bpToDouble(myList, start, end)[1];
-                            List<double> diast = bpCalc.averSd(myDiast);
-                            diastAv = diast[0].toStringAsFixed(0);
-                            diastSd = diast[1].toStringAsFixed(0);
-                            diastHi = diast[2].toStringAsFixed(0);
-                            diastLo = diast[3].toStringAsFixed(0);
-                          });
-                        }
-                      }),
+                          myDiast = bpCalc.getBpFromPlotlist(myPlotData)[1];
+                          List<double> syst = bpCalc.averSd(mySyst);
+                          numberOfDays = myPlotData.length;
+                          firstDay = myPlotData[0].xAxis;
+                          lastDay = myPlotData[numberOfDays - 1].xAxis;
+
+                          // get a list of syst and diast to calculate averages and sd
+                          systAv = syst[0].toStringAsFixed(0);
+                          systSd = syst[1].toStringAsFixed(0);
+                          systHi = syst[2].toStringAsFixed(0);
+                          systLo = syst[3].toStringAsFixed(0);
+
+                          myDiast = bpCalc.getBpFromPlotlist(myPlotData)[1];
+                          List<double> diast = bpCalc.averSd(myDiast);
+                          diastAv = diast[0].toStringAsFixed(0);
+                          diastSd = diast[1].toStringAsFixed(0);
+                          diastHi = diast[2].toStringAsFixed(0);
+                          diastLo = diast[3].toStringAsFixed(0);
+                        });
+                      }
+                      // },
+                      ),
                 ),
                 SizedBox(height: 10),
                 systAv == null
