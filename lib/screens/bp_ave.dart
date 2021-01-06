@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import "package:flutter/services.dart";
+import 'package:fluttertoast/fluttertoast.dart';
 import '../widgets/my_icons.dart';
 import '../widgets/bp_widgets.dart';
 import '../models/bio.dart';
@@ -52,6 +53,17 @@ class _BPAveState extends State<BPAve> {
     });
   }
 
+  noData() {
+    Fluttertoast.showToast(
+        msg: "No data available. Expand selection. ",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 20.0);
+  }
+
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<Data>(context, listen: false);
@@ -72,11 +84,6 @@ class _BPAveState extends State<BPAve> {
             onPressed: () async {
               await data.getDataFromFirebase(true);
               await gettingData();
-              // setState(() {
-              //   systAv = null;
-              //   myList = data.items;
-              //   myPlotData = data.systDiast();
-              // });
             },
           ),
         ],
@@ -110,39 +117,35 @@ class _BPAveState extends State<BPAve> {
                   child: RaisedButton(
                       child: Text("Select Range"),
                       onPressed: () async {
-                        // find index of firt and last day
-                        // List<int> indexList = await bpCalc.dateRange(
-                        //     context, myList.first.day, myList.last.day, myList);
-                        // if (indexList != null) {
-                        // print("indexlist: $indexList");
                         myPlotData = await bpCalc.dateRange(
                             context, myList.first.day, myList.last.day, myList);
-                        //print(myPlotData);
-                        setState(() {
-                          // start = indexList[0];
-                          // end = indexList[1];
-                          // myPlotData;
-                          mySyst = bpCalc.getBpFromPlotlist(myPlotData)[0];
+                        if (myPlotData.isNotEmpty) {
+                          setState(() {
+                            mySyst = bpCalc.getBpFromPlotlist(myPlotData)[0];
+                            //myDiast = bpCalc.getBpFromPlotlist(myPlotData)[1];
+                            List<double> syst = bpCalc.averSd(mySyst);
+                            numberOfDays = myPlotData.length;
+                            firstDay = myPlotData[0].xAxis;
+                            lastDay = myPlotData[numberOfDays - 1].xAxis;
 
-                          myDiast = bpCalc.getBpFromPlotlist(myPlotData)[1];
-                          List<double> syst = bpCalc.averSd(mySyst);
-                          numberOfDays = myPlotData.length;
-                          firstDay = myPlotData[0].xAxis;
-                          lastDay = myPlotData[numberOfDays - 1].xAxis;
+                            // get a list of syst and diast to calculate averages and sd
+                            systAv = syst[0].toStringAsFixed(0);
+                            systSd = syst[1].toStringAsFixed(0);
+                            systHi = syst[2].toStringAsFixed(0);
+                            systLo = syst[3].toStringAsFixed(0);
 
-                          // get a list of syst and diast to calculate averages and sd
-                          systAv = syst[0].toStringAsFixed(0);
-                          systSd = syst[1].toStringAsFixed(0);
-                          systHi = syst[2].toStringAsFixed(0);
-                          systLo = syst[3].toStringAsFixed(0);
-
-                          myDiast = bpCalc.getBpFromPlotlist(myPlotData)[1];
-                          List<double> diast = bpCalc.averSd(myDiast);
-                          diastAv = diast[0].toStringAsFixed(0);
-                          diastSd = diast[1].toStringAsFixed(0);
-                          diastHi = diast[2].toStringAsFixed(0);
-                          diastLo = diast[3].toStringAsFixed(0);
-                        });
+                            myDiast = bpCalc.getBpFromPlotlist(myPlotData)[1];
+                            List<double> diast = bpCalc.averSd(myDiast);
+                            diastAv = diast[0].toStringAsFixed(0);
+                            diastSd = diast[1].toStringAsFixed(0);
+                            diastHi = diast[2].toStringAsFixed(0);
+                            diastLo = diast[3].toStringAsFixed(0);
+                          });
+                        } else {
+                          noData();
+                          // await data.getDataFromFirebase(true);
+                          await gettingData();
+                        }
                       }
                       // },
                       ),

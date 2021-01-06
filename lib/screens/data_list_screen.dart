@@ -15,7 +15,7 @@ import '../widgets/dialog_func.dart';
 class ListScreen extends StatelessWidget {
   static const routeName = '/list';
 
-  sig() {
+  noData() {
     Fluttertoast.showToast(
         msg: "No weight in entries. Expand selection. ",
         toastLength: Toast.LENGTH_SHORT,
@@ -120,7 +120,7 @@ class ListScreen extends StatelessWidget {
                   ),
                 ),
                 child: data.weightEmpty
-                    ? sig()
+                    ? noData()
                     : Stack(
                         children: [
                           PlotData(
