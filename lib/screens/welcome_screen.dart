@@ -93,7 +93,7 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
                       ],
                     )
                   : Container(
-                      height: 45,
+                      height: 60,
                       child: RaisedButton(
                         elevation: 6,
                         child: Text(

@@ -18,6 +18,12 @@ class PlotData extends StatelessWidget {
       this.plotName1,
       this.plotName2});
 
+  int axisIncr(len) {
+    var dlen = dataToPlot.last.xAxis.difference(dataToPlot.first.xAxis).inDays;
+
+    return ((dlen ~/ 5) + 1);
+  }
+
   @override
   Widget build(BuildContext context) {
     var series = [
@@ -76,7 +82,7 @@ class PlotData extends StatelessWidget {
         ),
         domainAxis: new charts.DateTimeAxisSpec(
           tickProviderSpec: charts.DayTickProviderSpec(
-              increments: [dataToPlot.length > 20 ? 30 : 2]),
+              increments: [this.axisIncr(dataToPlot.length)]),
           tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
             day: new charts.TimeFormatterSpec(
                 format: 'd', transitionFormat: 'd.MMM'),

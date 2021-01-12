@@ -61,7 +61,7 @@ class _LoginState extends State<Login> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          height: 40,
+                          height: 60,
                           width: double.infinity,
                           child: RaisedButton(
                             onPressed: () {
@@ -70,14 +70,14 @@ class _LoginState extends State<Login> {
                             },
                             child: Text(
                               'Edit',
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 25),
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 30),
                         Container(
                           width: double.infinity,
-                          height: 40,
+                          height: 60,
                           child: RaisedButton(
                             onPressed: () {
                               Navigator.of(context)
@@ -85,7 +85,7 @@ class _LoginState extends State<Login> {
                             },
                             child: Text(
                               'Add',
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 25),
                             ),
                           ),
                         ),
