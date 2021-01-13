@@ -76,13 +76,13 @@ class _BPAveState extends State<BPAve> {
           IconButton(
               icon: Icon(MyIcons.resize_small),
               onPressed: () async {
-                await data.getDataFromFirebase(false);
+                await data.getDataFromFirebase(10);
                 await gettingData();
               }),
           IconButton(
             icon: Icon(MyIcons.resize_full),
             onPressed: () async {
-              await data.getDataFromFirebase(true);
+              await data.getDataFromFirebase(50);
               await gettingData();
             },
           ),

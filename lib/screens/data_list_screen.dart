@@ -41,11 +41,14 @@ class ListScreen extends StatelessWidget {
               Navigator.of(context).pushNamed(SystDiast.routeName);
             },
           ),
+          NumberWidget(data: data, numberToGet: 50),
+          SizedBox(width: 5),
+          NumberWidget(data: data, numberToGet: 100),
           IconButton(
             iconSize: 18,
             icon: Icon(MyIcons.database),
             onPressed: () {
-              data.getDataFromFirebase(true);
+              data.getDataFromFirebase(0);
             },
           ),
           IconButton(
@@ -61,7 +64,7 @@ class ListScreen extends StatelessWidget {
       drawer: AppDrawer(),
       body: RefreshIndicator(
         onRefresh: () async {
-          await data.getDataFromFirebase(false);
+          await data.getDataFromFirebase(10);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -172,6 +175,26 @@ class ListScreen extends StatelessWidget {
           SystemChannels.platform.invokeMethod('SystemNavigator.pop');
         },
       ),
+    );
+  }
+}
+
+class NumberWidget extends StatelessWidget {
+  final Data data;
+  final int numberToGet;
+  NumberWidget({this.data, this.numberToGet});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: GestureDetector(
+          onTap: () {
+            data.getDataFromFirebase(numberToGet);
+          },
+          child: Text(
+            numberToGet.toString(),
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          )),
     );
   }
 }

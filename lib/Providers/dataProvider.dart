@@ -41,13 +41,13 @@ class Data with ChangeNotifier {
 
   final url = 'https://weight-8da08.firebaseio.com/weights/';
 
-  Future<void> getDataFromFirebase(bool all) async {
+  Future<void> getDataFromFirebase(int limMeasurements) async {
     try {
       List<Bio> loadedData = [];
       String segment = '';
-      if (all == false) {
+      if (limMeasurements > 0) {
         segment =
-            '${myAuth.id}.json?orderBy="uid"&limitToLast=10&auth=${myAuth.token}';
+            '${myAuth.id}.json?orderBy="uid"&limitToLast=$limMeasurements&auth=${myAuth.token}';
       } else {
         segment = '${myAuth.id}.json?auth=${myAuth.token}';
       }

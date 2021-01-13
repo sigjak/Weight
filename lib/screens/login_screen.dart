@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
   }
 
   void loading() async {
-    await Provider.of<Data>(context, listen: false).getDataFromFirebase(false);
+    await Provider.of<Data>(context, listen: false).getDataFromFirebase(10);
     setState(() {
       isLoading = false;
     });
