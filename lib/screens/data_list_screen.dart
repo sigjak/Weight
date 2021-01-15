@@ -49,14 +49,6 @@ class _ListScreenState extends State<ListScreen> {
           ),
           buildBadge(data),
           SizedBox(width: 5),
-          // NumberWidget(data: data, numberToGet: 100),
-          // IconButton(
-          //   iconSize: 18,
-          //   icon: Icon(MyIcons.database),
-          //   onPressed: () {
-          //     data.getDataFromFirebase(0);
-          //   },
-          // ),
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {

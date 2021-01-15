@@ -19,14 +19,6 @@ class Data with ChangeNotifier {
   double rms = 0;
   String badgeNumber = '10';
 
-  // String get bdgNumber {
-  //   return _badgeNumber;
-  // }
-
-  // set bdgNumber(String badgeNumber) {
-  //   _badgeNumber = badgeNumber;
-  // }
-
   List<Bio> get items {
     return [..._items];
   }
@@ -210,17 +202,4 @@ class Data with ChangeNotifier {
     systAveSd = statistic.calcAverSD(systArray);
     return myPlot;
   }
-
-  // void findData(List<Bio> bioList) {
-  //   DateTime tt = DateTime.now();
-  //   DateTime test = DateTime(tt.year, tt.month, tt.day);
-
-  //   for (int i = 0; i < bioList.length; i++) {
-  //     if (bioList[i].day.compareTo(test) == 0) {
-  //       print("found");
-  //       print(bioList[i].day);
-  //       print(i);
-  //     }
-  //   }
-  // }
 }

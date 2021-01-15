@@ -77,19 +77,6 @@ class _BPAveState extends State<BPAve> {
         actions: [
           buildBadge(data),
           SizedBox(width: 20),
-          // IconButton(
-          //     icon: Icon(MyIcons.resize_small),
-          //     onPressed: () async {
-          //       await data.getDataFromFirebase(10);
-          //       await gettingData();
-          //     }),
-          // IconButton(
-          //   icon: Icon(MyIcons.resize_full),
-          //   onPressed: () async {
-          //     await data.getDataFromFirebase(50);
-          //     await gettingData();
-          //   },
-          //),
         ],
       ),
       body: myList.isEmpty
