@@ -205,15 +205,13 @@ class _ListScreenState extends State<ListScreen> {
         color: Colors.grey[200],
         icon: Icon(MyIcons.database),
         onSelected: (value) async {
-          setState(() {
-            if (value == 0) {
-              badgeNumber = 'all';
-              data.badgeNumber = 'all';
-            } else {
-              badgeNumber = value.toString();
-              data.badgeNumber = value.toString();
-            }
-          });
+          if (value == 0) {
+            badgeNumber = 'all';
+            data.badgeNumber = 'all';
+          } else {
+            badgeNumber = value.toString();
+            data.badgeNumber = value.toString();
+          }
 
           await data.getDataFromFirebase(value);
         },
