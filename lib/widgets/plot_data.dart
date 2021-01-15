@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-
+import '../Providers/dataProvider.dart';
 import '../models/plot.dart';
 
 class PlotData extends StatelessWidget {
@@ -92,3 +92,23 @@ class PlotData extends StatelessWidget {
     );
   }
 }
+
+// class NumberWidget extends StatelessWidget {
+//   final Data data;
+//   final int numberToGet;
+//   NumberWidget({this.data, this.numberToGet});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: GestureDetector(
+//           onTap: () async {
+//             await data.getDataFromFirebase(numberToGet);
+//           },
+//           child: Text(
+//             numberToGet.toString(),
+//             style: TextStyle(color: Colors.white, fontSize: 20),
+//           )),
+//     );
+//   }
+// }

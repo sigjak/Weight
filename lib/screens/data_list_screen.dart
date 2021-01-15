@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
-import 'package:weight_2/widgets/my_icons.dart';
+import 'package:badges/badges.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import '../screens/syst_diast_screen.dart';
 import '../screens/data_add_screen.dart';
+import '../widgets/my_icons.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/plot_data.dart';
 import '../Providers/dataProvider.dart';
 import '../widgets/list_item.dart';
 import '../widgets/dialog_func.dart';
 
-class ListScreen extends StatelessWidget {
+class ListScreen extends StatefulWidget {
   static const routeName = '/list';
+
+  @override
+  _ListScreenState createState() => _ListScreenState();
+}
+
+class _ListScreenState extends State<ListScreen> {
+  String badgeNumber = '10';
+  List<int> dataToGet = [10, 50, 100, 300];
 
   noData() {
     Fluttertoast.showToast(
@@ -41,16 +51,16 @@ class ListScreen extends StatelessWidget {
               Navigator.of(context).pushNamed(SystDiast.routeName);
             },
           ),
-          NumberWidget(data: data, numberToGet: 50),
+          buildBadge(data),
           SizedBox(width: 5),
-          NumberWidget(data: data, numberToGet: 100),
-          IconButton(
-            iconSize: 18,
-            icon: Icon(MyIcons.database),
-            onPressed: () {
-              data.getDataFromFirebase(0);
-            },
-          ),
+          // NumberWidget(data: data, numberToGet: 100),
+          // IconButton(
+          //   iconSize: 18,
+          //   icon: Icon(MyIcons.database),
+          //   onPressed: () {
+          //     data.getDataFromFirebase(0);
+          //   },
+          // ),
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
@@ -177,24 +187,67 @@ class ListScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-class NumberWidget extends StatelessWidget {
-  final Data data;
-  final int numberToGet;
-  NumberWidget({this.data, this.numberToGet});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: GestureDetector(
-          onTap: () {
-            data.getDataFromFirebase(numberToGet);
-          },
-          child: Text(
-            numberToGet.toString(),
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          )),
+  Badge buildBadge(data) {
+    return Badge(
+      borderRadius: BorderRadius.circular(5),
+      shape: BadgeShape.square,
+      position: BadgePosition.topEnd(top: 4, end: -6),
+      padding: EdgeInsets.fromLTRB(2, 1, 2, 2),
+      badgeContent: Container(
+        width: 25,
+        child: Text(
+          badgeNumber.toString(),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white, fontSize: 12),
+        ),
+      ),
+      badgeColor: Colors.red,
+      child: PopupMenuButton(
+        color: Colors.grey[200],
+        icon: FaIcon(FontAwesomeIcons.database),
+        onSelected: (value) async {
+          setState(() {
+            if (value == 0) {
+              badgeNumber = 'all';
+            } else {
+              badgeNumber = value.toString();
+            }
+          });
+          await data.getDataFromFirebase(value);
+        },
+        itemBuilder: (BuildContext context) {
+          List<PopupMenuItem> jj = dataToGet.map((num) {
+            return PopupMenuItem(
+              value: num,
+              child: Text('${num.toString()} last measurements'),
+            );
+          }).toList();
+          var s =
+              PopupMenuItem(value: 0, child: Text('all avilable neasurements'));
+          jj.add(s);
+          return jj;
+        },
+      ),
     );
   }
 }
+// class NumberWidget extends StatelessWidget {
+//   final Data data;
+//   final int numberToGet;
+//   NumberWidget({this.data, this.numberToGet});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: GestureDetector(
+//           onTap: () {
+//             data.getDataFromFirebase(numberToGet);
+//           },
+//           child: Text(
+//             numberToGet.toString(),
+//             style: TextStyle(color: Colors.white, fontSize: 20),
+//           )),
+//     );
+//   }
+// }

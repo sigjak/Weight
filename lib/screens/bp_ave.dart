@@ -73,6 +73,9 @@ class _BPAveState extends State<BPAve> {
       appBar: AppBar(
         title: Text("Bp averages"),
         actions: [
+          // NumberWidget(data: data, numberToGet: 50),
+          // SizedBox(width: 5),
+          // NumberWidget(data: data, numberToGet: 100),
           IconButton(
               icon: Icon(MyIcons.resize_small),
               onPressed: () async {
