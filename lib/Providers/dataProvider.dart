@@ -17,6 +17,15 @@ class Data with ChangeNotifier {
   double progress = 0;
   double weightInOneWeek = 0;
   double rms = 0;
+  String badgeNumber = '10';
+
+  // String get bdgNumber {
+  //   return _badgeNumber;
+  // }
+
+  // set bdgNumber(String badgeNumber) {
+  //   _badgeNumber = badgeNumber;
+  // }
 
   List<Bio> get items {
     return [..._items];

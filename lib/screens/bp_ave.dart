@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import "package:flutter/services.dart";
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:badges/badges.dart';
+
 import '../widgets/my_icons.dart';
 import '../widgets/bp_widgets.dart';
 import '../models/bio.dart';
@@ -73,22 +75,21 @@ class _BPAveState extends State<BPAve> {
       appBar: AppBar(
         title: Text("Bp averages"),
         actions: [
-          // NumberWidget(data: data, numberToGet: 50),
-          // SizedBox(width: 5),
-          // NumberWidget(data: data, numberToGet: 100),
-          IconButton(
-              icon: Icon(MyIcons.resize_small),
-              onPressed: () async {
-                await data.getDataFromFirebase(10);
-                await gettingData();
-              }),
-          IconButton(
-            icon: Icon(MyIcons.resize_full),
-            onPressed: () async {
-              await data.getDataFromFirebase(50);
-              await gettingData();
-            },
-          ),
+          buildBadge(data),
+          SizedBox(width: 20),
+          // IconButton(
+          //     icon: Icon(MyIcons.resize_small),
+          //     onPressed: () async {
+          //       await data.getDataFromFirebase(10);
+          //       await gettingData();
+          //     }),
+          // IconButton(
+          //   icon: Icon(MyIcons.resize_full),
+          //   onPressed: () async {
+          //     await data.getDataFromFirebase(50);
+          //     await gettingData();
+          //   },
+          //),
         ],
       ),
       body: myList.isEmpty
@@ -229,6 +230,55 @@ class _BPAveState extends State<BPAve> {
         child: Icon(Icons.exit_to_app),
         onPressed: () {
           SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        },
+      ),
+    );
+  }
+
+  Badge buildBadge(data) {
+    List<int> dataToGet = [10, 50, 100, 300];
+    String badgeNumber = data.badgeNumber;
+    return Badge(
+      borderRadius: BorderRadius.circular(5),
+      shape: BadgeShape.square,
+      position: BadgePosition.topEnd(top: 4, end: -6),
+      padding: EdgeInsets.fromLTRB(2, 1, 2, 2),
+      badgeContent: Container(
+        width: 25,
+        child: Text(
+          badgeNumber.toString(),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white, fontSize: 12),
+        ),
+      ),
+      badgeColor: Colors.red,
+      child: PopupMenuButton(
+        color: Colors.grey[200],
+        icon: Icon(MyIcons.database),
+        onSelected: (value) async {
+          setState(() {
+            if (value == 0) {
+              badgeNumber = 'all';
+              data.badgeNumber = 'all';
+            } else {
+              badgeNumber = value.toString();
+              data.badgeNumber = value.toString();
+            }
+          });
+          await data.getDataFromFirebase(value);
+          await gettingData();
+        },
+        itemBuilder: (BuildContext context) {
+          List<PopupMenuItem> jj = dataToGet.map((num) {
+            return PopupMenuItem(
+              value: num,
+              child: Text('${num.toString()} last measurements'),
+            );
+          }).toList();
+          var s =
+              PopupMenuItem(value: 0, child: Text('all avilable neasurements'));
+          jj.add(s);
+          return jj;
         },
       ),
     );

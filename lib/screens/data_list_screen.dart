@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:badges/badges.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import '../screens/syst_diast_screen.dart';
@@ -22,9 +21,6 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  String badgeNumber = '10';
-  List<int> dataToGet = [10, 50, 100, 300];
-
   noData() {
     Fluttertoast.showToast(
         msg: "No weight in entries. Expand selection. ",
@@ -189,6 +185,8 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   Badge buildBadge(data) {
+    String badgeNumber = data.badgeNumber;
+    List<int> dataToGet = [10, 50, 100, 300];
     return Badge(
       borderRadius: BorderRadius.circular(5),
       shape: BadgeShape.square,
@@ -205,15 +203,18 @@ class _ListScreenState extends State<ListScreen> {
       badgeColor: Colors.red,
       child: PopupMenuButton(
         color: Colors.grey[200],
-        icon: FaIcon(FontAwesomeIcons.database),
+        icon: Icon(MyIcons.database),
         onSelected: (value) async {
           setState(() {
             if (value == 0) {
               badgeNumber = 'all';
+              data.badgeNumber = 'all';
             } else {
               badgeNumber = value.toString();
+              data.badgeNumber = value.toString();
             }
           });
+
           await data.getDataFromFirebase(value);
         },
         itemBuilder: (BuildContext context) {
@@ -232,22 +233,3 @@ class _ListScreenState extends State<ListScreen> {
     );
   }
 }
-// class NumberWidget extends StatelessWidget {
-//   final Data data;
-//   final int numberToGet;
-//   NumberWidget({this.data, this.numberToGet});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: GestureDetector(
-//           onTap: () {
-//             data.getDataFromFirebase(numberToGet);
-//           },
-//           child: Text(
-//             numberToGet.toString(),
-//             style: TextStyle(color: Colors.white, fontSize: 20),
-//           )),
-//     );
-//   }
-// }
