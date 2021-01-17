@@ -18,10 +18,10 @@ class Bio with ChangeNotifier {
     };
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'weight': weight,
-    };
-  }
+  // Map<String, dynamic> toMap() {
+  //   return {
+  //     'id': id,
+  //     'weight': weight,
+  //   };
+  // }
 }

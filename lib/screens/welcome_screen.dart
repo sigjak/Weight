@@ -98,7 +98,7 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
                         elevation: 6,
                         child: Text(
                           'Login',
-                          style: TextStyle(fontSize: 25),
+                          style: TextStyle(fontSize: 30),
                         ),
                         onPressed: () async {
                           final authenticate =

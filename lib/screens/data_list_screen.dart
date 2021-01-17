@@ -214,8 +214,8 @@ class _ListScreenState extends State<ListScreen> {
               child: Text('${num.toString()} last measurements'),
             );
           }).toList();
-          var s =
-              PopupMenuItem(value: 0, child: Text('all avilable neasurements'));
+          var s = PopupMenuItem(
+              value: 0, child: Text('All available measurements'));
           jj.add(s);
           return jj;
         },

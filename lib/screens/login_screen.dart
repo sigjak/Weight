@@ -70,7 +70,7 @@ class _LoginState extends State<Login> {
                             },
                             child: Text(
                               'Edit',
-                              style: TextStyle(fontSize: 25),
+                              style: TextStyle(fontSize: 30),
                             ),
                           ),
                         ),
@@ -85,7 +85,7 @@ class _LoginState extends State<Login> {
                             },
                             child: Text(
                               'Add',
-                              style: TextStyle(fontSize: 25),
+                              style: TextStyle(fontSize: 30),
                             ),
                           ),
                         ),
