@@ -63,6 +63,7 @@ class _ListScreenState extends State<ListScreen> {
       body: RefreshIndicator(
         onRefresh: () async {
           await data.getDataFromFirebase(10);
+          data.badgeNumber = '10';
         },
         child: Container(
           decoration: BoxDecoration(

@@ -6,7 +6,7 @@ class Bio with ChangeNotifier {
   String syst;
   String diast;
   String pulse;
-  DateTime day;
+  dynamic day;
 
   Bio({this.id, this.weight, this.syst, this.diast, this.day, this.pulse});
 
