@@ -3,6 +3,11 @@ import 'data_add_screen.dart';
 import 'package:provider/provider.dart';
 import '../Providers/dataProvider.dart';
 import './data_list_screen.dart';
+import '../models/bio.dart';
+import '../Providers/database_helper.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
+//import 'package:sqflite/sqflite.dart';
 
 class Login extends StatefulWidget {
   static const routeName = '/login';
@@ -60,6 +65,36 @@ class _LoginState extends State<Login> {
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        RaisedButton(
+                            child: Text('Get '),
+                            onPressed: () async {
+                              DatabaseHelper db = DatabaseHelper.instance;
+                              List<Bio> inbio = await db.getLim(5);
+                              inbio.forEach((element) {
+                                print(element.day);
+                              });
+                            }),
+                        Container(
+                          child: RaisedButton(
+                            child: Text('Getjson'),
+                            onPressed: () async {
+                              DatabaseHelper db = DatabaseHelper.instance;
+                              List<Bio> myList = [];
+                              String data = await rootBundle
+                                  .loadString('assets/data/data.json');
+                              Map<String, dynamic> jsonResult =
+                                  json.decode(data);
+                              jsonResult.forEach((key, value) {
+                                myList.add(Bio.fromMap(value));
+                              });
+                              print(myList.length);
+                              await db.insertBatch(myList);
+                              // result.forEach((element) {
+                              //   print(result);
+                              // });
+                            },
+                          ),
+                        ),
                         Container(
                           height: 60,
                           width: double.infinity,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Bio with ChangeNotifier {
-  String id;
+  dynamic id;
   String weight;
   String syst;
   String diast;
@@ -18,10 +18,31 @@ class Bio with ChangeNotifier {
     };
   }
 
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     'id': id,
-  //     'weight': weight,
-  //   };
-  // }
+//
+//-----------------toMap
+//
+
+  Map<String, dynamic> toMap() {
+    var map = {
+      'weight': weight,
+      'systolic': syst,
+      'diastolic': diast,
+      'pulse': pulse,
+      'day': day,
+    };
+    return map;
+  }
+
+  //
+//-----------------fromMap
+//
+
+  Bio.fromMap(Map<String, dynamic> map) {
+    id = map['id'];
+    weight = map['weight'];
+    diast = map['diastolic'];
+    syst = map['systolic'];
+    pulse = map['pulse'];
+    day = map['day'];
+  }
 }
