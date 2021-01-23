@@ -251,7 +251,7 @@ class _BPAveState extends State<BPAve> {
             data.badgeNumber = value.toString();
           }
 
-          await data.getDataFromFirebase(value);
+          await data.getDataFromSQL(value);
           await gettingData();
         },
         itemBuilder: (BuildContext context) {

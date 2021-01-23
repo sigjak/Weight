@@ -5,6 +5,7 @@ import 'bp_ave.dart';
 import '../widgets/plot_data.dart';
 import '../Providers/dataProvider.dart';
 import '../widgets/my_icons.dart';
+//import '../widgets/app_drawer.dart';
 
 class SystDiast extends StatelessWidget {
   static const routeName = '/syst-diast';
@@ -25,7 +26,7 @@ class SystDiast extends StatelessWidget {
               })
         ],
       ),
-      //drawer: AppDrawer(),
+//drawer: AppDrawer(),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(

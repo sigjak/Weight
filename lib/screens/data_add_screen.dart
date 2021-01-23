@@ -31,8 +31,9 @@ class _AddEditState extends State<AddEdit> {
     _formKey.currentState.save();
     DateTime now = DateTime.now();
     //DateTime bb = DateTime(now.year, now.month, now.day);
-    // more thatn once a day
+    // more than once a day
     bio.day = now;
+
     //bio.day = bb;
     if (bio.id != null) {
       await Provider.of<Data>(context, listen: false)
@@ -40,6 +41,7 @@ class _AddEditState extends State<AddEdit> {
     } else {
       await Provider.of<Data>(context, listen: false).addNewData(bio);
     }
+
     setState(() {
       isLoading = false;
     });

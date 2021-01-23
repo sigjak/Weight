@@ -5,10 +5,11 @@ import './authProvider.dart';
 import '../models/plot.dart';
 import '../models/bio.dart';
 import '../calc/statistic.dart';
+import './database_helper.dart';
 
 class Data with ChangeNotifier {
   final Auth myAuth;
-
+  DatabaseHelper db = DatabaseHelper.instance;
   List<Bio> _items = [];
   List<Map<String, dynamic>> myList = [];
   List<double> systAveSd;
@@ -41,38 +42,50 @@ class Data with ChangeNotifier {
   Data(this.myAuth);
 
   final url = 'https://weight-8da08.firebaseio.com/weights/';
-
-  Future<void> getDataFromFirebase(int limMeasurements) async {
-    try {
-      List<Bio> loadedData = [];
-      String segment = '';
-      if (limMeasurements > 0) {
-        segment =
-            '${myAuth.id}.json?orderBy="uid"&limitToLast=$limMeasurements&auth=${myAuth.token}';
-      } else {
-        segment = '${myAuth.id}.json?auth=${myAuth.token}';
-      }
-      final response = await http.get('$url$segment');
-      final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
-      extractedData.forEach((key, data) {
-        loadedData.add(
-          Bio(
-              id: key,
-              weight: data['weight'],
-              syst: data['systolic'],
-              diast: data['diastolic'],
-              day: DateTime.parse(data['day']),
-              pulse: data['pulse']),
-        );
-      });
-
-      _items = loadedData;
-      _items.sort((a, b) => a.day.compareTo(b.day));
-      notifyListeners();
-    } catch (error) {
-      print(error);
-    }
+  Future<void> getDataFromSQL(int dataToGet) async {
+    List<Bio> loadedData = [];
+    loadedData = await db.getLim(dataToGet);
+    _items = loadedData;
+    _items.sort((a, b) => a.day.compareTo(b.day));
+    notifyListeners();
   }
+
+  // Future<void> getDataFromFirebase(int limMeasurements) async {
+  //   try {
+  //     List<Bio> loadedData = [];
+  //     String segment = '';
+  //     if (limMeasurements > 0) {
+  //       segment =
+  //           '${myAuth.id}.json?orderBy="uid"&limitToLast=$limMeasurements&auth=${myAuth.token}';
+  //     } else {
+  //       segment = '${myAuth.id}.json?auth=${myAuth.token}';
+  //     }
+  //     final response = await http.get('$url$segment');
+  //     final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
+  //     extractedData.forEach((key, data) {
+  //       loadedData.add(
+  //         Bio(
+  //             id: key,
+  //             weight: data['weight'],
+  //             syst: data['systolic'],
+  //             diast: data['diastolic'],
+  //             day: DateTime.parse(data['day']),
+  //             pulse: data['pulse']),
+  //       );
+  //     });
+
+  //     _items = loadedData;
+  //     _items.sort((a, b) => a.day.compareTo(b.day));
+  //     notifyListeners();
+  //   } catch (error) {
+  //     print(error);
+  //   }
+  // }
+  // Future<void> addNewDataSQL(bio) async {
+  //   await db.insertDB(bio);
+  //   _items.add(bio);
+  //   notifyListeners();
+  // }
 
   Future<void> addNewData(bio) async {
     try {
@@ -86,8 +99,9 @@ class Data with ChangeNotifier {
                 'pulse': bio.pulse,
               }));
       final decoded = jsonDecode(response.body);
-
       bio.id = decoded['name'];
+
+      await db.insertDB(bio); // add to SQL
       _items.add(bio);
       notifyListeners();
     } catch (error) {
@@ -121,6 +135,7 @@ class Data with ChangeNotifier {
       await http.delete('$url${myAuth.id}/$id.json?auth=${myAuth.token}');
       _items.removeWhere((element) => element.id == id);
       notifyListeners();
+      db.deleteItem(id);
     } catch (error) {
       print(error);
     }

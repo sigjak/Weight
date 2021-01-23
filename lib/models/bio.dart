@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 
 class Bio with ChangeNotifier {
-  dynamic id;
+  int sqlId;
+  String id;
   String weight;
   String syst;
   String diast;
   String pulse;
   dynamic day;
 
-  Bio({this.id, this.weight, this.syst, this.diast, this.day, this.pulse});
+  Bio(
+      {this.sqlId,
+      this.id,
+      this.weight,
+      this.syst,
+      this.diast,
+      this.day,
+      this.pulse});
 
 // item should be weight syst or diast))
   Map<String, dynamic> toPlot(var item) {
@@ -24,11 +32,12 @@ class Bio with ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     var map = {
+      'id': id,
       'weight': weight,
       'systolic': syst,
       'diastolic': diast,
       'pulse': pulse,
-      'day': day,
+      'day': day.toIso8601String(), // check this
     };
     return map;
   }
@@ -38,11 +47,20 @@ class Bio with ChangeNotifier {
 //
 
   Bio.fromMap(Map<String, dynamic> map) {
+    sqlId = map['sqlId'];
     id = map['id'];
     weight = map['weight'];
     diast = map['diastolic'];
     syst = map['systolic'];
     pulse = map['pulse'];
-    day = map['day'];
+    day = DateTime.parse(map['day']);
+  }
+
+  //
+  // override tostring
+  //
+  @override
+  String toString() {
+    return 'Bio: sqlId:$sqlId, id:$id, weight: $weight, systolic: $syst, diastolic: $diast, pulse: $pulse, day:$day';
   }
 }

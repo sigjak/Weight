@@ -30,7 +30,8 @@ class DatabaseHelper {
   _onCreateDB(Database db, int version) async {
     await db.execute('''
     CREATE TABLE $_db_name(
-     id INTEGER PRIMARY KEY AUTOINCREMENT,
+     sqlId INTEGER PRIMARY KEY AUTOINCREMENT,
+     id TEXT NOT NULL,
      weight TEXT,
      systolic TEXT,
      diastolic TEXT,
@@ -107,7 +108,7 @@ class DatabaseHelper {
   // delete
   //------------------------------
 
-  Future<void> deleteItem(int id) async {
+  Future<void> deleteItem(String id) async {
     final Database db = await database;
     await db.delete(_db_name, where: 'id=?', whereArgs: [id]);
   }

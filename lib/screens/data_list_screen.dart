@@ -62,7 +62,7 @@ class _ListScreenState extends State<ListScreen> {
       drawer: AppDrawer(),
       body: RefreshIndicator(
         onRefresh: () async {
-          await data.getDataFromFirebase(10);
+          await data.getDataFromSQL(10);
           data.badgeNumber = '10';
         },
         child: Container(
@@ -206,7 +206,7 @@ class _ListScreenState extends State<ListScreen> {
             data.badgeNumber = value.toString();
           }
 
-          await data.getDataFromFirebase(value);
+          await data.getDataFromSQL(value);
         },
         itemBuilder: (BuildContext context) {
           List<PopupMenuItem> jj = dataToGet.map((num) {

@@ -26,7 +26,8 @@ class _LoginState extends State<Login> {
   }
 
   void loading() async {
-    await Provider.of<Data>(context, listen: false).getDataFromFirebase(10);
+    //await Provider.of<Data>(context, listen: false).getDataFromFirebase(10);
+    await Provider.of<Data>(context, listen: false).getDataFromSQL(10);
     setState(() {
       isLoading = false;
     });
@@ -71,7 +72,7 @@ class _LoginState extends State<Login> {
                               DatabaseHelper db = DatabaseHelper.instance;
                               List<Bio> inbio = await db.getLim(5);
                               inbio.forEach((element) {
-                                print(element.day);
+                                print(element.toString());
                               });
                             }),
                         Container(
@@ -85,6 +86,7 @@ class _LoginState extends State<Login> {
                               Map<String, dynamic> jsonResult =
                                   json.decode(data);
                               jsonResult.forEach((key, value) {
+                                value['id'] = key;
                                 myList.add(Bio.fromMap(value));
                               });
                               print(myList.length);
