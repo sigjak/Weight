@@ -198,7 +198,7 @@ class _ListScreenState extends State<ListScreen> {
         color: Colors.grey[200],
         icon: Icon(MyIcons.database),
         onSelected: (value) async {
-          if (value == 0) {
+          if (value == 10000) {
             badgeNumber = 'all';
             data.badgeNumber = 'all';
           } else {
@@ -216,7 +216,7 @@ class _ListScreenState extends State<ListScreen> {
             );
           }).toList();
           var s = PopupMenuItem(
-              value: 0, child: Text('All available measurements'));
+              value: 10000, child: Text('All available measurements'));
           jj.add(s);
           return jj;
         },

@@ -243,7 +243,7 @@ class _BPAveState extends State<BPAve> {
         color: Colors.grey[200],
         icon: Icon(MyIcons.database),
         onSelected: (value) async {
-          if (value == 0) {
+          if (value == 100000) {
             badgeNumber = 'all';
             data.badgeNumber = 'all';
           } else {
@@ -262,7 +262,7 @@ class _BPAveState extends State<BPAve> {
             );
           }).toList();
           var s = PopupMenuItem(
-              value: 0, child: Text('All available measurements'));
+              value: 100000, child: Text('All available measurements'));
           jj.add(s);
           return jj;
         },

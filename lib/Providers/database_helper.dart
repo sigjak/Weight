@@ -31,7 +31,7 @@ class DatabaseHelper {
     await db.execute('''
     CREATE TABLE $_db_name(
      sqlId INTEGER PRIMARY KEY AUTOINCREMENT,
-     id TEXT NOT NULL,
+     id,
      weight TEXT,
      systolic TEXT,
      diastolic TEXT,

@@ -124,6 +124,7 @@ class Data with ChangeNotifier {
           }));
       final itemIndex = _items.indexWhere((item) => item.id == id);
       _items[itemIndex] = updated;
+      db.updateDB(updated);
       notifyListeners();
     } catch (error) {
       print(error);
