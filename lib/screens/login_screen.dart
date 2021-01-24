@@ -67,6 +67,12 @@ class _LoginState extends State<Login> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         RaisedButton(
+                            child: Text('DeleteDB'),
+                            onPressed: () async {
+                              DatabaseHelper db = DatabaseHelper.instance;
+                              db.deleteDb();
+                            }),
+                        RaisedButton(
                             child: Text('Get '),
                             onPressed: () async {
                               DatabaseHelper db = DatabaseHelper.instance;
@@ -87,10 +93,15 @@ class _LoginState extends State<Login> {
                                   json.decode(data);
                               jsonResult.forEach((key, value) {
                                 value['id'] = key;
-                                myList.add(Bio.fromMap(value));
+                                Bio ss = Bio.fromMap(value);
+                                print(ss.toString());
+                                myList.add(ss);
+                                // value['id'] = key;
+                                // myList.add(Bio.fromMap(value));
                               });
                               print(myList.length);
                               await db.insertBatch(myList);
+                              print('Done');
                               // result.forEach((element) {
                               //   print(result);
                               // });

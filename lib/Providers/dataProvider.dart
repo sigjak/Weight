@@ -42,6 +42,8 @@ class Data with ChangeNotifier {
   Data(this.myAuth);
 
   final url = 'https://weight-8da08.firebaseio.com/weights/';
+
+  //
   Future<void> getDataFromSQL(int dataToGet) async {
     List<Bio> loadedData = [];
     loadedData = await db.getLim(dataToGet);
