@@ -25,7 +25,8 @@ class Data with ChangeNotifier {
   }
 
   int get numbDays {
-    return _items.length;
+    Duration diff = _items.last.day.difference(_items.first.day);
+    return diff.inDays;
   }
 
   bool get weightEmpty {
@@ -46,9 +47,12 @@ class Data with ChangeNotifier {
   //
   Future<void> getDataFromSQL(int dataToGet) async {
     List<Bio> loadedData = [];
+
     loadedData = await db.getLim(dataToGet);
+
     _items = loadedData;
     _items.sort((a, b) => a.day.compareTo(b.day));
+
     notifyListeners();
   }
 

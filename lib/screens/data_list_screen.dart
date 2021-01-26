@@ -21,6 +21,8 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
+  ScrollController controller = ScrollController();
+
   noData() {
     Fluttertoast.showToast(
         msg: "No weight in entries. Expand selection. ",
@@ -34,6 +36,10 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.jumpTo(controller.position.maxScrollExtent);
+    });
+
     final data = Provider.of<Data>(context);
     var dialogs = Dialogs();
     return Scaffold(
@@ -104,6 +110,7 @@ class _ListScreenState extends State<ListScreen> {
                   color: Colors.white,
                 ),
                 child: ListView.builder(
+                  controller: controller,
                   itemCount: data.items.length,
                   itemBuilder: (ctx, i) => ListItem(
                     data.items[i],
