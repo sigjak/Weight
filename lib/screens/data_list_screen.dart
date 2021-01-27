@@ -36,11 +36,14 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<Data>(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.jumpTo(controller.position.maxScrollExtent);
+      if (data.items.length < 75) {
+        controller.jumpTo(controller.position.maxScrollExtent);
+      }
     });
 
-    final data = Provider.of<Data>(context);
+    //final data = Provider.of<Data>(context);
     var dialogs = Dialogs();
     return Scaffold(
       resizeToAvoidBottomPadding: false,
