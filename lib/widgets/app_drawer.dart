@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
+import '../widgets/my_icons.dart';
 import '../screens/data_add_screen.dart';
-
+import '../screens/data_list_screen.dart';
 import '../screens/register_screen.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -30,14 +30,14 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed(Register.routeName);
             },
           ),
-          // Divider(),
-          // ListTile(
-          //   leading: Icon(MyIcons.chart_line),
-          //   title: Text('Show Data'),
-          //   onTap: () {
-          //     Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
-          //   },
-          // ),
+          Divider(),
+          ListTile(
+            leading: Icon(MyIcons.chart_line),
+            title: Text('Show Data'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
+            },
+          ),
           // Divider(),
           // ListTile(
           //   leading: Icon(Icons.favorite_border),
