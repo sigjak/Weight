@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 import './login_screen.dart';
-import './register_screen.dart';
+//import './register_screen.dart';
+import './data_list_screen.dart';
 import '../Providers/authProvider.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
+
+import '../Providers/dataProvider.dart';
 
 class Welcome extends StatefulWidget {
   static const routeName = '/welcome';
@@ -19,9 +24,64 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<Offset> _slideAnimation;
 
+  showNoNetDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text('No internet connection!'),
+              content: Text('You can view data but not save or edit.'),
+              actions: [
+                TextButton(
+                    onPressed: () async {
+                      await Provider.of<Data>(context, listen: false)
+                          .getDataFromSQL(10);
+                      Navigator.of(context)
+                          .pushReplacementNamed(ListScreen.routeName);
+                    },
+                    child: Text('Proceed')),
+                TextButton.icon(
+                    onPressed: () {
+                      SystemChannels.platform
+                          .invokeMethod('SystemNavigator.pop');
+                    },
+                    icon: Icon(Icons.exit_to_app),
+                    label: Text('Leave'))
+              ]);
+        });
+  }
+
+  net() async {
+    final authenticate = Provider.of<Auth>(context, listen: false);
+
+    await authenticate.signIn(email, password).catchError((error) {
+      message = error;
+    });
+
+    if (message.isEmpty) {
+      Navigator.of(context).pushReplacementNamed(Login.routeName);
+    }
+  }
+
+  noNet() {
+    setState(() {
+      show = false;
+      //dialog here
+      showNoNetDialog();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    setState(() {
+      show = true;
+    });
+    DataConnectionChecker().hasConnection.then((result) => {
+          if (result == true) {net()} else {noNet()}
+        });
+
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 500),
@@ -36,7 +96,6 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
       ),
     );
     _controller.forward();
-    //   _sizeAnimation.addListener(() => setState(() {}));
   }
 
   @override
@@ -50,18 +109,6 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         centerTitle: true,
         title: Text('Bio Data'),
-        actions: <Widget>[
-          Builder(
-            builder: (context) => FlatButton.icon(
-              color: Colors.brown[600],
-              icon: Icon(Icons.people),
-              onPressed: () {
-                Navigator.of(context).pushNamed(Register.routeName);
-              },
-              label: Text('Register'),
-            ),
-          ),
-        ],
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -92,46 +139,7 @@ class _WelcomeState extends State<Welcome> with SingleTickerProviderStateMixin {
                         ),
                       ],
                     )
-                  : Container(
-                      height: 60,
-                      child: RaisedButton(
-                        elevation: 6,
-                        child: Text(
-                          'Login',
-                          style: TextStyle(fontSize: 30),
-                        ),
-                        onPressed: () async {
-                          final authenticate =
-                              Provider.of<Auth>(context, listen: false);
-                          setState(() {
-                            show = true;
-                          });
-                          await authenticate
-                              .signIn(email, password)
-                              .catchError((error) {
-                            message = error;
-                          });
-
-                          if (message.isEmpty) {
-                            Navigator.of(context)
-                                .pushReplacementNamed(Login.routeName);
-                          } else {
-                            setState(() {
-                              show = false;
-                            });
-                            authenticate.registerAlert(message, context);
-                            Future.delayed(Duration(seconds: 2), () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed(Welcome.routeName);
-                            });
-                          }
-
-                          setState(() {
-                            show = false;
-                          });
-                        },
-                      ),
-                    ),
+                  : Container(),
             ),
           ),
         ),
