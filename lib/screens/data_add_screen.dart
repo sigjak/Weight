@@ -60,22 +60,22 @@ class _AddEditState extends State<AddEdit> {
     bio.syst = toAverage(systThree);
     bio.diast = toAverage(diastThree);
     bio.pulse = toAverage(pulseThree);
-    print(bio.syst);
-    print(bio.diast);
-    print(bio.pulse);
+    // print(bio.syst);
+    // print(bio.diast);
+    // print(bio.pulse);
 
     //bio.day = bb;
-    // if (bio.id != null) {
-    //   await Provider.of<Data>(context, listen: false)
-    //       .updateOldData(bio.id, bio);
-    // } else {
-    //   await Provider.of<Data>(context, listen: false).addNewData(bio);
-    // }
+    if (bio.id != null) {
+      await Provider.of<Data>(context, listen: false)
+          .updateOldData(bio.id, bio);
+    } else {
+      await Provider.of<Data>(context, listen: false).addNewData(bio);
+    }
 
     setState(() {
       isLoading = false;
     });
-    //Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
   }
 
   String validateNumber(var val) {
