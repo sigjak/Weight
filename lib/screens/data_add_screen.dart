@@ -15,6 +15,12 @@ class AddEdit extends StatefulWidget {
 class _AddEditState extends State<AddEdit> {
   final _formKey = GlobalKey<FormState>();
   final FocusScopeNode _node = FocusScopeNode();
+
+  List<String> systThree = [];
+  List<String> diastThree = [];
+  List<String> pulseThree = [];
+  int visCount = 0;
+
   Bio bio = Bio();
   var isLoading = false;
   var init = {
@@ -23,6 +29,23 @@ class _AddEditState extends State<AddEdit> {
     'diastolic': '',
     'pulse': '',
   };
+
+  String toAverage(List<String> threeList) {
+    double total = 0;
+    double ave = 0;
+    double count = 0;
+    threeList.forEach((element) {
+      if (element.isNotEmpty && element != null) {
+        double temp = (double.tryParse(element));
+        count++;
+        total += temp;
+      }
+    });
+    ave = total / count;
+
+    String value = ave.toStringAsFixed(0);
+    return value;
+  }
 
   void saveFormData() async {
     setState(() {
@@ -34,21 +57,28 @@ class _AddEditState extends State<AddEdit> {
     // more than once a day
     bio.day = now;
 
+    bio.syst = toAverage(systThree);
+    bio.diast = toAverage(diastThree);
+    bio.pulse = toAverage(pulseThree);
+    print(bio.syst);
+    print(bio.diast);
+    print(bio.pulse);
+
     //bio.day = bb;
-    if (bio.id != null) {
-      await Provider.of<Data>(context, listen: false)
-          .updateOldData(bio.id, bio);
-    } else {
-      await Provider.of<Data>(context, listen: false).addNewData(bio);
-    }
+    // if (bio.id != null) {
+    //   await Provider.of<Data>(context, listen: false)
+    //       .updateOldData(bio.id, bio);
+    // } else {
+    //   await Provider.of<Data>(context, listen: false).addNewData(bio);
+    // }
 
     setState(() {
       isLoading = false;
     });
-    Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
+    //Navigator.of(context).pushReplacementNamed(ListScreen.routeName);
   }
 
-  String validateNumber(String val) {
+  String validateNumber(var val) {
     if (val.isNotEmpty && double.tryParse(val) == null) {
       return ('Enter a valid number');
     } else {
@@ -116,64 +146,202 @@ class _AddEditState extends State<AddEdit> {
                               bio.weight = value;
                             },
                           ),
-                          TextFormField(
-                            validator: validateNumber,
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
-                            onEditingComplete: _node.nextFocus,
-                            initialValue: init['systolic'],
-                            decoration: InputDecoration(
-                              labelText: 'Systolic',
+                          Row(children: [
+                            Expanded(
+                              child: TextFormField(
+                                validator: validateNumber,
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.next,
+                                onEditingComplete: _node.nextFocus,
+                                initialValue: init['systolic'],
+                                decoration: InputDecoration(
+                                  labelText: 'Systolic 1',
+                                ),
+                                onSaved: (value) {
+                                  systThree.insert(0, value);
+                                },
+                              ),
                             ),
-                            onSaved: (value) {
-                              bio.syst = value;
-                            },
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Expanded(
+                              child: TextFormField(
+                                validator: validateNumber,
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.next,
+                                onEditingComplete: _node.nextFocus,
+                                initialValue: init['diastolic'],
+                                decoration: InputDecoration(
+                                  labelText: 'Diastolic 1',
+                                ),
+                                onSaved: (value) {
+                                  diastThree.insert(0, value);
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Expanded(
+                              child: TextFormField(
+                                validator: validateNumber,
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.next,
+                                onEditingComplete: _node.nextFocus,
+                                initialValue: init['pulse'],
+                                decoration: InputDecoration(
+                                  labelText: 'Pulse 1',
+                                ),
+                                onSaved: (value) {
+                                  pulseThree.insert(0, value);
+                                },
+                              ),
+                            ),
+                          ]),
+                          Visibility(
+                            visible: visCount > 0 ? true : false,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    validator: validateNumber,
+                                    keyboardType: TextInputType.number,
+                                    textInputAction: TextInputAction.next,
+                                    onEditingComplete: _node.nextFocus,
+                                    initialValue: init['systolic'],
+                                    decoration: InputDecoration(
+                                      labelText: 'Systolic 2',
+                                    ),
+                                    onSaved: (value) {
+                                      systThree.insert(1, value);
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                  child: TextFormField(
+                                    validator: validateNumber,
+                                    keyboardType: TextInputType.number,
+                                    textInputAction: TextInputAction.next,
+                                    onEditingComplete: _node.nextFocus,
+                                    initialValue: init['diastolic'],
+                                    decoration: InputDecoration(
+                                      labelText: 'Diastolic 2',
+                                    ),
+                                    onSaved: (value) {
+                                      diastThree.insert(1, value);
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                  child: TextFormField(
+                                    validator: validateNumber,
+                                    keyboardType: TextInputType.number,
+                                    textInputAction: TextInputAction.next,
+                                    onEditingComplete: _node.nextFocus,
+                                    initialValue: init['pulse'],
+                                    decoration: InputDecoration(
+                                      labelText: 'Pulse 2',
+                                    ),
+                                    onSaved: (value) {
+                                      pulseThree.insert(1, value);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          TextFormField(
-                            validator: validateNumber,
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
-                            onEditingComplete: _node.nextFocus,
-                            initialValue: init['diastolic'],
-                            decoration: InputDecoration(
-                              labelText: 'Diastolic',
+                          Visibility(
+                            visible: visCount > 1 ? true : false,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    validator: validateNumber,
+                                    keyboardType: TextInputType.number,
+                                    textInputAction: TextInputAction.next,
+                                    onEditingComplete: _node.nextFocus,
+                                    initialValue: init['systolic'],
+                                    decoration: InputDecoration(
+                                      labelText: 'Systolic 3',
+                                    ),
+                                    onSaved: (value) {
+                                      systThree.insert(2, value);
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                  child: TextFormField(
+                                    validator: validateNumber,
+                                    keyboardType: TextInputType.number,
+                                    textInputAction: TextInputAction.next,
+                                    onEditingComplete: _node.nextFocus,
+                                    initialValue: init['diastolic'],
+                                    decoration: InputDecoration(
+                                      labelText: 'Diastolic 3',
+                                    ),
+                                    onSaved: (value) {
+                                      diastThree.insert(2, value);
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                  child: TextFormField(
+                                    validator: validateNumber,
+                                    keyboardType: TextInputType.number,
+                                    textInputAction: TextInputAction.next,
+                                    onEditingComplete: _node.nextFocus,
+                                    initialValue: init['pulse'],
+                                    decoration: InputDecoration(
+                                      labelText: 'Pulse 3',
+                                    ),
+                                    onSaved: (value) {
+                                      pulseThree.insert(2, value);
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
-                            onSaved: (value) {
-                              bio.diast = value;
-                            },
-                          ),
-                          TextFormField(
-                            validator: validateNumber,
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.done,
-                            onEditingComplete: _node.nextFocus,
-                            initialValue: init['pulse'],
-                            decoration: InputDecoration(
-                              labelText: 'Pulse',
-                            ),
-                            onSaved: (value) {
-                              bio.pulse = value;
-                            },
                           ),
                           SizedBox(height: 20),
-                          Builder(builder: (BuildContext context) {
-                            return RaisedButton(
-                                child: Text('Submit'),
-                                onPressed: () {
-                                  SystemChannels.textInput
-                                      .invokeMethod('TextInput.hide');
-                                  if (!_formKey.currentState.validate()) {
-                                    return;
-                                  }
-                                  saveFormData();
-
-                                  Scaffold.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('New data added!'),
-                                    ),
-                                  );
-                                });
-                          }),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              RaisedButton(
+                                  child: Text('Submit'),
+                                  onPressed: () {
+                                    SystemChannels.textInput
+                                        .invokeMethod('TextInput.hide');
+                                    if (!_formKey.currentState.validate()) {
+                                      return;
+                                    }
+                                    saveFormData();
+                                  }),
+                              Visibility(
+                                visible: visCount > 1 ? false : true,
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      visCount++;
+                                    });
+                                  },
+                                  child: Text('More Bp'),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
