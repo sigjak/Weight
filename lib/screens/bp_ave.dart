@@ -108,9 +108,17 @@ class _BPAveState extends State<BPAve> {
                   child: RaisedButton(
                       child: Text("Select Range"),
                       onPressed: () async {
+                        if (myList.length < 50) {
+                          await data.getDataFromSQL(50);
+                          await gettingData();
+                          // setState(() {
+                          //   data.badgeNumber = '50';
+                          // });
+                        }
                         myPlotData = await bpCalc.dateRange(
                             context, myList.first.day, myList.last.day, myList);
-                        if (myPlotData.isNotEmpty) {
+                        //if (myPlotData[0].yAxis == 0) return;
+                        if (myPlotData?.isNotEmpty ?? false) {
                           setState(() {
                             mySyst = bpCalc.getBpFromPlotlist(myPlotData)[0];
                             //myDiast = bpCalc.getBpFromPlotlist(myPlotData)[1];

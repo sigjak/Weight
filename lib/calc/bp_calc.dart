@@ -14,6 +14,8 @@ class BPCalc {
   Future<List<Plot>> dateRange(BuildContext context, DateTime firstDate,
       DateTime lastDate, List<Bio> bioList) async {
     //List<int> validIndices = [];
+    //List<Plot> zeroPlot = [];
+    // zeroPlot.add(Plot(xAxis: DateTime.now(), yAxis: 0.0, yAxis2: 0.0));
 
     final DateTimeRange picked = await showDateRangePicker(
       context: context,
@@ -30,8 +32,9 @@ class BPCalc {
     );
     if (picked != null) {
       return findDataInRange(bioList, picked.start, picked.end);
-    } else
-      return null;
+    }
+    //return zeroPlot;
+    return null;
   }
 
   List<Plot> findDataInRange(bioList, firstDate, lastDateSelected) {

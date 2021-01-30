@@ -49,7 +49,7 @@ class Data with ChangeNotifier {
     List<Bio> loadedData = [];
 
     loadedData = await db.getLim(dataToGet);
-
+    badgeNumber = dataToGet.toString();
     _items = loadedData;
     _items.sort((a, b) => a.day.compareTo(b.day));
 
