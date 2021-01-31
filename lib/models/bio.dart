@@ -37,7 +37,7 @@ class Bio with ChangeNotifier {
       'systolic': syst,
       'diastolic': diast,
       'pulse': pulse,
-      'day': day.toIso8601String(), // check this
+      'day': day // check this
     };
     return map;
   }

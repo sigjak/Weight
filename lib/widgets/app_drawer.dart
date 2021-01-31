@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+
 import '../widgets/my_icons.dart';
 import '../screens/data_add_screen.dart';
 import '../screens/data_list_screen.dart';
 import '../screens/register_screen.dart';
 import '../Providers/database_helper.dart';
+import '../Providers/dataProvider.dart';
+import '../models/bio.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -23,6 +28,9 @@ class _AppDrawerState extends State<AppDrawer> {
                 onPressed: () async {
                   DatabaseHelper db = DatabaseHelper.instance;
                   await db.deleteDb();
+                  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                  // Navigator.pop(context);
+                  //Phoenix.rebirth(context);
                 },
                 child: Text(
                   'YES',
@@ -41,6 +49,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<Data>(context);
     return Drawer(
       child: Column(
         children: <Widget>[
@@ -83,7 +92,14 @@ class _AppDrawerState extends State<AppDrawer> {
           ListTile(
             leading: Icon(MyIcons.database),
             title: Text('Build new SQL from Firebase db'),
-            onTap: () {},
+            onTap: () async {
+              DatabaseHelper db = DatabaseHelper.instance;
+              List<Bio> loaded = [];
+              loaded = await data.getDataFromFirebase();
+              await db.insertBatch(loaded);
+              print('DONE');
+              await data.getDataFromSQL(10);
+            },
           ),
         ],
       ),

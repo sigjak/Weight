@@ -56,6 +56,34 @@ class Data with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<Bio>> getDataFromFirebase() async {
+    List<Bio> loadedData = [];
+    try {
+      String segment = '${myAuth.id}.json?auth=${myAuth.token}';
+
+      final response = await http.get('$url$segment');
+      final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
+      extractedData.forEach((key, data) {
+        loadedData.add(
+          Bio(
+              id: key,
+              weight: data['weight'],
+              syst: data['systolic'],
+              diast: data['diastolic'],
+              day: data['day'],
+              pulse: data['pulse']),
+        );
+      });
+
+      loadedData.sort((a, b) => a.day.compareTo(b.day));
+      print(loadedData.length);
+      print(loadedData.last.day);
+    } catch (error) {
+      print(error);
+    }
+    return loadedData;
+  }
+
   // Future<void> getDataFromFirebase(int limMeasurements) async {
   //   try {
   //     List<Bio> loadedData = [];
