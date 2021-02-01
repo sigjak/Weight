@@ -48,6 +48,12 @@ class DatabaseHelper {
     await deleteDatabase(db.path);
   }
 
+// deleta all
+  Future<void> deleteAll() async {
+    final Database db = await database;
+    db.rawDelete("Delete from bio_table");
+  }
+
 // insert
   Future<int> insertDB(Bio bio) async {
     final Database db = await database;

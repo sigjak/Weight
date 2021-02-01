@@ -76,8 +76,6 @@ class Data with ChangeNotifier {
       });
 
       loadedData.sort((a, b) => a.day.compareTo(b.day));
-      print(loadedData.length);
-      print(loadedData.last.day);
     } catch (error) {
       print(error);
     }

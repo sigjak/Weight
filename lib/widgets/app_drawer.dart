@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/services.dart';
 
 import '../widgets/my_icons.dart';
 import '../screens/data_add_screen.dart';
@@ -16,21 +15,41 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+  _showSnackbarDb(BuildContext context) {
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          "SQL database rebuilt!",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
+    );
+  }
+
   _showDeleteDbDialog() {
     showDialog(
         context: context,
-        builder: (BuildContext context) {
+        builder: (BuildContext dialogContext) {
+          final data = Provider.of<Data>(context);
           return AlertDialog(
-            title: Text('Deleteing SQL database'),
+            title: Text('Resetting SQL database to Firebase'),
             content: Text('This can not be undone!'),
             actions: [
               TextButton(
                 onPressed: () async {
+                  List<Bio> loaded = [];
                   DatabaseHelper db = DatabaseHelper.instance;
-                  await db.deleteDb();
-                  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                  // Navigator.pop(context);
-                  //Phoenix.rebirth(context);
+                  await db.deleteAll();
+
+                  loaded = await data.getDataFromFirebase();
+                  await db.insertBatch(loaded);
+
+                  await data.getDataFromSQL(10);
+
+                  Navigator.pop(dialogContext);
+                  Navigator.pop(context);
+                  _showSnackbarDb(context);
                 },
                 child: Text(
                   'YES',
@@ -49,7 +68,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final data = Provider.of<Data>(context);
+    // final data = Provider.of<Data>(context);
     return Drawer(
       child: Column(
         children: <Widget>[
@@ -83,22 +102,11 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.delete_forever),
-            title: Text('Delete SQL database'),
-            onTap: () async {
-              _showDeleteDbDialog();
-            },
-          ),
-          ListTile(
             leading: Icon(MyIcons.database),
-            title: Text('Build new SQL from Firebase db'),
+            title: Text('Reset database to Firebase'),
             onTap: () async {
-              DatabaseHelper db = DatabaseHelper.instance;
-              List<Bio> loaded = [];
-              loaded = await data.getDataFromFirebase();
-              await db.insertBatch(loaded);
-              print('DONE');
-              await data.getDataFromSQL(10);
+              await _showDeleteDbDialog();
+              //Navigator.pop(context);
             },
           ),
         ],
