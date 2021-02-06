@@ -157,7 +157,7 @@ class _ListScreenState extends State<ListScreen> {
                                     ),
                                   );
                                 },
-                                child: data.weight().length < 1
+                                child: data.progress.toString() == "NaN"
                                     ? Container()
                                     : Container(
                                         width: 400,

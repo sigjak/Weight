@@ -8,4 +8,9 @@ class Plot {
   String getName(int index) {
     return names[index];
   }
+
+  @override
+  String toString() {
+    return 'xAxis: $xAxis, yAxis: $yAxis, yAxis2: $yAxis2';
+  }
 }

@@ -33,8 +33,9 @@ class _AppDrawerState extends State<AppDrawer> {
         builder: (BuildContext dialogContext) {
           final data = Provider.of<Data>(context);
           return AlertDialog(
-            title: Text('Resetting SQL database to Firebase'),
-            content: Text('This can not be undone!'),
+            title: Text('Resetting SQL to Firebase'),
+            content:
+                Text('This can not be undone. Local SQL will be overwritten!'),
             actions: [
               TextButton(
                 onPressed: () async {
@@ -68,7 +69,6 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    // final data = Provider.of<Data>(context);
     return Drawer(
       child: Column(
         children: <Widget>[
@@ -103,10 +103,9 @@ class _AppDrawerState extends State<AppDrawer> {
           Divider(),
           ListTile(
             leading: Icon(MyIcons.database),
-            title: Text('Reset database to Firebase'),
+            title: Text('Sync SQL to Firebase'),
             onTap: () async {
               await _showDeleteDbDialog();
-              //Navigator.pop(context);
             },
           ),
         ],

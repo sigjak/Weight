@@ -3,10 +3,10 @@ import 'data_add_screen.dart';
 import 'package:provider/provider.dart';
 import '../Providers/dataProvider.dart';
 import './data_list_screen.dart';
-import '../models/bio.dart';
-import '../Providers/database_helper.dart';
-import 'package:flutter/services.dart';
-import 'dart:convert';
+// import '../models/bio.dart';
+// import '../Providers/database_helper.dart';
+// import 'package:flutter/services.dart';
+// import 'dart:convert';
 //import 'package:sqflite/sqflite.dart';
 
 class Login extends StatefulWidget {
@@ -81,33 +81,33 @@ class _LoginState extends State<Login> {
                         //         print(element.toString());
                         //       });
                         //     }),
-                        Container(
-                          child: RaisedButton(
-                            child: Text('Getjson'),
-                            onPressed: () async {
-                              DatabaseHelper db = DatabaseHelper.instance;
-                              List<Bio> myList = [];
-                              String data = await rootBundle
-                                  .loadString('assets/data/data.json');
-                              Map<String, dynamic> jsonResult =
-                                  json.decode(data);
-                              jsonResult.forEach((key, value) {
-                                value['id'] = key;
-                                Bio ss = Bio.fromMap(value);
-                                print(ss.toString());
-                                myList.add(ss);
-                                // value['id'] = key;
-                                // myList.add(Bio.fromMap(value));
-                              });
-                              print(myList.length);
-                              await db.insertBatch(myList);
-                              print('Done');
-                              // result.forEach((element) {
-                              //   print(result);
-                              // });
-                            },
-                          ),
-                        ),
+                        // Container(
+                        //   child: RaisedButton(
+                        //     child: Text('Getjson'),
+                        //     onPressed: () async {
+                        //       DatabaseHelper db = DatabaseHelper.instance;
+                        //       List<Bio> myList = [];
+                        //       String data = await rootBundle
+                        //           .loadString('assets/data/data.json');
+                        //       Map<String, dynamic> jsonResult =
+                        //           json.decode(data);
+                        //       jsonResult.forEach((key, value) {
+                        //         value['id'] = key;
+                        //         Bio ss = Bio.fromMap(value);
+                        //         print(ss.toString());
+                        //         myList.add(ss);
+                        //         // value['id'] = key;
+                        //         // myList.add(Bio.fromMap(value));
+                        //       });
+                        //       print(myList.length);
+                        //       await db.insertBatch(myList);
+                        //       print('Done');
+                        //       // result.forEach((element) {
+                        //       //   print(result);
+                        //       // });
+                        //     },
+                        //   ),
+                        // ),
                         Container(
                           height: 60,
                           width: double.infinity,
