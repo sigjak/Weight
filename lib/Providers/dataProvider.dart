@@ -19,6 +19,8 @@ class Data with ChangeNotifier {
   double weightInOneWeek = 0;
   double rms = 0;
   String badgeNumber = '10';
+  double bmi;
+  double colhue;
 
   List<Bio> get items {
     return [..._items];
@@ -82,43 +84,6 @@ class Data with ChangeNotifier {
     return loadedData;
   }
 
-  // Future<void> getDataFromFirebase(int limMeasurements) async {
-  //   try {
-  //     List<Bio> loadedData = [];
-  //     String segment = '';
-  //     if (limMeasurements > 0) {
-  //       segment =
-  //           '${myAuth.id}.json?orderBy="uid"&limitToLast=$limMeasurements&auth=${myAuth.token}';
-  //     } else {
-  //       segment = '${myAuth.id}.json?auth=${myAuth.token}';
-  //     }
-  //     final response = await http.get('$url$segment');
-  //     final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
-  //     extractedData.forEach((key, data) {
-  //       loadedData.add(
-  //         Bio(
-  //             id: key,
-  //             weight: data['weight'],
-  //             syst: data['systolic'],
-  //             diast: data['diastolic'],
-  //             day: DateTime.parse(data['day']),
-  //             pulse: data['pulse']),
-  //       );
-  //     });
-
-  //     _items = loadedData;
-  //     _items.sort((a, b) => a.day.compareTo(b.day));
-  //     notifyListeners();
-  //   } catch (error) {
-  //     print(error);
-  //   }
-  // }
-  // Future<void> addNewDataSQL(bio) async {
-  //   await db.insertDB(bio);
-  //   _items.add(bio);
-  //   notifyListeners();
-  // }
-
   Future<void> addNewData(bio) async {
     try {
       final response =
@@ -132,7 +97,8 @@ class Data with ChangeNotifier {
               }));
       final decoded = jsonDecode(response.body);
       bio.id = decoded['name'];
-
+      print('In FB add data before insert');
+      // await addNewDataSQL(bio);
       await db.insertDB(bio); // add to SQL
       _items.add(bio);
       notifyListeners();
@@ -140,6 +106,14 @@ class Data with ChangeNotifier {
       print(error);
     }
   }
+
+  // Future<void> addNewDataSQL(Bio bioSQL) async {
+  //   print(bioSQL.toString());
+  //   bioSQL.day = bioSQL.day.toIso8601String();
+  //   print('In sqlAdd data');
+  //   print(bioSQL.day);
+  //   //await db.insertDB(bioSQL);
+  // }
 
   Bio findById(String id) {
     return _items.firstWhere((item) => item.id == id);
@@ -193,6 +167,9 @@ class Data with ChangeNotifier {
         ordinate.add(double.tryParse(element.weight));
       }
     });
+    bmi = myPlot.last.yAxis / (1.86 * 1.86);
+    colhue = findColhue(bmi);
+
     List regress = [];
     regress = (statistic.regressData(abscissa, ordinate));
     myPlot.add(regress[0]);
@@ -249,5 +226,20 @@ class Data with ChangeNotifier {
     // print(diastAveSd);
     systAveSd = statistic.calcAverSD(systArray);
     return myPlot;
+  }
+
+  double findColhue(bmi) {
+    if (bmi >= 25.0 && bmi <= 25.5) return 120;
+    if (bmi > 25.5 && bmi <= 26.0) return 105;
+    if (bmi > 26.0 && bmi <= 26.5) return 90;
+    if (bmi > 26.5 && bmi <= 27.0) return 75;
+    if (bmi > 27.0 && bmi <= 27.5) return 60;
+    if (bmi > 27.5 && bmi <= 28.0) return 50;
+
+    if (bmi > 28.0 && bmi <= 28.5) return 40;
+    if (bmi > 28.5 && bmi <= 29.0) return 30;
+    if (bmi > 29.0 && bmi <= 29.5) return 20;
+    if (bmi > 29.5 && bmi <= 30.0) return 10;
+    return 0;
   }
 }

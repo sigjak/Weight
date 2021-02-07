@@ -37,8 +37,7 @@ class Statistic {
     double sigmaX = 0;
     double sigmaY = 0;
     double sigmaXSquared = 0;
-    //print(x);
-    //print(y);
+
     double sigmaXY = 0;
     int n = x.length;
     double slope = 0;
@@ -74,7 +73,9 @@ class Statistic {
     int fd = x[0].toInt();
     DateTime lastDay = DateTime.fromMillisecondsSinceEpoch(ld);
     DateTime firstDay = DateTime.fromMillisecondsSinceEpoch(fd);
+
     var difference = lastDay.difference(firstDay).inDays;
+    if (difference <= 0) difference = 1;
 
     List<dynamic> regPlot = [];
     var progress = (last - first) * 1000 / (difference);

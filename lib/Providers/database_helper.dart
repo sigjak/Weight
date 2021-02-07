@@ -57,7 +57,8 @@ class DatabaseHelper {
 // insert
   Future<int> insertDB(Bio bio) async {
     final Database db = await database;
-    int recordId = await db.insert(_db_name, bio.toMap());
+    int recordId = await db.insert(_db_name, bio.toSQLMap());
+    print('recordId $recordId');
     return recordId;
   }
 

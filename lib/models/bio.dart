@@ -38,6 +38,19 @@ class Bio with ChangeNotifier {
       'diastolic': diast,
       'pulse': pulse,
       'day': day // check this
+      // 'day': day.toIso8601String() // check this
+    };
+    return map;
+  }
+
+  Map<String, dynamic> toSQLMap() {
+    var map = {
+      'id': id,
+      'weight': weight,
+      'systolic': syst,
+      'diastolic': diast,
+      'pulse': pulse,
+      'day': day.toIso8601String() // check this
     };
     return map;
   }

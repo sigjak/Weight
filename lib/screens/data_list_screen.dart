@@ -170,6 +170,30 @@ class _ListScreenState extends State<ListScreen> {
                               );
                             }),
                           ),
+                          Positioned(
+                            top: 25,
+                            left: 200,
+                            child: Stack(
+                              children: [
+                                Text(
+                                  'BMI: ${data.bmi.toStringAsFixed(1)}',
+                                  style: TextStyle(
+                                      foreground: Paint()
+                                        ..strokeWidth = 1
+                                        ..style = PaintingStyle.stroke
+                                        ..color = HSLColor.fromAHSL(
+                                                1, data.colhue, 1, 0.5)
+                                            .toColor()),
+                                ),
+                                Text(
+                                  'BMI: ${data.bmi.toStringAsFixed(1)}',
+                                  style: TextStyle(
+                                      color: Colors.grey[400],
+                                      fontWeight: FontWeight.w100),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
               ),
