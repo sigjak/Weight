@@ -42,6 +42,7 @@ class DatabaseHelper {
   }
 
   //-----------------------------  Database created ------------------
+
 //delete database
   Future<void> deleteDb() async {
     final Database db = await database;
@@ -58,7 +59,7 @@ class DatabaseHelper {
   Future<int> insertDB(Bio bio) async {
     final Database db = await database;
     int recordId = await db.insert(_db_name, bio.toSQLMap());
-    print('recordId $recordId');
+
     return recordId;
   }
 
@@ -96,7 +97,8 @@ class DatabaseHelper {
 
   Future updateDB(Bio bio) async {
     final Database db = await database;
-    await db.update(_db_name, bio.toMap(), where: 'id=?', whereArgs: [bio.id]);
+    await db
+        .update(_db_name, bio.toSQLMap(), where: 'id=?', whereArgs: [bio.id]);
   }
 
 //-------------------------------

@@ -97,8 +97,7 @@ class Data with ChangeNotifier {
               }));
       final decoded = jsonDecode(response.body);
       bio.id = decoded['name'];
-      print('In FB add data before insert');
-      // await addNewDataSQL(bio);
+
       await db.insertDB(bio); // add to SQL
       _items.add(bio);
       notifyListeners();

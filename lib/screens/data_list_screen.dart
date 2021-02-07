@@ -189,7 +189,7 @@ class _ListScreenState extends State<ListScreen> {
                                   'BMI: ${data.bmi.toStringAsFixed(1)}',
                                   style: TextStyle(
                                       color: Colors.grey[400],
-                                      fontWeight: FontWeight.w100),
+                                      fontWeight: FontWeight.w400),
                                 ),
                               ],
                             ),
