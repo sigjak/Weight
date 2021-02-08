@@ -80,7 +80,7 @@ class _AddEditState extends State<AddEdit> {
 
   String validateNumber(var val) {
     if (val.isNotEmpty && double.tryParse(val) == null) {
-      return ('Enter a valid number');
+      return ('Invalid entry!');
     } else {
       return null;
     }
