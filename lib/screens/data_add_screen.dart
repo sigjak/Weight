@@ -55,20 +55,17 @@ class _AddEditState extends State<AddEdit> {
     DateTime now = DateTime.now();
     //DateTime bb = DateTime(now.year, now.month, now.day);
     // more than once a day
-    bio.day = now;
 
     bio.syst = toAverage(systThree);
     bio.diast = toAverage(diastThree);
     bio.pulse = toAverage(pulseThree);
-    // print(bio.syst);
-    // print(bio.diast);
-    // print(bio.pulse);
 
-    //bio.day = bb;
     if (bio.id != null) {
       await Provider.of<Data>(context, listen: false)
           .updateOldData(bio.id, bio);
     } else {
+      //bio.day = bb;
+      bio.day = now;
       await Provider.of<Data>(context, listen: false).addNewData(bio);
     }
 
