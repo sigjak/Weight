@@ -21,6 +21,7 @@ class Data with ChangeNotifier {
   String badgeNumber = '10';
   double bmi;
   double colhue;
+  int tableSize;
 
   List<Bio> get items {
     return [..._items];
@@ -47,6 +48,11 @@ class Data with ChangeNotifier {
   final url = 'https://weight-8da08.firebaseio.com/weights/';
 
   //
+
+  Future<void> getTableSize() async {
+    tableSize = await db.countRecords();
+  }
+
   Future<void> getDataFromSQL(int dataToGet) async {
     List<Bio> loadedData = [];
 

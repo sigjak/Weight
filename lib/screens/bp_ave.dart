@@ -232,7 +232,7 @@ class _BPAveState extends State<BPAve> {
 
   Badge buildBadge(data) {
     List<int> dataToGet = [10, 50, 100, 300];
-    String badgeNumber = data.badgeNumber;
+
     return Badge(
       borderRadius: BorderRadius.circular(5),
       shape: BadgeShape.square,
@@ -241,7 +241,7 @@ class _BPAveState extends State<BPAve> {
       badgeContent: Container(
         width: 25,
         child: Text(
-          badgeNumber.toString(),
+          data.badgeNumber == '100000' ? 'all' : data.badgeNumber,
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white, fontSize: 12),
         ),
@@ -251,13 +251,7 @@ class _BPAveState extends State<BPAve> {
         color: Colors.grey[200],
         icon: Icon(MyIcons.database),
         onSelected: (value) async {
-          if (value == 100000) {
-            badgeNumber = 'all';
-            data.badgeNumber = 'all';
-          } else {
-            badgeNumber = value.toString();
-            data.badgeNumber = value.toString();
-          }
+          data.badgeNumber = value.toString();
 
           await data.getDataFromSQL(value);
           await gettingData();

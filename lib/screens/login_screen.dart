@@ -3,11 +3,6 @@ import 'data_add_screen.dart';
 import 'package:provider/provider.dart';
 import '../Providers/dataProvider.dart';
 import './data_list_screen.dart';
-// import '../models/bio.dart';
-// import '../Providers/database_helper.dart';
-// import 'package:flutter/services.dart';
-// import 'dart:convert';
-//import 'package:sqflite/sqflite.dart';
 
 class Login extends StatefulWidget {
   static const routeName = '/login';
@@ -28,6 +23,8 @@ class _LoginState extends State<Login> {
   void loading() async {
     //await Provider.of<Data>(context, listen: false).getDataFromFirebase(10);
     await Provider.of<Data>(context, listen: false).getDataFromSQL(10);
+    await Provider.of<Data>(context, listen: false).getTableSize();
+
     setState(() {
       isLoading = false;
     });

@@ -212,7 +212,9 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   Badge buildBadge(data) {
-    String badgeNumber = data.badgeNumber;
+    //String badgeNumber = data.badgeNumber;
+    int v1 = data.tableSize;
+    print('Number of records: ${data.tableSize}');
     List<int> dataToGet = [10, 50, 100, 300];
     return Badge(
       borderRadius: BorderRadius.circular(5),
@@ -222,7 +224,7 @@ class _ListScreenState extends State<ListScreen> {
       badgeContent: Container(
         width: 25,
         child: Text(
-          badgeNumber.toString(),
+          data.badgeNumber == '10000' ? 'all' : data.badgeNumber,
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white, fontSize: 12),
         ),
@@ -232,13 +234,8 @@ class _ListScreenState extends State<ListScreen> {
         color: Colors.grey[200],
         icon: Icon(MyIcons.database),
         onSelected: (value) async {
-          if (value == 10000) {
-            badgeNumber = 'all';
-            data.badgeNumber = 'all';
-          } else {
-            badgeNumber = value.toString();
-            data.badgeNumber = value.toString();
-          }
+          //badgeNumber = value.toString();
+          data.badgeNumber = value.toString();
 
           await data.getDataFromSQL(value);
         },
@@ -250,8 +247,9 @@ class _ListScreenState extends State<ListScreen> {
             );
           }).toList();
           var s = PopupMenuItem(
-              value: 10000, child: Text('All available measurements'));
+              value: v1, child: Text('All available measurements'));
           jj.add(s);
+
           return jj;
         },
       ),

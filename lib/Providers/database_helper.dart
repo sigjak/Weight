@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
+//import 'package:sqflite/utils/utils.dart';
 import 'dart:io';
 import '../models/bio.dart';
 
@@ -42,6 +43,14 @@ class DatabaseHelper {
   }
 
   //-----------------------------  Database created ------------------
+// count records
+  Future<int> countRecords() async {
+    final Database db = await database;
+    int count = 0;
+    count = Sqflite.firstIntValue(
+        await db.rawQuery('SELECT COUNT(*) FROM bio_table'));
+    return count;
+  }
 
 //delete database
   Future<void> deleteDb() async {
