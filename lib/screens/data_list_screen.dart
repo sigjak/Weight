@@ -224,7 +224,7 @@ class _ListScreenState extends State<ListScreen> {
       badgeContent: Container(
         width: 25,
         child: Text(
-          data.badgeNumber == '10000' ? 'all' : data.badgeNumber,
+          data.badgeNumber,
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white, fontSize: 12),
         ),

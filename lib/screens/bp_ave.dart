@@ -232,7 +232,7 @@ class _BPAveState extends State<BPAve> {
 
   Badge buildBadge(data) {
     List<int> dataToGet = [10, 50, 100, 300];
-
+    int v1 = data.tableSize;
     return Badge(
       borderRadius: BorderRadius.circular(5),
       shape: BadgeShape.square,
@@ -241,7 +241,7 @@ class _BPAveState extends State<BPAve> {
       badgeContent: Container(
         width: 25,
         child: Text(
-          data.badgeNumber == '100000' ? 'all' : data.badgeNumber,
+          data.badgeNumber,
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white, fontSize: 12),
         ),
@@ -264,7 +264,7 @@ class _BPAveState extends State<BPAve> {
             );
           }).toList();
           var s = PopupMenuItem(
-              value: 100000, child: Text('All available measurements'));
+              value: v1, child: Text('All available measurements'));
           jj.add(s);
           return jj;
         },
