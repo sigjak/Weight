@@ -47,6 +47,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   await db.insertBatch(loaded);
 
                   await data.getDataFromSQL(10);
+                  await data.getTableSize();
 
                   Navigator.pop(dialogContext);
                   Navigator.pop(context);

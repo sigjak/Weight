@@ -213,8 +213,8 @@ class _ListScreenState extends State<ListScreen> {
 
   Badge buildBadge(data) {
     //String badgeNumber = data.badgeNumber;
-    int v1 = data.tableSize;
-    print('Number of records: ${data.tableSize}');
+    int vAll = data.tableSize;
+
     List<int> dataToGet = [10, 50, 100, 300];
     return Badge(
       borderRadius: BorderRadius.circular(5),
@@ -235,6 +235,7 @@ class _ListScreenState extends State<ListScreen> {
         icon: Icon(MyIcons.database),
         onSelected: (value) async {
           //badgeNumber = value.toString();
+          if (value > vAll) value = vAll;
           data.badgeNumber = value.toString();
 
           await data.getDataFromSQL(value);
@@ -247,7 +248,7 @@ class _ListScreenState extends State<ListScreen> {
             );
           }).toList();
           var s = PopupMenuItem(
-              value: v1, child: Text('All available measurements'));
+              value: vAll, child: Text('All available measurements'));
           jj.add(s);
 
           return jj;

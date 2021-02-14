@@ -232,7 +232,8 @@ class _BPAveState extends State<BPAve> {
 
   Badge buildBadge(data) {
     List<int> dataToGet = [10, 50, 100, 300];
-    int v1 = data.tableSize;
+    int vAll = data.tableSize;
+
     return Badge(
       borderRadius: BorderRadius.circular(5),
       shape: BadgeShape.square,
@@ -251,6 +252,7 @@ class _BPAveState extends State<BPAve> {
         color: Colors.grey[200],
         icon: Icon(MyIcons.database),
         onSelected: (value) async {
+          if (value > vAll) value = vAll;
           data.badgeNumber = value.toString();
 
           await data.getDataFromSQL(value);
@@ -264,7 +266,7 @@ class _BPAveState extends State<BPAve> {
             );
           }).toList();
           var s = PopupMenuItem(
-              value: v1, child: Text('All available measurements'));
+              value: vAll, child: Text('All available measurements'));
           jj.add(s);
           return jj;
         },

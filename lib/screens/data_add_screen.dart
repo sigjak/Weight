@@ -67,6 +67,7 @@ class _AddEditState extends State<AddEdit> {
       //bio.day = bb;
       bio.day = now;
       await Provider.of<Data>(context, listen: false).addNewData(bio);
+      await Provider.of<Data>(context, listen: false).getTableSize();
     }
 
     setState(() {

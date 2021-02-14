@@ -1,24 +1,120 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
+import 'package:badges/badges.dart';
 import 'bp_ave.dart';
 import '../widgets/plot_data.dart';
 import '../Providers/dataProvider.dart';
 import '../widgets/my_icons.dart';
 //import '../widgets/app_drawer.dart';
 
-class SystDiast extends StatelessWidget {
+class SystDiast extends StatefulWidget {
   static const routeName = '/syst-diast';
+
+  @override
+  _SystDiastState createState() => _SystDiastState();
+}
+
+class _SystDiastState extends State<SystDiast> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<Data>(context);
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text(
           'Systolic-Diastolic',
           textAlign: TextAlign.center,
         ),
         actions: [
+          Badge(
+            shape: BadgeShape.square,
+            borderRadius: BorderRadius.circular(5),
+            padding: EdgeInsets.fromLTRB(2, 1, 2, 2),
+            badgeColor: Colors.red,
+            badgeContent: Container(
+              width: 25,
+              child: Text(
+                data.badgeNumber,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white, fontSize: 12),
+              ),
+            ),
+            position: BadgePosition.topEnd(top: 4, end: -6),
+            child: IconButton(
+                icon: Icon(MyIcons.database),
+                onPressed: () {
+                  return showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          insetPadding: EdgeInsets.symmetric(horizontal: 100),
+                          content: Card(
+                            margin: EdgeInsets.all(10),
+                            child: Container(
+                              padding: EdgeInsets.all(20),
+                              height: 240,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'How many measurements?',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    '${data.tableSize} available',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 9,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                  // use textfromfield and form and validator
+                                  Form(
+                                    key: _formKey,
+                                    child: TextFormField(
+                                      onSaved: (value) async {
+                                        int badgeValue = int.tryParse(value);
+                                        await data.getDataFromSQL(badgeValue);
+                                        setState(() {
+                                          data.badgeNumber = value;
+                                        });
+                                      },
+                                      validator: (value) {
+                                        if (value.isEmpty ||
+                                            int.tryParse(value) == null) {
+                                          return 'Enter text';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                          labelText: 'enter a number',
+                                          labelStyle: TextStyle(fontSize: 9)),
+                                      keyboardType: TextInputType.number,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState.validate()) {
+                                        _formKey.currentState.save();
+                                        _formKey.currentState.reset();
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    child: Text('Close'),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      });
+                }),
+          ),
           IconButton(
               icon: Icon(MyIcons.calendar),
               onPressed: () {
