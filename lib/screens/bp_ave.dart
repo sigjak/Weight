@@ -25,7 +25,7 @@ class _BPAveState extends State<BPAve> {
   List<double> myDiast = [];
   List<Plot> myPlotData = [];
   String systAv, systSd, systHi, systLo, diastAv, diastSd, diastHi, diastLo;
-  int numberOfDays, start, end;
+  int numberOfMeasurements, start, end;
   DateTime firstDay, lastDay;
 
   @override
@@ -51,7 +51,7 @@ class _BPAveState extends State<BPAve> {
       diastSd = data.diastAveSd[1].toStringAsFixed(0);
       diastHi = data.diastAveSd[2].toStringAsFixed(0);
       diastLo = data.diastAveSd[3].toStringAsFixed(0);
-      numberOfDays = myPlotData.length;
+      numberOfMeasurements = myPlotData.length;
     });
   }
 
@@ -123,9 +123,11 @@ class _BPAveState extends State<BPAve> {
                             mySyst = bpCalc.getBpFromPlotlist(myPlotData)[0];
                             //myDiast = bpCalc.getBpFromPlotlist(myPlotData)[1];
                             List<double> syst = bpCalc.averSd(mySyst);
-                            numberOfDays = myPlotData.length;
+                            numberOfMeasurements = myPlotData.length;
+                            data.badgeNumber = numberOfMeasurements.toString();
                             firstDay = myPlotData[0].xAxis;
-                            lastDay = myPlotData[numberOfDays - 1].xAxis;
+                            lastDay =
+                                myPlotData[numberOfMeasurements - 1].xAxis;
 
                             // get a list of syst and diast to calculate averages and sd
                             systAv = syst[0].toStringAsFixed(0);
@@ -176,7 +178,7 @@ class _BPAveState extends State<BPAve> {
                               Row(
                                 children: [
                                   Text(
-                                    "Average of $numberOfDays measurements",
+                                    "Average of $numberOfMeasurements measurements",
                                     style: TextStyle(
                                         color: Colors.black54, fontSize: 14),
                                   ),

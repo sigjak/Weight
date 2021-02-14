@@ -55,7 +55,7 @@ class _SystDiastState extends State<SystDiast> {
                             margin: EdgeInsets.all(10),
                             child: Container(
                               padding: EdgeInsets.all(20),
-                              height: 240,
+                              height: 250,
                               child: Column(
                                 children: [
                                   Text(
@@ -75,20 +75,23 @@ class _SystDiastState extends State<SystDiast> {
                                     key: _formKey,
                                     child: TextFormField(
                                       onSaved: (value) async {
-                                        int badgeValue = int.tryParse(value);
-                                        await data.getDataFromSQL(badgeValue);
-                                        setState(() {
-                                          data.badgeNumber = value;
-                                        });
+                                        if (value.isNotEmpty) {
+                                          int badgeValue = int.tryParse(value);
+                                          await data.getDataFromSQL(badgeValue);
+                                          setState(() {
+                                            data.badgeNumber = value;
+                                          });
+                                        }
                                       },
                                       validator: (value) {
-                                        if (value.isEmpty ||
+                                        if (value.isNotEmpty &&
                                             int.tryParse(value) == null) {
-                                          return 'Enter text';
+                                          return 'Error';
                                         }
                                         return null;
                                       },
                                       decoration: InputDecoration(
+                                          errorStyle: TextStyle(fontSize: 9),
                                           labelText: 'enter a number',
                                           labelStyle: TextStyle(fontSize: 9)),
                                       keyboardType: TextInputType.number,
