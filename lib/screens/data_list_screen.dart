@@ -230,29 +230,47 @@ class _ListScreenState extends State<ListScreen> {
         ),
       ),
       badgeColor: Colors.red,
-      child: PopupMenuButton(
-        color: Colors.grey[200],
-        icon: Icon(MyIcons.database),
-        onSelected: (value) async {
-          //badgeNumber = value.toString();
-          if (value > vAll) value = vAll;
-          data.badgeNumber = value.toString();
+      child: Builder(
+        builder: (context) => PopupMenuButton(
+          color: Colors.grey[200],
+          icon: Icon(MyIcons.database),
+          onSelected: (value) async {
+            //badgeNumber = value.toString();
+            if (value > vAll) {
+              value = vAll;
+              final snackBar = SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  elevation: 5,
+                  content: Row(
+                    children: [
+                      Icon(Icons.check),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text('Only ${data.tableSize} measurements available.',
+                          style: TextStyle(fontSize: 18)),
+                    ],
+                  ));
+              Scaffold.of(context).showSnackBar(snackBar);
+            }
+            data.badgeNumber = value.toString();
 
-          await data.getDataFromSQL(value);
-        },
-        itemBuilder: (BuildContext context) {
-          List<PopupMenuItem> jj = dataToGet.map((num) {
-            return PopupMenuItem(
-              value: num,
-              child: Text('${num.toString()} last measurements'),
-            );
-          }).toList();
-          var s = PopupMenuItem(
-              value: vAll, child: Text('All available measurements'));
-          jj.add(s);
+            await data.getDataFromSQL(value);
+          },
+          itemBuilder: (BuildContext context) {
+            List<PopupMenuItem> jj = dataToGet.map((num) {
+              return PopupMenuItem(
+                value: num,
+                child: Text('${num.toString()} last measurements'),
+              );
+            }).toList();
+            var s = PopupMenuItem(
+                value: vAll, child: Text('All available measurements'));
+            jj.add(s);
 
-          return jj;
-        },
+            return jj;
+          },
+        ),
       ),
     );
   }

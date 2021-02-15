@@ -108,7 +108,7 @@ class _SystDiastState extends State<SystDiast> {
                                         Navigator.pop(context);
                                       }
                                     },
-                                    child: Text('Close'),
+                                    child: Text('Go'),
                                   )
                                 ],
                               ),
