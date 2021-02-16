@@ -77,6 +77,10 @@ class _SystDiastState extends State<SystDiast> {
                                       onSaved: (value) async {
                                         if (value.isNotEmpty) {
                                           int badgeValue = int.tryParse(value);
+                                          if (badgeValue > data.tableSize) {
+                                            badgeValue = data.tableSize;
+                                            value = badgeValue.toString();
+                                          }
                                           await data.getDataFromSQL(badgeValue);
                                           setState(() {
                                             data.badgeNumber = value;
