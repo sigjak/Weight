@@ -17,25 +17,25 @@ class Dialogs {
         elevation: 20,
         title: Text('Delete?'),
         actions: [
-          FlatButton(
-            color: Colors.green,
+          TextButton(
+            style: TextButton.styleFrom(
+              primary: Colors.green,
+            ),
             onPressed: () {
               Navigator.of(context).pop();
             },
             child: Text(
               'NO',
-              style: TextStyle(color: Colors.white),
             ),
           ),
-          FlatButton(
-            color: Colors.red,
+          TextButton(
+            style: TextButton.styleFrom(primary: Colors.red),
             onPressed: () {
               Provider.of<Data>(context, listen: false).deleteOldData(items.id);
               Navigator.of(context).pop();
             },
             child: Text(
               'YES',
-              style: TextStyle(color: Colors.white),
             ),
           ),
         ],
@@ -57,14 +57,13 @@ class Dialogs {
           title: Text('Token expired!'),
           content: Text('You have to login again.'),
           actions: [
-            FlatButton(
-              color: Colors.green,
+            TextButton(
+              style: TextButton.styleFrom(primary: Colors.green),
               onPressed: () {
                 Navigator.of(context).pushReplacementNamed(Welcome.routeName);
               },
               child: Text(
                 'OK',
-                style: TextStyle(color: Colors.white),
               ),
             ),
           ],

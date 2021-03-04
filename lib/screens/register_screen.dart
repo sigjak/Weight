@@ -65,7 +65,7 @@ class _RegisterState extends State<Register> {
               SizedBox(
                 height: 20,
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () async {
                   FocusScopeNode currentFocus = FocusScope.of(context);
                   final authenticate =

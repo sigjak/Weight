@@ -38,6 +38,10 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.brown[700],
             primaryColor: Colors.brown[500],
             canvasColor: Colors.brown[200],
+            elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+              primary: Colors.brown[500],
+            )),
             buttonTheme: ButtonThemeData(
                 buttonColor: Colors.brown[500],
                 textTheme: ButtonTextTheme.primary),

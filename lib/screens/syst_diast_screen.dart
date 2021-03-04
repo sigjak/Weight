@@ -22,7 +22,7 @@ class _SystDiastState extends State<SystDiast> {
   Widget build(BuildContext context) {
     final data = Provider.of<Data>(context);
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           'Systolic-Diastolic',

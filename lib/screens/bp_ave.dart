@@ -71,7 +71,7 @@ class _BPAveState extends State<BPAve> {
     final data = Provider.of<Data>(context, listen: false);
     BPCalc bpCalc = new BPCalc(myList);
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Bp averages"),
         actions: [
@@ -105,7 +105,7 @@ class _BPAveState extends State<BPAve> {
                 SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                       child: Text("Select Range"),
                       onPressed: () async {
                         if (myList.length < 50) {

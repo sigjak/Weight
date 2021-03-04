@@ -317,7 +317,7 @@ class _AddEditState extends State<AddEdit> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              RaisedButton(
+                              ElevatedButton(
                                   child: Text('Submit'),
                                   onPressed: () {
                                     SystemChannels.textInput
@@ -329,7 +329,7 @@ class _AddEditState extends State<AddEdit> {
                                   }),
                               Visibility(
                                 visible: visCount > 1 ? false : true,
-                                child: RaisedButton(
+                                child: ElevatedButton(
                                   onPressed: () {
                                     setState(() {
                                       visCount++;

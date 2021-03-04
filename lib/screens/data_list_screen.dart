@@ -46,7 +46,7 @@ class _ListScreenState extends State<ListScreen> {
     //final data = Provider.of<Data>(context);
     var dialogs = Dialogs();
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Data'),
         actions: <Widget>[
@@ -148,7 +148,7 @@ class _ListScreenState extends State<ListScreen> {
                             child: Builder(builder: (BuildContext context) {
                               return GestureDetector(
                                 onTap: () {
-                                  Scaffold.of(context).showSnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
                                         'Weight after one more week: ${data.weightInOneWeek.toStringAsFixed(1)} \u{00B1}${data.rms.toStringAsFixed(1)} kg.',
@@ -251,7 +251,7 @@ class _ListScreenState extends State<ListScreen> {
                           style: TextStyle(fontSize: 18)),
                     ],
                   ));
-              Scaffold.of(context).showSnackBar(snackBar);
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
             data.badgeNumber = value.toString();
 

@@ -108,7 +108,7 @@ class _LoginState extends State<Login> {
                         Container(
                           height: 60,
                           width: double.infinity,
-                          child: RaisedButton(
+                          child: ElevatedButton(
                             onPressed: () {
                               Navigator.of(context)
                                   .pushReplacementNamed(ListScreen.routeName);
@@ -123,7 +123,7 @@ class _LoginState extends State<Login> {
                         Container(
                           width: double.infinity,
                           height: 60,
-                          child: RaisedButton(
+                          child: ElevatedButton(
                             onPressed: () {
                               Navigator.of(context)
                                   .pushReplacementNamed(AddEdit.routeName);
