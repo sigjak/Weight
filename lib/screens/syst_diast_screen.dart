@@ -17,7 +17,6 @@ class SystDiast extends StatefulWidget {
 
 class _SystDiastState extends State<SystDiast> {
   final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<Data>(context);

@@ -27,6 +27,10 @@ class Data with ChangeNotifier {
     return [..._items];
   }
 
+  String get bNumber {
+    return badgeNumber;
+  }
+
   int get numbDays {
     Duration diff = _items.last.day.difference(_items.first.day);
     return diff.inDays;

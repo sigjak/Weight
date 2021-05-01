@@ -125,6 +125,7 @@ class _BPAveState extends State<BPAve> {
                             List<double> syst = bpCalc.averSd(mySyst);
                             numberOfMeasurements = myPlotData.length;
                             data.badgeNumber = numberOfMeasurements.toString();
+
                             firstDay = myPlotData[0].xAxis;
                             lastDay =
                                 myPlotData[numberOfMeasurements - 1].xAxis;

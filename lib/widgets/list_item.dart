@@ -47,7 +47,9 @@ class ListItem extends StatelessWidget {
             style: TextStyle(fontSize: 13),
           ),
           title: Text(
+            // check if data is NaN
             'W: ${items.weight} - BP: ${items.syst}/${items.diast} - HR: ${items.pulse}',
+
             textAlign: TextAlign.center,
           ),
           trailing: Row(

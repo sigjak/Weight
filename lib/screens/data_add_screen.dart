@@ -44,6 +44,7 @@ class _AddEditState extends State<AddEdit> {
     ave = total / count;
 
     String value = ave.toStringAsFixed(0);
+    if (value == 'NaN') return '';
     return value;
   }
 
@@ -55,10 +56,12 @@ class _AddEditState extends State<AddEdit> {
     DateTime now = DateTime.now();
     //DateTime bb = DateTime(now.year, now.month, now.day);
     // more than once a day
-
+//check here if systetc is empty NaN
     bio.syst = toAverage(systThree);
     bio.diast = toAverage(diastThree);
     bio.pulse = toAverage(pulseThree);
+    print('BIO SYST -------------------   ${bio.syst}');
+    print('BIO weight -------------------   ${bio.weight}');
 
     if (bio.id != null) {
       await Provider.of<Data>(context, listen: false)

@@ -19,7 +19,8 @@ class Dialogs {
         actions: [
           TextButton(
             style: TextButton.styleFrom(
-              primary: Colors.green,
+              primary: Colors.white70,
+              backgroundColor: Colors.green,
             ),
             onPressed: () {
               Navigator.of(context).pop();
@@ -29,7 +30,10 @@ class Dialogs {
             ),
           ),
           TextButton(
-            style: TextButton.styleFrom(primary: Colors.red),
+            style: TextButton.styleFrom(
+              primary: Colors.white70,
+              backgroundColor: Colors.red,
+            ),
             onPressed: () {
               Provider.of<Data>(context, listen: false).deleteOldData(items.id);
               Navigator.of(context).pop();
