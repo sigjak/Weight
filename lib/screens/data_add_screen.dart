@@ -42,9 +42,9 @@ class _AddEditState extends State<AddEdit> {
       }
     });
     ave = total / count;
-
+    if (ave.isNaN) return '';
     String value = ave.toStringAsFixed(0);
-    if (value == 'NaN') return '';
+    // if (value == 'NaN') return '';
     return value;
   }
 
@@ -60,8 +60,6 @@ class _AddEditState extends State<AddEdit> {
     bio.syst = toAverage(systThree);
     bio.diast = toAverage(diastThree);
     bio.pulse = toAverage(pulseThree);
-    print('BIO SYST -------------------   ${bio.syst}');
-    print('BIO weight -------------------   ${bio.weight}');
 
     if (bio.id != null) {
       await Provider.of<Data>(context, listen: false)
